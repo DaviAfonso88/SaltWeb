@@ -680,6 +680,7 @@ body.active {
   border-radius: var(--radius-circle);
   transition: var(--transition-2);
   animation: scrollDown 2.5s linear infinite alternate;
+  box-shadow: 0 4px 8px var(--salt-purple);
 }
 
 .gallery .scroll-down img {
@@ -1378,7 +1379,6 @@ body.active {
     width: 85px;
     height: 85px;
     margin-block-start: 100px;
-    box-shadow: 0 4px 8px var(--salt-purple);
   }
 
   .gallery .scroll-down img {
