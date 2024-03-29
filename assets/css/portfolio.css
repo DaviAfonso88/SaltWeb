@@ -45,6 +45,7 @@
 
 .portfolio-card .btn-icon svg {
   width: 20px;
+  cursor: pointer;
 }
 
 .portfolio-card .card-title:is(:hover, :focus) {

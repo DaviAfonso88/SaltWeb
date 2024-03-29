@@ -6,6 +6,7 @@
   height: 100vh;
   position: relative;
   text-align: center;
+  z-index: 0;
 }
 .slider-top {
   padding-block: 100px 140px;
@@ -32,7 +33,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: linear-gradient(to top, var(--smokey-black) 40%, transparent);
+  background: linear-gradient(to top, var(--smokey-black) 20%, transparent);
 }
 .slider .list .item::before {
   content: "";
@@ -52,14 +53,27 @@
   z-index: 1;
   text-align: left;
 }
+.sub {
+  font-weight: var(--fw-300);
+}
 .slider .list .item .content p:nth-child(1) {
   text-transform: uppercase;
-  letter-spacing: 10px;
-}
-.slider .list .item .content h2 {
-  font-size: 100px;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  background-color: var(--white);
+  padding: 10px 20px;
+  border-radius: 0.5rem;
+  transition: 0.3s;
+  display: inline-block;
   margin: 0;
+  font-size: 12.8px;
 }
+.slider .list .item .content p:nth-child(1):hover {
+  cursor: pointer;
+  background-color: var(--black);
+  color: var(--white);
+}
+
 .slider .list .item.active {
   opacity: 1;
   z-index: 10;
@@ -126,9 +140,10 @@
 .thumbnail .item {
   width: 150px;
   height: 220px;
-  filter: brightness(0.5);
+  filter: brightness(0.4);
   transition: 0.5s;
   flex-shrink: 0;
+  cursor: pointer;
 }
 .thumbnail .item img {
   width: 100%;
@@ -143,14 +158,17 @@
   position: absolute;
   inset: auto 10px 10px 10px;
   color: var(--black);
-  background-color: var(--white);
+  background-color: rgba(255, 255, 255, 0.678);
   border-radius: 0.5rem;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
 }
 .container {
   padding-inline: 15px;
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 967px) {
   .thumbnail {
     justify-content: start;
   }
@@ -159,5 +177,15 @@
   }
   .arrows {
     top: 10%;
+  }
+}
+
+@media screen and (max-width: 572px) {
+  .slider .list .item .content h2 {
+    font-size: 40px;
+  }
+
+  .slider .list .item .content p {
+    font-size: 13px;
   }
 }

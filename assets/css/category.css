@@ -19,6 +19,10 @@
   max-width: calc(50% - 1px);
 }
 
+a {
+  cursor: default;
+}
+
 .category-card .card-title {
   color: var(--white_a25);
   margin-block-end: 10px;

@@ -86,6 +86,7 @@
   padding-block: 2px;
   text-transform: capitalize;
   transition: var(--transition-1);
+  cursor: pointer;
 }
 
 .navbar-link:is(:hover, :focus-visible) {

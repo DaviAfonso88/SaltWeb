@@ -241,56 +241,54 @@ document.body.addEventListener("mouseover", function () {
  */
 
 let items = document.querySelectorAll('.slider .list .item');
+let thumbnails = document.querySelectorAll('.thumbnail .item');
 let next = document.getElementById('next');
 let prev = document.getElementById('prev');
-let thumbnails = document.querySelectorAll('.thumbnail .item');
-
-// config param
-let countItem = items.length;
 let itemActive = 0;
-// event next click
-next.onclick = function(){
-    itemActive = itemActive + 1;
-    if(itemActive >= countItem){
-        itemActive = 0;
-    }
-    showSlider();
-}
-//event prev click
-prev.onclick = function(){
-    itemActive = itemActive - 1;
-    if(itemActive < 0){
-        itemActive = countItem - 1;
-    }
-    showSlider();
-}
-// auto run slider
-let refreshInterval = setInterval(() => {
-    next.click();
-}, 5000)
-function showSlider(){
-    // remove item active old
-    let itemActiveOld = document.querySelector('.slider .list .item.active');
-    let thumbnailActiveOld = document.querySelector('.thumbnail .item.active');
-    itemActiveOld.classList.remove('active');
-    thumbnailActiveOld.classList.remove('active');
+let refreshInterval;
 
-    // active new item
-    items[itemActive].classList.add('active');
-    thumbnails[itemActive].classList.add('active');
+// Evento para avançar para o próximo slide
+next.addEventListener('click', () => {
+    goToSlide(itemActive + 1);
+});
 
-    // clear auto time run slider
-    clearInterval(refreshInterval);
+// Evento para voltar para o slide anterior
+prev.addEventListener('click', () => {
+    goToSlide(itemActive - 1);
+});
+
+// Função para ir para um slide específico
+function goToSlide(index) {
+    clearInterval(refreshInterval); // Limpa o intervalo de atualização automática do slider
+    itemActive = (index + items.length) % items.length; // Calcula o índice do slide considerando a circularidade
+    updateSlider();
+}
+
+// Atualiza o slider com base no slide ativo
+function updateSlider() {
+    items.forEach(item => item.classList.remove('active')); // Remove a classe 'active' de todos os slides
+    thumbnails.forEach(thumbnail => thumbnail.classList.remove('active')); // Remove a classe 'active' de todas as miniaturas
+    items[itemActive].classList.add('active'); // Adiciona a classe 'active' ao slide ativo
+    thumbnails[itemActive].classList.add('active'); // Adiciona a classe 'active' à miniatura do slide ativo
+    startAutoSlide(); // Reinicia o intervalo de atualização automática do slider
+}
+
+// Função para iniciar o slide automático
+function startAutoSlide() {
+    clearInterval(refreshInterval); // Limpa o intervalo de atualização automática do slider
     refreshInterval = setInterval(() => {
-        next.click();
-    }, 5000)
+        goToSlide(itemActive + 1); // Avança para o próximo slide a cada 10 segundos (ou o intervalo definido)
+    }, 10000);
 }
 
-// click thumbnail
+// Evento de clique nas miniaturas para navegar para um slide específico
 thumbnails.forEach((thumbnail, index) => {
     thumbnail.addEventListener('click', () => {
-        itemActive = index;
-        showSlider();
-    })
-})
+        goToSlide(index);
+    });
+});
+
+// Inicia o slide automático quando a página é carregada
+startAutoSlide();
+
 

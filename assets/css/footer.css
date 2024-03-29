@@ -31,6 +31,7 @@
   border: 1px solid var(--white_a15);
   border-radius: var(--radius-circle);
   animation: scrollDown 2.5s linear infinite alternate;
+  cursor: pointer;
 }
 
 .footer .btn-icon img {

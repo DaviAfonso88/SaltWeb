@@ -13,7 +13,8 @@
 
 .service-card .img {
   display: none;
-  height: 400px;
+  height: 300px;
+  margin-left: 200px;
   border-radius: 0.5rem;
 }
 
