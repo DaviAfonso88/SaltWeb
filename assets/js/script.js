@@ -1,294 +1,125 @@
 'use strict';
 
-
-
-// add Event on multiple elment
-
+// Função para adicionar evento em múltiplos elementos
 const addEventOnElements = function (elements, eventType, callback) {
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].addEventListener(eventType, callback);
-  }
-}
+  elements.forEach(element => element.addEventListener(eventType, callback));
+};
 
-
-// PRELOADING
-
-const loadingElement = document.querySelector("[data-loading]");
-
+// Função para adicionar classe 'loaded' ao elemento de loading após o carregamento da página
 window.addEventListener("load", function () {
+  const loadingElement = document.querySelector("[data-loading]");
   loadingElement.classList.add("loaded");
   document.body.classList.remove("active");
 });
 
-
-
-// MOBILE NAV TOGGLE
-
-const [navTogglers, navLinks, navbar, overlay] = [
-  document.querySelectorAll("[data-nav-toggler]"),
-  document.querySelectorAll("[data-nav-link]"),
-  document.querySelector("[data-navbar]"),
-  document.querySelector("[data-overlay]")
-];
-
+// Função para exibir ou ocultar o menu mobile
 const toggleNav = function () {
+  const navbar = document.querySelector("[data-navbar]");
+  const overlay = document.querySelector("[data-overlay]");
+  const body = document.body;
   navbar.classList.toggle("active");
   overlay.classList.toggle("active");
-  document.body.classList.toggle("active");
-}
-
-addEventOnElements(navTogglers, "click", toggleNav);
+  body.classList.toggle("active");
+};
 
 const closeNav = function () {
+  const navbar = document.querySelector("[data-navbar]");
+  const overlay = document.querySelector("[data-overlay]");
+  const body = document.body;
   navbar.classList.remove("active");
   overlay.classList.remove("active");
-  document.body.classList.remove("active");
-}
+  body.classList.remove("active");
+};
 
+const navTogglers = document.querySelectorAll("[data-nav-toggler]");
+const navLinks = document.querySelectorAll("[data-nav-link]");
+addEventOnElements(navTogglers, "click", toggleNav);
 addEventOnElements(navLinks, "click", closeNav);
 
-
-
-// HEADER
-
+// Função para ativar ou desativar classe 'active' no header baseado no scroll
 const header = document.querySelector("[data-header]");
-
 const activeElementOnScroll = function () {
-  if (window.scrollY > 50) {
+  const scrollThreshold = 50;
+  if (window.scrollY > scrollThreshold) {
     header.classList.add("active");
   } else {
     header.classList.remove("active");
   }
-}
-
+};
 window.addEventListener("scroll", activeElementOnScroll);
 
-
-
-/**
- * TEXT ANIMATION EFFECT FOR HERO SECTION
- */
-
+// Iniciar animação do texto na seção hero
 const letterBoxes = document.querySelectorAll("[data-letter-effect]");
-
-let activeLetterBoxIndex = 0;
-let lastActiveLetterBoxIndex = 0;
-let totalLetterBoxDelay = 0;
-
+// Função para animar o texto
 const setLetterEffect = function () {
-
-  // loop through all letter boxes
-  for (let i = 0; i < letterBoxes.length; i++) {
-    // set initial animation delay
-    let letterAnimationDelay = 0;
-
-    // get all character from the current letter box
-    const letters = letterBoxes[i].textContent.trim();
-    // remove all character from the current letter box
-    letterBoxes[i].textContent = "";
-
-    // loop through all letters
-    for (let j = 0; j < letters.length; j++) {
-
-      // create a span
-      const span = document.createElement("span");
-
-      // set animation delay on span
-      span.style.animationDelay = `${letterAnimationDelay}s`;
-
-      // set the "in" class on the span, if current letter box is active
-      // otherwise class is "out"
-      if (i === activeLetterBoxIndex) {
-        span.classList.add("in");
-      } else {
-        span.classList.add("out");
-      }
-
-      // pass current letter into span
-      span.textContent = letters[j];
-
-      // add space class on span, when current letter contain space
-      if (letters[j] === " ") span.classList.add("space");
-
-      // pass the span on current letter box
-      letterBoxes[i].appendChild(span);
-
-      // skip letterAnimationDelay when loop is in the last index
-      if (j >= letters.length - 1) break;
-      // otherwise update
-      letterAnimationDelay += 0.05;
-
-    }
-
-    // get total delay of active letter box
-    if (i === activeLetterBoxIndex) {
-      totalLetterBoxDelay = Number(letterAnimationDelay.toFixed(2));
-    }
-
-    // add active class on last active letter box
-    if (i === lastActiveLetterBoxIndex) {
-      letterBoxes[i].classList.add("active");
-    } else {
-      letterBoxes[i].classList.remove("active");
-    }
-
-  }
-
-  setTimeout(function () {
-    lastActiveLetterBoxIndex = activeLetterBoxIndex;
-
-    // update activeLetterBoxIndex based on total letter boxes
-    activeLetterBoxIndex >= letterBoxes.length - 1 ? activeLetterBoxIndex = 0 : activeLetterBoxIndex++;
-
-    setLetterEffect();
-  }, (totalLetterBoxDelay * 1000) + 3000);
-
-}
-
-// call the letter effect function after window loaded
+  const activeLetterBoxIndex = Math.floor(Math.random() * letterBoxes.length);
+  const totalLetterBoxDelay = 0.05 * letterBoxes[activeLetterBoxIndex].textContent.trim().length;
+  letterBoxes.forEach((letterBox, index) => {
+    const isCurrentBoxActive = index === activeLetterBoxIndex;
+    letterBox.innerHTML = letterBox.textContent.trim().split('').map((char, i) => `<span style="animation-delay: ${0.05 * i}s;" class="${isCurrentBoxActive ? 'in' : 'out'} ${char === ' ' ? 'space' : ''}">${char}</span>`).join('');
+    if (isCurrentBoxActive) letterBox.classList.add("active");
+    else letterBox.classList.remove("active");
+  });
+  setTimeout(setLetterEffect, (totalLetterBoxDelay * 1000) + 3000);
+};
 window.addEventListener("load", setLetterEffect);
 
-
-
-/**
- * BACK TO TOP BUTTON
- */
-
+// Função para exibir ou ocultar o botão "Back to Top"
 const backTopBtn = document.querySelector("[data-back-top-btn]");
-
 window.addEventListener("scroll", function () {
-  const bodyHeight = document.body.scrollHeight;
-  const windowHeight = window.innerHeight;
-  const scrollEndPos = bodyHeight - windowHeight;
-  const totalScrollPercent = (window.scrollY / scrollEndPos) * 100;
-
+  const scrollThresholdPercent = 5;
+  const totalScrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
   backTopBtn.textContent = `${totalScrollPercent.toFixed(0)}%`;
-
-  // visible back top btn when scrolled 5% of the page
-  if (totalScrollPercent > 5) {
+  if (totalScrollPercent > scrollThresholdPercent) {
     backTopBtn.classList.add("show");
   } else {
     backTopBtn.classList.remove("show");
   }
 });
 
-
-
-/**
- * SCROLL REVEAL
- */
-
+// Função para exibir elementos conforme eles entram na tela
 const revealElements = document.querySelectorAll("[data-reveal]");
-
 const scrollReveal = function () {
-  for (let i = 0; i < revealElements.length; i++) {
-    const elementIsInScreen = revealElements[i].getBoundingClientRect().top < window.innerHeight / 1.15;
-
-    if (elementIsInScreen) {
-      revealElements[i].classList.add("revealed");
-    } else {
-      revealElements[i].classList.remove("revealed");
-    }
-  }
-}
-
+  revealElements.forEach(element => {
+    const elementIsInScreen = element.getBoundingClientRect().top < window.innerHeight / 1.15;
+    if (elementIsInScreen) element.classList.add("revealed");
+    else element.classList.remove("revealed");
+  });
+};
 window.addEventListener("scroll", scrollReveal);
-
 scrollReveal();
 
-
-
-/**
- * CUSTOM CURSOR
- */
-
-const cursor = document.querySelector("[data-cursor]");
-const anchorElements = document.querySelectorAll("a");
-const buttons = document.querySelectorAll("button");
-
-// change cursorElement position based on cursor move
-document.body.addEventListener("mousemove", function (event) {
-  setTimeout(function () {
-    cursor.style.top = `${event.clientY}px`;
-    cursor.style.left = `${event.clientX}px`;
-  }, 100);
-});
-
-// add cursor hoverd class
-const hoverActive = function () { cursor.classList.add("hovered"); }
-
-// remove cursor hovered class
-const hoverDeactive = function () { cursor.classList.remove("hovered"); }
-
-// add hover effect on cursor, when hover on any button or hyperlink
-addEventOnElements(anchorElements, "mouseover", hoverActive);
-addEventOnElements(anchorElements, "mouseout", hoverDeactive);
-addEventOnElements(buttons, "mouseover", hoverActive);
-addEventOnElements(buttons, "mouseout", hoverDeactive);
-
-// add disabled class on cursorElement, when mouse out of body
-document.body.addEventListener("mouseout", function () {
-  cursor.classList.add("disabled");
-});
-
-// remove diabled class on cursorElement, when mouse in the body
-document.body.addEventListener("mouseover", function () {
-  cursor.classList.remove("disabled");
-});
-
-/**
- * SLIDER
- */
-
-let items = document.querySelectorAll('.slider .list .item');
-let thumbnails = document.querySelectorAll('.thumbnail .item');
-let next = document.getElementById('next');
-let prev = document.getElementById('prev');
+// Slider
+const items = document.querySelectorAll('.slider .list .item');
+const thumbnails = document.querySelectorAll('.thumbnail .item');
 let itemActive = 0;
 let refreshInterval;
 
-// Evento para avançar para o próximo slide
-next.addEventListener('click', () => {
+const goToSlide = index => {
+  clearInterval(refreshInterval);
+  itemActive = (index + items.length) % items.length;
+  updateSlider();
+};
+
+const updateSlider = () => {
+  items.forEach(item => item.classList.remove('active'));
+  thumbnails.forEach(thumbnail => thumbnail.classList.remove('active'));
+  items[itemActive].classList.add('active');
+  thumbnails[itemActive].classList.add('active');
+  startAutoSlide();
+};
+
+const startAutoSlide = () => {
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(() => {
     goToSlide(itemActive + 1);
-});
+  }, 10000);
+};
 
-// Evento para voltar para o slide anterior
-prev.addEventListener('click', () => {
-    goToSlide(itemActive - 1);
-});
-
-// Função para ir para um slide específico
-function goToSlide(index) {
-    clearInterval(refreshInterval); // Limpa o intervalo de atualização automática do slider
-    itemActive = (index + items.length) % items.length; // Calcula o índice do slide considerando a circularidade
-    updateSlider();
-}
-
-// Atualiza o slider com base no slide ativo
-function updateSlider() {
-    items.forEach(item => item.classList.remove('active')); // Remove a classe 'active' de todos os slides
-    thumbnails.forEach(thumbnail => thumbnail.classList.remove('active')); // Remove a classe 'active' de todas as miniaturas
-    items[itemActive].classList.add('active'); // Adiciona a classe 'active' ao slide ativo
-    thumbnails[itemActive].classList.add('active'); // Adiciona a classe 'active' à miniatura do slide ativo
-    startAutoSlide(); // Reinicia o intervalo de atualização automática do slider
-}
-
-// Função para iniciar o slide automático
-function startAutoSlide() {
-    clearInterval(refreshInterval); // Limpa o intervalo de atualização automática do slider
-    refreshInterval = setInterval(() => {
-        goToSlide(itemActive + 1); // Avança para o próximo slide a cada 10 segundos (ou o intervalo definido)
-    }, 10000);
-}
-
-// Evento de clique nas miniaturas para navegar para um slide específico
 thumbnails.forEach((thumbnail, index) => {
-    thumbnail.addEventListener('click', () => {
-        goToSlide(index);
-    });
+  thumbnail.addEventListener('click', () => {
+    goToSlide(index);
+  });
 });
 
-// Inicia o slide automático quando a página é carregada
 startAutoSlide();
-
-
