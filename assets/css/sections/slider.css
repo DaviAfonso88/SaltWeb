@@ -38,6 +38,11 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--smokey-black-transparent) 20%,
+    transparent
+  );
 }
 .slider .list .item .content {
   position: absolute;
