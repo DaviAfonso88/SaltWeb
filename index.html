@@ -1,1310 +1,907 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 
     - primary meta tags
   -->
-    <title>Salt</title>
-    <meta name="title" content="Salt" />
-    <meta
-      name="description"
-      content="Explore o nosso site dedicado à juventude da nossa igreja."
-    />
+  <title>Salt</title>
+  <meta name="title" content="Salt" />
+  <meta name="description" content="Explore o nosso site dedicado à juventude da nossa igreja." />
 
-    <!-- 
+  <!-- 
     - favicon
   -->
-    <link
-      rel="shortcut icon"
-      href="assets/images/SALT SIMBOLO FUNDO CLARO.png"
-      type="image/svg+xml"
-    />
+  <link rel="shortcut icon" href="assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
 
-    <!-- 
-    - custom css link
+  <!-- 
+    - font awesome
   -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
 
-    <!-- 
+  <!-- 
+    - custom style link
+  -->
+  <link rel="stylesheet" href="./assets/css/sections/style.css" />
+
+  <!-- 
     - custom font link
   -->
-    <link rel="stylesheet" href="./assets/font/font.css" />
+  <link rel="stylesheet" href="./assets/font/font.css" />
 
-    <!-- 
-    - custom header
+  <!-- 
+    - custom header link
   -->
-    <link rel="stylesheet" href="./assets/css/header.css" />
+  <link rel="stylesheet" href="./assets/css/sections//header.css" />
 
-    <!-- 
-    - custom hero
+  <!-- 
+    - custom hero link
   -->
-    <link rel="stylesheet" href="./assets/css/hero.css" />
+  <link rel="stylesheet" href="./assets/css/sections/hero.css" />
 
-    <!-- 
-    - custom gallery
+  <!-- 
+    - custom gallery link
   -->
-    <link rel="stylesheet" href="./assets/css/gallery.css" />
+  <link rel="stylesheet" href="./assets/css/sections/gallery.css" />
 
-    <!-- 
-    - custom category
+  <!-- 
+    - custom category link
   -->
-    <link rel="stylesheet" href="./assets/css/category.css" />
+  <link rel="stylesheet" href="./assets/css/sections/category.css" />
 
-    <!-- 
-    - custom about
+  <!-- 
+    - custom about link
   -->
-    <link rel="stylesheet" href="./assets/css/about.css" />
+  <link rel="stylesheet" href="./assets/css/sections/about.css" />
 
-    <!-- 
-    - custom services
+  <!-- 
+    - custom services link
   -->
-    <link rel="stylesheet" href="./assets/css/services.css" />
+  <link rel="stylesheet" href="./assets/css/sections/services.css" />
 
-    <!-- 
-    - custom portfolio
+  <!-- 
+    - custom portfolio link
   -->
-    <link rel="stylesheet" href="./assets/css/portfolio.css" />
+  <link rel="stylesheet" href="./assets/css/sections/portfolio.css" />
 
-    <!-- 
-    - custom footer
+  <!-- 
+    - custom footer link
   -->
-    <link rel="stylesheet" href="./assets/css/footer.css" />
+  <link rel="stylesheet" href="./assets/css/sections/footer.css" />
 
-    <!-- 
-    - custom media
+  <!-- 
+    - custom media link
   -->
-    <link rel="stylesheet" href="./assets/css/media.css" />
+  <link rel="stylesheet" href="./assets/css/sections/media.css" />
 
-    <!-- 
-    - custom slider
+  <!-- 
+    - custom slider link
   -->
-    <link rel="stylesheet" href="./assets/css/slider.css" />
+  <link rel="stylesheet" href="./assets/css/sections/slider.css" />
 
-    <!-- 
-  - preload images
+  <!-- 
+  - preload images link
 -->
+  <link rel="preload" as="image" href="./assets/images/SALT SIMBOLO FUNDO CLARO.png" />
+  <link rel="preload" as="image" href="./assets/images/loading-circle.svg" />
+</head>
 
-    <link
-      rel="preload"
-      as="image"
-      href="./assets/images/SALT SIMBOLO FUNDO CLARO.png"
-    />
-    <link rel="preload" as="image" href="./assets/images/loading-circle.svg" />
-  </head>
-
-  <body class="active" id="top">
-    <!-- 
+<body class="active" id="top">
+  <!-- 
     -#PRELOADING
   -->
 
-    <div class="loading" data-loading>
-      <img
-        src="./assets/images/SALT SIMBOLO FUNDO CLARO.png"
-        width="55"
-        height="55"
-        alt="loading"
-        class="img"
-      />
-      <img
-        src="./assets/images/loading-circle.svg"
-        width="70"
-        height="70"
-        alt=""
-        class="circle"
-      />
-    </div>
+  <div class="loading" data-loading>
+    <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
+    <img src="./assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
+  </div>
 
-    <!-- 
+  <!-- 
     - #HEADER
   -->
 
-    <header class="header" data-header>
-      <div class="container">
-        <a href="#" class="logo">
-          <img
-            src="./assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png"
-            width="60"
-            height="40"
-            alt="Salt home"
-          />
-        </a>
+  <header class="header" data-header>
+    <div class="container">
+      <a href="#" class="logo">
+        <img src="./assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
+      </a>
 
-        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-          <img
-            src="./assets/images/menu.svg"
-            width="17"
-            height="17"
-            alt="menu icon"
-          />
-        </button>
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <img src="./assets/images/menu.svg" width="17" height="17" alt="menu icon" />
+      </button>
 
-        <nav class="navbar" data-navbar>
-          <div class="navbar-top">
-            <a href="#" class="logo">
-              <img
-                src="./assets/images/SALT SIMBOLO FUNDO CLARO.png"
-                width="40"
-                height="40"
-                alt="Salt home"
-                class="img"
-              />
-            </a>
+      <nav class="navbar" data-navbar>
+        <div class="navbar-top">
+          <a href="#" class="logo">
+            <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="40" height="40" alt="Salt home"
+              class="img" />
+          </a>
 
-            <button
-              class="nav-close-btn"
-              aria-label="close menu"
-              data-nav-toggler
-            >
-              <span class="span one"></span>
-              <span class="span two"></span>
-            </button>
-          </div>
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <span class="span one"></span>
+            <span class="span two"></span>
+          </button>
+        </div>
 
-          <ul class="navbar-list">
-            <li class="navbar-item">
-              <a href="#home" class="navbar-link" data-nav-link>Home</a>
-            </li>
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link" data-nav-link>Home</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#about" class="navbar-link" data-nav-link>Sobre</a>
-            </li>
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link" data-nav-link>Sobre</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#projects" class="navbar-link" data-nav-link>Projetos</a>
-            </li>
+          <li class="navbar-item">
+            <a href="#projects" class="navbar-link" data-nav-link>Projetos</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#why" class="navbar-link" data-nav-link>Porquê</a>
-            </li>
+          <li class="navbar-item">
+            <a href="#why" class="navbar-link" data-nav-link>Porquê</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#schedules" class="navbar-link" data-nav-link>Programações</a>
-            </li>
+          <li class="navbar-item">
+            <a href="#schedules" class="navbar-link" data-nav-link>Programações</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#themes" class="navbar-link" data-nav-link>Temas</a>
-            </li>
+          <li class="navbar-item">
+            <a href="#themes" class="navbar-link" data-nav-link>Temas</a>
+          </li>
 
-            <li class="navbar-item">
-              <a href="#contact" class="navbar-link" data-nav-link>Contato</a>
-            </li>
-          </ul>
+          <li class="navbar-item">
+            <a href="#contact" class="navbar-link" data-nav-link>Contato</a>
+          </li>
+        </ul>
 
-          <p class="navbar-title">Nosso Endereço</p>
+        <p class="navbar-title">Nosso Endereço</p>
 
-          <address class="navbar-text">
-            Rua Jair Gonçalves Bastos, 64, Jardim Ipê
-          </address>
-        </nav>
+        <address class="navbar-text">
+          Rua Jair Gonçalves Bastos, 64, Jardim Ipê
+        </address>
+      </nav>
 
-        <div class="overlay" data-nav-toggler data-overlay></div>
-      </div>
-    </header>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
 
-    <main>
-      <article>
-        <!-- 
+  <main>
+    <article>
+      <!-- 
         - #HERO
       -->
 
-        <section class="section hero" id="home" aria-label="home">
-          <div class="container">
-            <img
-              src="./assets/images/SALT SIMBOLO DEGRADE 3.png"
-              width="322"
-              height="322"
-              alt=""
-              class="hero-banner"
-            />
+      <section class="section hero" id="home" aria-label="home">
+        <div class="container">
+          <img src="./assets/images/SALT SIMBOLO DEGRADE 3.png" width="322" height="322" alt="" class="hero-banner" />
 
-            <div class="hero-content">
-              <h1 class="h1 hero-title">Juventude Salt</h1>
+          <div class="hero-content">
+            <h1 class="h1 hero-title">Juventude Salt</h1>
 
-              <div class="wrapper h2">
-                <strong class="strong" data-letter-effect>Seja Luz</strong>
-                <strong class="strong" data-letter-effect>Seja Salt</strong>
-              </div>
-
-              <p class="hero-text">Primeira Igreja Batista em Lagoa Santa</p>
+            <div class="wrapper h2">
+              <strong class="strong" data-letter-effect>Seja Luz</strong>
+              <strong class="strong" data-letter-effect>Seja Salt</strong>
             </div>
+
+            <p class="hero-text">Primeira Igreja Batista em Lagoa Santa</p>
           </div>
+        </div>
 
-          <img
-            src="./assets/images/hero-shape.svg"
-            width="211"
-            height="189"
-            alt=""
-            class="shape"
-          />
-        </section>
+        <img src="./assets/images/hero-shape.svg" width="211" height="189" alt="" class="shape" />
+      </section>
 
-        <!-- 
+      <!-- 
         - #GALLERY
       -->
 
-        <section class="section gallery" id="gallery" data-reveal>
-          <div class="container">
-            <ul class="gallery-list">
-              <li class="gallery-item" data-reveal>
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/André.jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="The Drunken"
-                      class="img-cover"
-                    />
-                  </figure>
+      <section class="section gallery" id="gallery" data-reveal>
+        <div class="container">
+          <ul class="gallery-list">
+            <li class="gallery-item" data-reveal>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/André.jpeg" width="450" height="625" loading="lazy" alt="The Drunken"
+                    class="img-cover" />
+                </figure>
 
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title"
-                        >Pregação Mês da Juventude</a
-                      >
-                    </h3>
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Pregação Mês da Juventude</a>
+                  </h3>
 
-                    <span class="card-tag">André</span>
-                  </div>
-
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
+                  <span class="card-tag">André</span>
                 </div>
 
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/Gabriel.jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="The Drunken"
-                      class="img-cover"
-                    />
-                  </figure>
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
 
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title"
-                        >Pregação Mês da Juventude</a
-                      >
-                    </h3>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/Gabriel.jpeg" width="450" height="625" loading="lazy" alt="The Drunken"
+                    class="img-cover" />
+                </figure>
 
-                    <span class="card-tag">Gabriel</span>
-                  </div>
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Pregação Mês da Juventude</a>
+                  </h3>
 
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
-                </div>
-              </li>
-
-              <li class="gallery-item" data-reveal>
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/cultosalt.jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="Leaping Lizard"
-                      class="img-cover"
-                    />
-                  </figure>
-
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Culto</a>
-                    </h3>
-
-                    <span class="card-tag">Salt</span>
-                  </div>
-
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
+                  <span class="card-tag">Gabriel</span>
                 </div>
 
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/cultosalt (2).jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="Juan More Taco"
-                      class="img-cover"
-                    />
-                  </figure>
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
+            </li>
 
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Culto</a>
-                    </h3>
+            <li class="gallery-item" data-reveal>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/cultosalt.jpeg" width="450" height="625" loading="lazy" alt="Leaping Lizard"
+                    class="img-cover" />
+                </figure>
 
-                    <span class="card-tag">Salt</span>
-                  </div>
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Culto</a>
+                  </h3>
 
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
-                </div>
-              </li>
-
-              <li class="gallery-item" data-reveal>
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/cultolagoa.jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="Goldilox Bagels"
-                      class="img-cover"
-                    />
-                  </figure>
-
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Projeto Missionário</a>
-                    </h3>
-
-                    <span class="card-tag">Orla da Lagoa Santa</span>
-                  </div>
-
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
+                  <span class="card-tag">Salt</span>
                 </div>
 
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/cultolagoa2.jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="Cookie Monstah"
-                      class="img-cover"
-                    />
-                  </figure>
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
 
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Projeto Missionário</a>
-                    </h3>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/cultosalt (2).jpeg" width="450" height="625" loading="lazy"
+                    alt="Juan More Taco" class="img-cover" />
+                </figure>
 
-                    <span class="card-tag">Orla da Lagoa Santa</span>
-                  </div>
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Culto</a>
+                  </h3>
 
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
-                </div>
-              </li>
-
-              <li class="gallery-item" data-reveal>
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/talks (3).jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="Divine Pastabilities"
-                      class="img-cover"
-                    />
-                  </figure>
-
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Salt Talks</a>
-                    </h3>
-
-                    <span class="card-tag">Juventude</span>
-                  </div>
-
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
+                  <span class="card-tag">Salt</span>
                 </div>
 
-                <div class="gallery-card">
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 450; --height: 625"
-                  >
-                    <img
-                      src="./assets/images/talks (4).jpeg"
-                      width="450"
-                      height="625"
-                      loading="lazy"
-                      alt="The Lockhart Bar"
-                      class="img-cover"
-                    />
-                  </figure>
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
+            </li>
 
-                  <div class="card-content">
-                    <h3 class="h6">
-                      <a href="#" class="card-title">Salt Talks</a>
-                    </h3>
+            <li class="gallery-item" data-reveal>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/cultolagoa.jpeg" width="450" height="625" loading="lazy"
+                    alt="Goldilox Bagels" class="img-cover" />
+                </figure>
 
-                    <span class="card-tag">Juventude</span>
-                  </div>
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Projeto Missionário</a>
+                  </h3>
 
-                  <a href="#" class="btn-icon">
-                    <img
-                      src="./assets/images/arrow-forward.svg"
-                      width="43"
-                      height="20"
-                      loading="lazy"
-                      alt="arrow-forward icon"
-                    />
-                  </a>
+                  <span class="card-tag">Orla da Lagoa Santa</span>
                 </div>
-              </li>
-            </ul>
 
-            <a
-              href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp"
-              target="_blank"
-              class="scroll-down"
-            >
-              <img
-                src="./assets/images/instagram.png"
-                width="40"
-                height="66"
-                loading="lazy"
-                alt="mouse scroll"
-              />
-            </a>
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
 
-            <img
-              src="./assets/images/gallery-shape.svg"
-              width="220"
-              height="78"
-              loading="lazy"
-              alt=""
-              class="shape"
-            />
-          </div>
-        </section>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/cultolagoa2.jpeg" width="450" height="625" loading="lazy"
+                    alt="Cookie Monstah" class="img-cover" />
+                </figure>
 
-        <!-- 
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Projeto Missionário</a>
+                  </h3>
+
+                  <span class="card-tag">Orla da Lagoa Santa</span>
+                </div>
+
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
+            </li>
+
+            <li class="gallery-item" data-reveal>
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/talks (3).jpeg" width="450" height="625" loading="lazy"
+                    alt="Divine Pastabilities" class="img-cover" />
+                </figure>
+
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Salt Talks</a>
+                  </h3>
+
+                  <span class="card-tag">Juventude</span>
+                </div>
+
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
+
+              <div class="gallery-card">
+                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625">
+                  <img src="./assets/images/talks (4).jpeg" width="450" height="625" loading="lazy"
+                    alt="The Lockhart Bar" class="img-cover" />
+                </figure>
+
+                <div class="card-content">
+                  <h3 class="h6">
+                    <a href="#" class="card-title">Salt Talks</a>
+                  </h3>
+
+                  <span class="card-tag">Juventude</span>
+                </div>
+
+                <a href="#" class="btn-icon">
+                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
+                    alt="arrow-forward icon" />
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <a href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp" target="_blank" class="scroll-down">
+            <img src="./assets/images/instagram.png" width="40" height="66" loading="lazy" alt="mouse scroll" />
+          </a>
+
+          <img src="./assets/images/gallery-shape.svg" width="220" height="78" loading="lazy" alt="" class="shape" />
+        </div>
+      </section>
+
+      <!-- 
         - #ABOUT
       -->
 
-        <section class="section about" id="about" aria-label="about me">
-          <div class="container">
-            <div class="about-content">
-              <h2 class="h2 section-title" data-reveal="right">
-                Olá, <br />
-                Somos a Salt
-              </h2>
-  
-              <div class="wrapper" data-reveal="right">
-                <p class="section-text">
-                  SALT é o movimento da
-                  <em class="em">juventude</em>
-                  da Primeira Igreja Batista em Lagoa Santa. SALT é um silga
-                  para
-                  <em class="em">"Seja A Luz da Terra"</em>
-                  e em inglês salt também significa "Sal".
-                </p>
-  
-                <p class="section-text">
-                  O naming foi baseado na passagem de
-                  <em class="em">1 João 1.5-7</em>
-                  onde Jesus disse que seus discípulos
-                  <em class="em">andam na luz</em>
-                  como ele anda, bem como em
-                  <em class="em">1 Matues 5.13.14,</em>
-                  onde Jesus chama seus discípulos á serem
-                  <em class="em">Sal e Luz da terra.</em>
-                </p>
-              </div>
-            </div>
-  
-            <figure class="about-banner" data-reveal="left">
-              <div
-                class="shadow"
-                class="img-holder has-before"
-                style="--width: 512; --height: 684"
-              >
-                <img
-                  src="./assets/images/cultosalt.jpeg"
-                  width="212"
-                  height="184"
-                  loading="lazy"
-                  alt="Salt"
-                  class="img-cover"
-                />
-              </div>
-  
-              <img
-                src="./assets/images/about-shape-2.svg"
-                width="239"
-                height="232"
-                loading="lazy"
-                alt=""
-                class="shape shape-2"
-              />
-            </figure>
-          </div>
-        </section>
+      <section class="section about" id="about" aria-label="about me">
+        <div class="container">
+          <div class="about-content">
+            <h2 class="h2 section-title" data-reveal="right">
+              Olá, <br />
+              Somos a Salt
+            </h2>
 
-        <!-- 
+            <div class="wrapper" data-reveal="right">
+              <p class="section-text">
+                SALT é o movimento da
+                <em class="em">juventude</em>
+                da Primeira Igreja Batista em Lagoa Santa. SALT é um silga
+                para
+                <em class="em">"Seja A Luz da Terra"</em>
+                e em inglês salt também significa "Sal".
+              </p>
+
+              <p class="section-text">
+                O naming foi baseado na passagem de
+                <em class="em">1 João 1.5-7</em>
+                onde Jesus disse que seus discípulos
+                <em class="em">andam na luz</em>
+                como ele anda, bem como em
+                <em class="em">1 Matues 5.13.14,</em>
+                onde Jesus chama seus discípulos á serem
+                <em class="em">Sal e Luz da terra.</em>
+              </p>
+              <a href="#" class="play" onclick="toggleVideo();"><i class="fa-regular fa-circle-play"> nosso
+                  video</i></a>
+            </div>
+          </div>
+
+          <div class="trailer">
+            <video src="" controls="true"></video>
+            <img src="assets/images/close.png" class="close" onclick="toggleVideo();">
+          </div>
+
+          <figure class="about-banner" data-reveal="left">
+            <div class="shadow" class="img-holder has-before" style="--width: 512; --height: 684">
+              <img src="./assets/images/cultosalt.jpeg" width="212" height="184" loading="lazy" alt="Salt"
+                class="img-cover" />
+            </div>
+
+            <img src="./assets/images/about-shape-2.svg" width="239" height="232" loading="lazy" alt=""
+              class="shape shape-2" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- 
         - #CATEGORY
       -->
       <p class="section-subtitle container" id="projects">
         projetos
       </p>
-        <section class="section category" aria-label="category">
-          <div class="container">
-            <ul class="category-list">
-              
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Pescador,</h3>
+      <section class="section category" aria-label="category">
+        <div class="container">
+          <ul class="category-list">
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/pescador.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Landscape"
-                      class="img-cover2"
-                    />
-                  </figure>
-                </a>
-              </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Pescador,</h3>
 
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Acampamento,</h3>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/pescador.jpeg" width="600" height="690" loading="lazy" alt="Landscape"
+                    class="img-cover2" />
+                </figure>
+              </a>
+            </li>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/acampamento.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Model"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Acampamento,</h3>
 
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Encontrão,</h3>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/acampamento.jpeg" width="600" height="690" loading="lazy" alt="Model"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/encontrao.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Street"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Encontrão,</h3>
 
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Avalanche,</h3>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/encontrao.jpeg" width="600" height="690" loading="lazy" alt="Street"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/avalanche.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Product"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Avalanche,</h3>
 
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Turma de Minas,</h3>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/avalanche.jpeg" width="600" height="690" loading="lazy" alt="Product"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/minas.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Fashion"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Turma de Minas,</h3>
 
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Invasão,</h3>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/minas.jpeg" width="600" height="690" loading="lazy" alt="Fashion"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/invasão.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Street"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
-              <li class="category-item" data-reveal>
-                <a href="#" class="category-card">
-                  <h3 class="h4 card-title">Orla da lagoa.</h3>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Invasão,</h3>
 
-                  <figure
-                    class="card-banner img-holder"
-                    style="--width: 600; --height: 690"
-                  >
-                    <img
-                      src="./assets/images/orla.jpeg"
-                      width="600"
-                      height="690"
-                      loading="lazy"
-                      alt="Street"
-                      class="img-cover"
-                    />
-                  </figure>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </section>
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/invasão.jpeg" width="600" height="690" loading="lazy" alt="Street"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
+            <li class="category-item" data-reveal>
+              <a href="#" class="category-card">
+                <h3 class="h4 card-title">Orla da lagoa.</h3>
 
-        <!-- 
+                <figure class="card-banner img-holder" style="--width: 600; --height: 690">
+                  <img src="./assets/images/orla.jpeg" width="600" height="690" loading="lazy" alt="Street"
+                    class="img-cover" />
+                </figure>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 
         - #SERVICE
       -->
 
-        <section
-          class="section service"
-          id="why"
-          aria-labelledby="service-lable"
-        >
-          <p class="section-subtitle container" id="service">
-            O nosso Porquê
-          </p>
+      <section class="section service" id="why" aria-labelledby="service-lable">
+        <p class="section-subtitle container" id="service">
+          O nosso Porquê
+        </p>
 
-          <ul class="service-list">
-            <li data-reveal>
-              <div class="service-card container">
-                <img
-                  src="./assets/images/_MG_8332.JPG"
-                  width="340"
-                  height="380"
-                  loading="lazy"
-                  class="img"
-                />
+        <ul class="service-list">
+          <li data-reveal>
+            <div class="service-card container">
+              <img src="./assets/images/_MG_8332.JPG" width="340" height="380" loading="lazy" class="img" />
 
-                <div>
-                  <h3 class="h3 card-title">O que queremos:</h3>
+              <div>
+                <h3 class="h3 card-title">O que queremos:</h3>
 
-                  <p class="card-subtitle">
-                    Glorificar a Deus, servir a igreja,
-                     amar as pessoas, fazer discípulos,
-                    <br>          
-                    pregar o verdadeiro evangelho e transformar o mundo.
-                  </p>
-                </div>
+                <p class="card-subtitle">
+                  Glorificar a Deus, servir a igreja,
+                  amar as pessoas, fazer discípulos,
+                  <br>
+                  pregar o verdadeiro evangelho e transformar o mundo.
+                </p>
               </div>
-            </li>
+            </div>
+          </li>
 
-            <li data-reveal>
-              <div class="service-card container">
-                <img
-                  src="./assets/images/ceia.jpeg"
-                  width="340"
-                  height="380"
-                  loading="lazy"
-                  class="img"
-                />
+          <li data-reveal>
+            <div class="service-card container">
+              <img src="./assets/images/ceia.jpeg" width="340" height="380" loading="lazy" class="img" />
 
-                <div>
-                  <h3 class="h3 card-title">Como?</h3>
+              <div>
+                <h3 class="h3 card-title">Como?</h3>
 
-                  <p class="card-subtitle">
-                    Cultuando, servindo, pertencendo, cuidando,
-                    <br>
-                    ensinando e transformando.
-                  </p>
-                </div>
+                <p class="card-subtitle">
+                  Cultuando, servindo, pertencendo, cuidando,
+                  <br>
+                  ensinando e transformando.
+                </p>
               </div>
-            </li>
+            </div>
+          </li>
 
-            <li data-reveal>
-              <div class="service-card container">
-                <img
-                  src="./assets/images/_MG_9729.JPG"
-                  width="340"
-                  height="380"
-                  loading="lazy"
-                  class="img"
-                />
+          <li data-reveal>
+            <div class="service-card container">
+              <img src="./assets/images/_MG_9729.JPG" width="340" height="380" loading="lazy" class="img" />
 
-                <div>
-                  <h3 class="h3 card-title">O quê?</h3>
+              <div>
+                <h3 class="h3 card-title">O quê?</h3>
 
-                  <p class="card-subtitle">
-                    Por meio da adoração no culto, pelo servir a igreja, 
-                    <br>
-                    através da comunhão uns com os outros, 
-                    <br>
-                    mediante ao discipulado que imite a Cristo, fazendo o uso do evangelho 
-                    <br>
-                    e de ações que refletem a luz de Deus no mundo.
-                  </p>
-                </div>
+                <p class="card-subtitle">
+                  Por meio da adoração no culto, pelo servir a igreja,
+                  <br>
+                  através da comunhão uns com os outros,
+                  <br>
+                  mediante ao discipulado que imite a Cristo, fazendo o uso do evangelho
+                  <br>
+                  e de ações que refletem a luz de Deus no mundo.
+                </p>
               </div>
-            </li>
-          </ul>
-        </section>
+            </div>
+          </li>
+        </ul>
+      </section>
 
-       <!-- 
+      <!-- 
         - #SLIDER
       -->
 
-        <section class="slider-top" data-reveal="" id="schedules">
-          <p class="section-subtitle">Programações</p>
-          <div class="slider">
-            <!-- list Items -->
-            <div class="list">
-              <div class="item active">
-                <img src="assets/images/adolescentes.jpeg" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">Células</h2>
-                  <p class="sub">
-                    Oferecemos grupos de células específicos para adolescentes e jovens em nossa igreja, 
-                    proporcionando um espaço de comunhão e crescimento espiritual 
-                    adequado às suas necessidades e interesses.
-                  </p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9903.JPG" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">EBD</h2>
-                  <p class="sub"> 
-                      Domingo é dia de escola biblica da juventude,
-                      junte-se a nós todos os domingos ás 09H!
-                      Rua Jair Gonçalves Bastos, 64, Jardim Ipê (PIB Lagoa Santa)
-                  </p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9627.JPG" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">Culto Salt</h2>
-                  <p class="sub">
-                    Culto Salt.
-                  </p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9718.JPG" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">Discipulado</h2>
-                  <p class="sub">
-                    Oferecemos programas específicos para solteiros, namorados e casados, adaptados às diversas fases da vida. 
-                    Seja você homem ou mulher, de qualquer idade, há um espaço para você se aprofundar na sua jornada de fé. Venha se conectar, aprender e crescer conosco!
-                  </p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_8209.JPG" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">Embaixadores</h2>
-                  <p class="sub">
-                    Venha fazer parte dos Embaixadores do Rei! 
-                    Somos uma organização missionária dedicada a meninos de 8 a 17 anos. 
-                    Nos encontramos todos os sábados às 10 horas para uma manhã repleta de atividades bíblicas e esportivas. 
-                    Junte-se a nós para crescer espiritualmente e se divertir!
-                  </p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="assets/images/mensageiras.jpeg" />
-                <div class="content">
-                  <p>saiba mais</p>
-                  <h2 class="h3 card-title">Mensageiras</h2>
-                  <p class="sub">
-                    Mensageiras
-                  </p>
+      <section class="slider-top" data-reveal="" id="schedules">
+        <p class="section-subtitle">Programações</p>
+        <div class="slider">
+          <!-- list Items -->
+          <div class="list">
+            <div class="item active">
+              <img src="assets/images/adolescentes.jpeg" />
+              <div class="content">
+                <h2 class="h3 card-title">Células</h2>
+                <p class="sub">
+                  Oferecemos grupos de células específicos para adolescentes e jovens em nossa igreja,
+                  proporcionando um espaço de comunhão e crescimento espiritual
+                  adequado às suas necessidades e interesses.
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>
-            <!-- button arrows -->
-            <div class="arrows">
-              <button id="prev"><</button>
-              <button id="next">></button>
-            </div>
-            <!-- thumbnail -->
-            <div class="thumbnail">
-              <div class="item active">
-                <img src="assets/images/adolescentes.jpeg" />
-                <div class="content">CÉLULAS</div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9903.JPG" />
-                <div class="content">EBD</div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9627.JPG" />
-                <div class="content">CULTO SALT</div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_9718.JPG" />
-                <div class="content">DISCIPULADO</div>
-              </div>
-              <div class="item">
-                <img src="assets/images/_MG_8209.JPG" />
-                <div class="content">EMBAIXADORES</div>
-              </div>
-              <div class="item">
-                <img src="assets/images/mensageiras.jpeg" />
-                <div class="content">MENSAGEIRAS</div>
+            <div class="item">
+              <img src="assets/images/_MG_9903.JPG" />
+              <div class="content">
+                <h2 class="h3 card-title">EBD</h2>
+                <p class="sub">
+                  Domingo é dia de escola biblica da juventude,
+                  junte-se a nós todos os domingos ás 09H!
+                  Rua Jair Gonçalves Bastos, 64, Jardim Ipê (PIB Lagoa Santa)
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+                </div>
               </div>
             </div>
-        </section>
+            <div class="item">
+              <img src="assets/images/_MG_9627.JPG" />
+              <div class="content">
+                <h2 class="h3 card-title">Culto Salt</h2>
+                <p class="sub">
+                  Culto Salt.
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_9718.JPG" />
+              <div class="content">
+                <h2 class="h3 card-title">Discipulado</h2>
+                <p class="sub">
+                  Oferecemos programas específicos para solteiros, namorados e casados, adaptados às diversas fases da
+                  vida.
+                  Seja você homem ou mulher, de qualquer idade, há um espaço para você se aprofundar na sua jornada de
+                  fé. Venha se conectar, aprender e crescer conosco!
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_8209.JPG" />
+              <div class="content">
+                <h2 class="h3 card-title">Embaixadores</h2>
+                <p class="sub">
+                  Venha fazer parte dos Embaixadores do Rei!
+                  Somos uma organização missionária dedicada a meninos de 8 a 17 anos.
+                  Nos encontramos todos os sábados às 10 horas para uma manhã repleta de atividades bíblicas e
+                  esportivas.
+                  Junte-se a nós para crescer espiritualmente e se divertir!
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="assets/images/mensageiras.jpeg" />
+              <div class="content">
+                <h2 class="h3 card-title">Mensageiras</h2>
+                <p class="sub">
+                  Mensageiras
+                </p>
+                <div class="button-slider">
+                  <a href="">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- button arrows -->
+          <div class="arrows">
+            <button id="prev">
+              < </button>
 
-        <!-- 
+                <button id="next">></button>
+          </div>
+          <!-- thumbnail -->
+          <div class="thumbnail">
+            <div class="item active">
+              <img src="assets/images/adolescentes.jpeg" />
+              <div class="content">CÉLULAS</div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_9903.JPG" />
+              <div class="content">EBD</div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_9627.JPG" />
+              <div class="content">CULTO SALT</div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_9718.JPG" />
+              <div class="content">DISCIPULADO</div>
+            </div>
+            <div class="item">
+              <img src="assets/images/_MG_8209.JPG" />
+              <div class="content">EMBAIXADORES</div>
+            </div>
+            <div class="item">
+              <img src="assets/images/mensageiras.jpeg" />
+              <div class="content">MENSAGEIRAS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- 
         - #PORTFOLIO
       -->
 
-        <section class="" id="themes" aria-labelledby="portfolio-label">
-          <div class="container">
-            <p class="section-subtitle2 container" id="service" data-reveal>
-              Nossos Temas
-            </p>
-            <div class="portfolio-list">
-              <div class="wrapper">
-                <div class="portfolio-card" data-reveal>
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 700; --height: 605"
-                  >
-                    <img
-                      src="./assets/images/temas (1).jpeg"
-                      width="700"
-                      height="605"
-                      loading="lazy"
-                      alt="Shoe Promo"
-                      class="img-cover"
-                    />
-                  </figure>
+      <section class="" id="themes" aria-labelledby="portfolio-label">
+        <div class="container">
+          <p class="section-subtitle2 container" id="service" data-reveal>
+            Nossos Temas
+          </p>
+          <div class="portfolio-list">
+            <div class="wrapper">
+              <div class="portfolio-card" data-reveal>
+                <figure class="card-banner img-holder has-before" style="--width: 700; --height: 605">
+                  <img src="./assets/images/temas (1).jpeg" width="700" height="605" loading="lazy" alt="Shoe Promo"
+                    class="img-cover" />
+                </figure>
 
-                  <div class="card-content">
-                    <h3 class="h4">
-                      <a href="#" class="card-title">Igualdade</a>
-                    </h3>
+                <div class="card-content">
+                  <h3 class="h4">
+                    <a href="#" class="card-title">Igualdade</a>
+                  </h3>
 
-                    <p class="card-tag">Salt Talks</p>
-                  </div>
-
-                  <a href="#" class="btn-icon" aria-label="See more">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="43"
-                      height="20"
-                      viewBox="0 0 43 20"
-                      fill="none"
-                    >
-                      <path d="M0 10H41" stroke="black" stroke-width="2" />
-                      <path
-                        d="M33 1L41.9 10.2727L33 19"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                    </svg>
-                  </a>
+                  <p class="card-tag">Salt Talks</p>
                 </div>
 
-                <div class="portfolio-card" data-reveal>
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 700; --height: 1091"
-                  >
-                    <img
-                      src="./assets/images/temas (4).jpeg"
-                      width="700"
-                      height="1091"
-                      loading="lazy"
-                      alt="Wedding Shot"
-                      class="img-cover"
-                    />
-                  </figure>
-
-                  <div class="card-content">
-                    <h3 class="h4">
-                      <a href="#" class="card-title">Identidade</a>
-                    </h3>
-
-                    <p class="card-tag">Salt Talks</p>
-                  </div>
-
-                  <a href="#" class="btn-icon" aria-label="See more">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="43"
-                      height="20"
-                      viewBox="0 0 43 20"
-                      fill="none"
-                    >
-                      <path d="M0 10H41" stroke="black" stroke-width="2" />
-                      <path
-                        d="M33 1L41.9 10.2727L33 19"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                    </svg>
-                  </a>
-                </div>
+                <a href="#" class="btn-icon" aria-label="See more">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
+                    <path d="M0 10H41" stroke="black" stroke-width="2" />
+                    <path d="M33 1L41.9 10.2727L33 19" stroke="black" stroke-width="2" />
+                  </svg>
+                </a>
               </div>
 
-              <div class="wrapper">
-                <div class="portfolio-card" data-reveal>
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 700; --height: 1000"
-                  >
-                    <img
-                      src="./assets/images/temas (2).jpeg"
-                      width="700"
-                      height="1000"
-                      loading="lazy"
-                      alt="Fashion Show"
-                      class="img-cover"
-                    />
-                  </figure>
+              <div class="portfolio-card" data-reveal>
+                <figure class="card-banner img-holder has-before" style="--width: 700; --height: 1091">
+                  <img src="./assets/images/temas (4).jpeg" width="700" height="1091" loading="lazy" alt="Wedding Shot"
+                    class="img-cover" />
+                </figure>
 
-                  <div class="card-content">
-                    <h3 class="h4">
-                      <a href="#" class="card-title">Namoro e Relacionamento</a>
-                    </h3>
+                <div class="card-content">
+                  <h3 class="h4">
+                    <a href="#" class="card-title">Identidade</a>
+                  </h3>
 
-                    <p class="card-tag">Salt Talks</p>
-                  </div>
-
-                  <a href="#" class="btn-icon" aria-label="See more">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="43"
-                      height="20"
-                      viewBox="0 0 43 20"
-                      fill="none"
-                    >
-                      <path d="M0 10H41" stroke="black" stroke-width="2" />
-                      <path
-                        d="M33 1L41.9 10.2727L33 19"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                    </svg>
-                  </a>
+                  <p class="card-tag">Salt Talks</p>
                 </div>
 
-                <div class="portfolio-card" data-reveal>
-                  <figure
-                    class="card-banner img-holder has-before"
-                    style="--width: 700; --height: 850"
-                  >
-                    <img
-                      src="./assets/images/temas (3).jpeg"
-                      width="700"
-                      height="850"
-                      loading="lazy"
-                      alt="Jumbo Barger"
-                      class="img-cover"
-                    />
-                  </figure>
-
-                  <div class="card-content">
-                    <h3 class="h4">
-                      <a href="#" class="card-title">Sexualidade</a>
-                    </h3>
-
-                    <p class="card-tag">Salt Talks</p>
-                  </div>
-
-                  <a href="#" class="btn-icon" aria-label="See more">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="43"
-                      height="20"
-                      viewBox="0 0 43 20"
-                      fill="none"
-                    >
-                      <path d="M0 10H41" stroke="black" stroke-width="2" />
-                      <path
-                        d="M33 1L41.9 10.2727L33 19"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                    </svg>
-                  </a>
-                </div>
+                <a href="#" class="btn-icon" aria-label="See more">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
+                    <path d="M0 10H41" stroke="black" stroke-width="2" />
+                    <path d="M33 1L41.9 10.2727L33 19" stroke="black" stroke-width="2" />
+                  </svg>
+                </a>
               </div>
             </div>
 
+            <div class="wrapper">
+              <div class="portfolio-card" data-reveal>
+                <figure class="card-banner img-holder has-before" style="--width: 700; --height: 1000">
+                  <img src="./assets/images/temas (2).jpeg" width="700" height="1000" loading="lazy" alt="Fashion Show"
+                    class="img-cover" />
+                </figure>
 
+                <div class="card-content">
+                  <h3 class="h4">
+                    <a href="#" class="card-title">Namoro e Relacionamento</a>
+                  </h3>
+
+                  <p class="card-tag">Salt Talks</p>
+                </div>
+
+                <a href="#" class="btn-icon" aria-label="See more">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
+                    <path d="M0 10H41" stroke="black" stroke-width="2" />
+                    <path d="M33 1L41.9 10.2727L33 19" stroke="black" stroke-width="2" />
+                  </svg>
+                </a>
+              </div>
+
+              <div class="portfolio-card" data-reveal>
+                <figure class="card-banner img-holder has-before" style="--width: 700; --height: 850">
+                  <img src="./assets/images/temas (3).jpeg" width="700" height="850" loading="lazy" alt="Jumbo Barger"
+                    class="img-cover" />
+                </figure>
+
+                <div class="card-content">
+                  <h3 class="h4">
+                    <a href="#" class="card-title">Sexualidade</a>
+                  </h3>
+
+                  <p class="card-tag">Salt Talks</p>
+                </div>
+
+                <a href="#" class="btn-icon" aria-label="See more">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
+                    <path d="M0 10H41" stroke="black" stroke-width="2" />
+                    <path d="M33 1L41.9 10.2727L33 19" stroke="black" stroke-width="2" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
-        </section>
-      </article>
-    </main>
 
-    <!-- 
+
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- 
     - #FOOTER
   -->
 
-    <footer class="footer">
-      <div class="footer-top section" id="contact">
-        <div class="container">
-          <p class="section-subtitle" data-reveal>CONTATE-NOS</p>
+  <footer class="footer">
+    <div class="footer-top section" id="contact">
+      <div class="container">
+        <p class="section-subtitle" data-reveal>CONTATE-NOS</p>
 
-          <h2 class="h2 section-title" data-reveal>
-            Gostou do nosso trabalho? Mande uma mensagem
-          </h2>
+        <h2 class="h2 section-title" data-reveal>
+          Gostou do nosso trabalho? Mande uma mensagem
+        </h2>
 
-          <a
-            href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20NO%20TRABALHO%20DE%20VOC%C3%8AS%21"
-            target="_blank"
-            class="btn-icon"
-            data-reveal
-          >
-            <img
-              src="./assets/images/whatsapp.png"
-              width="63"
-              height="40"
-              loading="lazy"
-              alt="whatsapp icon"
-              class=".btn-icon"
-            />
-          </a>
+        <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20NO%20TRABALHO%20DE%20VOC%C3%8AS%21"
+          target="_blank" class="btn-icon" data-reveal>
+          <img src="./assets/images/whatsapp.png" width="63" height="40" loading="lazy" alt="whatsapp icon"
+            class=".btn-icon" />
+        </a>
 
-          <img
-            src="./assets/images/livia.jpeg"
-            width="159"
-            height="176"
-            loading="lazy"
-            alt="photography"
-            class="abs-img abs-img-1"
-            data-reveal
-          />
+        <img src="./assets/images/livia.jpeg" width="159" height="176" loading="lazy" alt="photography"
+          class="abs-img abs-img-1" data-reveal />
 
-          <img
-            src="./assets/images/footer (1).jpeg"
-            width="265"
-            height="275"
-            loading="lazy"
-            alt="photography"
-            class="abs-img abs-img-2"
-            data-reveal
-          />
+        <img src="./assets/images/footer (1).jpeg" width="265" height="275" loading="lazy" alt="photography"
+          class="abs-img abs-img-2" data-reveal />
 
-          <img
-            src="./assets/images/footer (3).jpeg"
-            width="303"
-            height="272"
-            loading="lazy"
-            alt="photography"
-            class="abs-img abs-img-3"
-            data-reveal
-          />
+        <img src="./assets/images/footer (3).jpeg" width="303" height="272" loading="lazy" alt="photography"
+          class="abs-img abs-img-3" data-reveal />
 
-          <img
-            src="./assets/images/footer (2).jpeg"
-            width="175"
-            height="175"
-            loading="lazy"
-            alt="photography"
-            class="abs-img abs-img-4"
-            data-reveal
-          />
+        <img src="./assets/images/footer (2).jpeg" width="175" height="175" loading="lazy" alt="photography"
+          class="abs-img abs-img-4" data-reveal />
 
-          <img
-            src="./assets/images/footer-shape.svg"
-            width="185"
-            height="134"
-            loading="lazy"
-            alt=""
-            class="shape"
-          />
-        </div>
+        <img src="./assets/images/footer-shape.svg" width="185" height="134" loading="lazy" alt="" class="shape" />
       </div>
+    </div>
 
-      <div class="footer-bottom">
-        <div class="container">
-          <a href="#" class="logo">
-            <img
-              src="./assets/images/SALT SIMBOLO FUNDO ESCURO.png"
-              width="40"
-              height="40"
-              loading="lazy"
-              alt="Salt"
-            />
-          </a>
+    <div class="footer-bottom">
+      <div class="container">
+        <a href="#" class="logo">
+          <img src="./assets/images/SALT SIMBOLO FUNDO ESCURO.png" width="40" height="40" loading="lazy" alt="Salt" />
+        </a>
 
-          <ul class="social-list">
-            <li>
-              <a
-                href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp"
-                target="_blank"
-                class="social-link"
-              ></a>
-            </li>
-          </ul>
+        <ul class="social-list">
+          <li>
+            <a href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp" target="_blank"
+              class="social-link"></a>
+          </li>
+        </ul>
 
-          <p class="copyright">
-            <a
-              href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp"
-              target="_blank"
-              target="_blank"
-              class="social-link"
-              >Instagram.</a
-            >
-          </p>
-        </div>
+        <p class="copyright">
+          <a href="https://www.instagram.com/saltjuventude_?igsh=dTJhbnV2Y2V2Zmlp" target="_blank" target="_blank"
+            class="social-link">Instagram.</a>
+        </p>
       </div>
+    </div>
 
-      <div class="footer-bg has-before">
-        <img
-          src="./assets/images/louvor-footer.png"
-          width="1920"
-          height="1135"
-          loading="lazy"
-          alt="photography"
-          class="img-cover"
-        />
-      </div>
-    </footer>
+    <div class="footer-bg has-before">
+      <img src="./assets/images/louvor-footer.png" width="1920" height="1135" loading="lazy" alt="photography"
+        class="img-cover" />
+    </div>
+  </footer>
 
-    <!-- 
+  <!-- 
     - #BACK TO TOP
   -->
 
-    <a
-      href="#top"
-      class="back-top-btn"
-      aria-label="back to top"
-      data-back-top-btn
-      >0%</a
-    >
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>0%</a>
 
-    <!-- 
+  <!-- 
     - #CUSTOM CURSOR
   -->
 
-    <div class="cursor" data-cursor></div>
+  <div class="cursor" data-cursor></div>
 
-    <!-- 
+  <!-- 
     - custom js link
   -->
-    <script src="./assets/js/script.js"></script>
-  </body>
+  <script src="./assets/js/script.js"></script>
+</body>
+
 </html>

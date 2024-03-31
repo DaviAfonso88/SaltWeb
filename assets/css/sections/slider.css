@@ -1,7 +1,3 @@
-/*-----------------------------------*\
-  #SLIDER
-\*-----------------------------------*/
-
 .slider {
   height: 100vh;
   position: relative;
@@ -42,7 +38,6 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, var(--smokey-black) -1%, transparent);
 }
 .slider .list .item .content {
   position: absolute;
@@ -85,20 +80,7 @@
     opacity: 1;
   }
 }
-.slider .list .item.active p:nth-child(1),
-.slider .list .item.active h2,
-.slider .list .item.active p:nth-child(3) {
-  transform: translateY(30px);
-  filter: blur(20px);
-  opacity: 0;
-  animation: showContent 0.5s 0.7s ease-in-out 1 forwards;
-}
-.slider .list .item.active h2 {
-  animation-delay: 1s;
-}
-.slider .list .item.active p:nth-child(3) {
-  animation-duration: 1.3s;
-}
+
 .arrows {
   position: absolute;
   top: 30%;
@@ -126,46 +108,142 @@
   bottom: 50px;
   z-index: 11;
   display: flex;
+  flex-wrap: nowrap;
   gap: 10px;
   width: 100%;
+  max-width: 100%;
   height: 250px;
-  padding: 0 50px;
+  padding: 0 5%;
   box-sizing: border-box;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   justify-content: center;
+  align-items: center;
 }
-.thumbnail::-webkit-scrollbar {
-  display: none;
-}
+
 .thumbnail .item {
-  width: 150px;
-  height: 220px;
-  filter: brightness(0.4);
-  transition: 0.5s;
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  max-width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
 }
-.thumbnail .item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
+
 .thumbnail .item.active {
   filter: brightness(1.5);
 }
+
+.thumbnail .item img {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .thumbnail .item .content {
-  position: absolute;
-  inset: auto 10px 10px 10px;
-  color: var(--black);
-  background-color: rgba(255, 255, 255, 0.678);
-  border-radius: 0.5rem;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.thumbnail::-webkit-scrollbar {
+  display: none;
 }
 .container {
   padding-inline: 15px;
+}
+
+.movie-title {
+  max-width: 250px;
+}
+
+.button-slider {
+  position: relative;
+}
+
+.button-slider a {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  background: var(--salt-purple);
+  color: var(--white);
+  padding: 6px 20px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.button-slider a:nth-child(1) {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.button-slider a:hover:nth-child(1) {
+  background: var(--salt-purple);
+}
+
+.play {
+  position: absolute;
+  margin-bottom: 0px;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 1em;
+  cursor: pointer !important;
+  transition: 0.3s;
+}
+
+.play i {
+  margin-right: 10px;
+  cursor: pointer !important;
+}
+
+.play:hover {
+  color: var(--salt-purple);
+}
+
+.trailer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}
+
+.trailer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.trailer video {
+  max-width: 90%;
+  max-height: 90%;
+  outline: none;
+}
+
+.close {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  cursor: pointer;
+  filter: invert(1);
+  max-width: 5vw;
 }
 
 @media screen and (max-width: 967px) {
@@ -187,5 +265,22 @@
 
   .slider .list .item .content p {
     font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .banner {
+    padding: 0 20px;
+  }
+
+  .trailer video {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .close {
+    top: 20px;
+    right: 20px;
+    max-width: 40px;
   }
 }
