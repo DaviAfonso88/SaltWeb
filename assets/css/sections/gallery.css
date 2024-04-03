@@ -12,6 +12,10 @@
   position: relative;
 }
 
+.gallery-card {
+  animation: changeCard 10s linear infinite;
+}
+
 .gallery-item .gallery-card:last-child {
   position: absolute;
   top: 0;
