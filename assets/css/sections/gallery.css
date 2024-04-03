@@ -41,10 +41,6 @@
   }
 }
 
-.gallery-item:is(:hover, :focus-within) .gallery-card {
-  animation-play-state: paused;
-}
-
 .gallery .scroll-down {
   width: 60px;
   height: 60px;
