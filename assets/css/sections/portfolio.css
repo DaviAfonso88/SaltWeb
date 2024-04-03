@@ -10,6 +10,10 @@
   margin-block-end: 60px;
 }
 
+.fa-spotify {
+  color: #32cd32;
+}
+
 .portfolio-card {
   position: relative;
   margin-block-end: 50px;
