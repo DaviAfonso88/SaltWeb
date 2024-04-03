@@ -1,0 +1,56 @@
+.video {
+  height: 80vh;
+  position: relative;
+  text-align: center;
+  z-index: 0;
+}
+.video-top {
+  text-align: center;
+}
+
+.fa-circle-play {
+  color: var(--white);
+}
+
+.trailer {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 95%;
+  max-height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+  box-shadow: 0px 0px 20px var(--salt-purple);
+  border-radius: 1.5rem;
+}
+
+.trailer video {
+  width: 90%;
+  height: 90%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media only screen and (max-width: 768px) {
+  .banner {
+    padding: 0 20px;
+  }
+
+  .trailer {
+    width: 70%;
+    height: 60%;
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 40px;
+  }
+
+  .video {
+    height: 40vh;
+  }
+
+  .trailer video {
+    width: 80%;
+    height: 80%;
+  }
+}

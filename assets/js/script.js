@@ -122,12 +122,12 @@ thumbnails.forEach((thumbnail, index) => {
   });
 });
 
-startAutoSlide();
+// startAutoSlide();
 
-function toggleVideo(){
-  event.preventDefault();
-  const trailer = document.querySelector('.trailer');
-  const video = document.querySelector('video');
-  video.pause();
-  trailer.classList.toggle('active');
-}
+// function toggleVideo(){
+//   event.preventDefault();
+//   const trailer = document.querySelector('.trailer');
+//   const video = document.querySelector('video');
+//   video.pause();
+//   trailer.classList.toggle('active');
+// }
