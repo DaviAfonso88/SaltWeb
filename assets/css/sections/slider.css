@@ -10,6 +10,9 @@
   text-align: center;
   background: linear-gradient(to bottom, var(--smokey-black) 40%);
 }
+.slider-top p {
+  margin-bottom: 30px;
+}
 .slider .list .item {
   position: absolute;
   inset: 0 0 0 0;

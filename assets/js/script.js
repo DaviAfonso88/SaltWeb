@@ -52,17 +52,22 @@ window.addEventListener("scroll", activeElementOnScroll);
 const letterBoxes = document.querySelectorAll("[data-letter-effect]");
 // Função para animar o texto
 const setLetterEffect = function () {
-  const activeLetterBoxIndex = Math.floor(Math.random() * letterBoxes.length);
-  const totalLetterBoxDelay = 0.05 * letterBoxes[activeLetterBoxIndex].textContent.trim().length;
+  const totalLetterBoxes = letterBoxes.length;
+  const activeLetterBoxIndex = Math.floor(Math.random() * totalLetterBoxes);
+  const totalLetterBoxDelay = 0.05 * Math.max(...Array.from(letterBoxes, box => box.textContent.trim().length));
+  
   letterBoxes.forEach((letterBox, index) => {
     const isCurrentBoxActive = index === activeLetterBoxIndex;
-    letterBox.innerHTML = letterBox.textContent.trim().split('').map((char, i) => `<span style="animation-delay: ${0.05 * i}s;" class="${isCurrentBoxActive ? 'in' : 'out'} ${char === ' ' ? 'space' : ''}">${char}</span>`).join('');
+    const textContent = letterBox.textContent.trim();
+    letterBox.innerHTML = textContent.split('').map((char, i) => `<span style="animation-delay: ${0.05 * i}s;" class="${isCurrentBoxActive ? 'in' : 'out'} ${char === ' ' ? 'space' : ''}">${char}</span>`).join('');
     if (isCurrentBoxActive) letterBox.classList.add("active");
     else letterBox.classList.remove("active");
   });
   setTimeout(setLetterEffect, (totalLetterBoxDelay * 1000) + 3000);
 };
+
 window.addEventListener("load", setLetterEffect);
+
 
 // Função para exibir ou ocultar o botão "Back to Top"
 const backTopBtn = document.querySelector("[data-back-top-btn]");
@@ -122,12 +127,4 @@ thumbnails.forEach((thumbnail, index) => {
   });
 });
 
-// startAutoSlide();
 
-// function toggleVideo(){
-//   event.preventDefault();
-//   const trailer = document.querySelector('.trailer');
-//   const video = document.querySelector('video');
-//   video.pause();
-//   trailer.classList.toggle('active');
-// }

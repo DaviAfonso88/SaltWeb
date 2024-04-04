@@ -230,6 +230,21 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .banner {
+    padding: 0 20px;
+  }
+
+  .video {
+    height: 40vh;
+  }
+
+  .trailer video {
+    width: 80%;
+    height: 80%;
+  }
+}
+
 /**
    * responsive for large than 992px screen
    */
