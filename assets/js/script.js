@@ -1,18 +1,18 @@
 'use strict';
 
-// Função para adicionar evento em múltiplos elementos
+// Function to add event listener to multiple elements
 const addEventOnElements = function (elements, eventType, callback) {
   elements.forEach(element => element.addEventListener(eventType, callback));
 };
 
-// Função para adicionar classe 'loaded' ao elemento de loading após o carregamento da página
+// Function to add 'loaded' class to loading element after page load
 window.addEventListener("load", function () {
   const loadingElement = document.querySelector("[data-loading]");
   loadingElement.classList.add("loaded");
   document.body.classList.remove("active");
 });
 
-// Função para exibir ou ocultar o menu mobile
+// Function to toggle mobile menu
 const toggleNav = function () {
   const navbar = document.querySelector("[data-navbar]");
   const overlay = document.querySelector("[data-overlay]");
@@ -36,7 +36,7 @@ const navLinks = document.querySelectorAll("[data-nav-link]");
 addEventOnElements(navTogglers, "click", toggleNav);
 addEventOnElements(navLinks, "click", closeNav);
 
-// Função para ativar ou desativar classe 'active' no header baseado no scroll
+// Function to activate or deactivate 'active' class on header based on scroll
 const header = document.querySelector("[data-header]");
 const activeElementOnScroll = function () {
   const scrollThreshold = 50;
@@ -48,9 +48,8 @@ const activeElementOnScroll = function () {
 };
 window.addEventListener("scroll", activeElementOnScroll);
 
-// Iniciar animação do texto na seção hero
+// Initialize text animation in hero section
 const letterBoxes = document.querySelectorAll("[data-letter-effect]");
-// Função para animar o texto
 const setLetterEffect = function () {
   const totalLetterBoxes = letterBoxes.length;
   const activeLetterBoxIndex = Math.floor(Math.random() * totalLetterBoxes);
@@ -68,8 +67,7 @@ const setLetterEffect = function () {
 
 window.addEventListener("load", setLetterEffect);
 
-
-// Função para exibir ou ocultar o botão "Back to Top"
+// Function to show or hide "Back to Top" button
 const backTopBtn = document.querySelector("[data-back-top-btn]");
 window.addEventListener("scroll", function () {
   const scrollThresholdPercent = 5;
@@ -82,7 +80,7 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// Função para exibir elementos conforme eles entram na tela
+// Function to reveal elements as they enter the screen
 const revealElements = document.querySelectorAll("[data-reveal]");
 const scrollReveal = function () {
   revealElements.forEach(element => {
@@ -126,5 +124,3 @@ thumbnails.forEach((thumbnail, index) => {
     goToSlide(index);
   });
 });
-
-

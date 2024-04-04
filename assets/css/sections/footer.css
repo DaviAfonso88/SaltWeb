@@ -81,20 +81,19 @@
   text-decoration: underline;
 }
 
-.copyright,
-.social-list {
-  padding-block-end: 15px;
-}
-
 .copyright {
   font-weight: var(--fw-300);
   letter-spacing: 0.5px;
   text-align: center;
 }
 
+.copyright a:hover {
+  cursor: pointer;
+}
+
 /*-----------------------------------*\
     #BACK TO TOP
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .back-top-btn {
   position: fixed;
