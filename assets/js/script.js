@@ -113,6 +113,15 @@ const scrollReveal = function () {
 window.addEventListener("scroll", scrollReveal);
 scrollReveal();
 
+// Detect when video exits full-screen mode
+document.addEventListener("fullscreenchange", function () {
+  if (!document.fullscreenElement) {
+    // If exited full screen mode, scroll to the video section position
+    var videoSection = document.querySelector('.video-top');
+    videoSection.scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
 // Slider
 const items = document.querySelectorAll('.slider .list .item');
 const thumbnails = document.querySelectorAll('.swiper-wrapper .swiper-slide');
