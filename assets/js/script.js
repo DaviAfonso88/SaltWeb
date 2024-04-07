@@ -50,19 +50,40 @@ window.addEventListener("scroll", activeElementOnScroll);
 
 // Initialize text animation in hero section
 const letterBoxes = document.querySelectorAll("[data-letter-effect]");
-const setLetterEffect = function () {
-  const totalLetterBoxes = letterBoxes.length;
-  const activeLetterBoxIndex = Math.floor(Math.random() * totalLetterBoxes);
-  const totalLetterBoxDelay = 0.05 * Math.max(...Array.from(letterBoxes, box => box.textContent.trim().length));
-  
+let activeLetterBoxIndex = 0;
+let lastActiveLetterBoxIndex = 0;
+
+const setLetterEffect = () => {
   letterBoxes.forEach((letterBox, index) => {
     const isCurrentBoxActive = index === activeLetterBoxIndex;
-    const textContent = letterBox.textContent.trim();
-    letterBox.innerHTML = textContent.split('').map((char, i) => `<span style="animation-delay: ${0.05 * i}s;" class="${isCurrentBoxActive ? 'in' : 'out'} ${char === ' ' ? 'space' : ''}">${char}</span>`).join('');
+    const letters = letterBox.textContent.trim();
+    letterBox.innerHTML = ""; // Limpar o conteúdo do elemento
+
+    letters.split('').forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.animationDelay = `${0.05 * i}s`;
+      span.classList.add(isCurrentBoxActive ? "in" : "out");
+      if (char === " ") span.classList.add("space");
+      letterBox.appendChild(span);
+    });
+
     if (isCurrentBoxActive) letterBox.classList.add("active");
     else letterBox.classList.remove("active");
   });
-  setTimeout(setLetterEffect, (totalLetterBoxDelay * 1000) + 3000);
+
+  setTimeout(updateActiveLetterBoxIndex, getTotalLetterBoxDelay());
+};
+
+const updateActiveLetterBoxIndex = () => {
+  lastActiveLetterBoxIndex = activeLetterBoxIndex;
+  activeLetterBoxIndex = (activeLetterBoxIndex + 1) % letterBoxes.length;
+  setLetterEffect();
+};
+
+const getTotalLetterBoxDelay = () => {
+  const letters = letterBoxes[activeLetterBoxIndex].textContent.trim();
+  return 0.05 * letters.length * 1000 + 3000;
 };
 
 window.addEventListener("load", setLetterEffect);
@@ -94,7 +115,7 @@ scrollReveal();
 
 // Slider
 const items = document.querySelectorAll('.slider .list .item');
-const thumbnails = document.querySelectorAll('.thumbnail .item');
+const thumbnails = document.querySelectorAll('.swiper-wrapper .swiper-slide');
 let itemActive = 0;
 let refreshInterval;
 
@@ -124,3 +145,21 @@ thumbnails.forEach((thumbnail, index) => {
     goToSlide(index);
   });
 });
+
+
+    var swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+    });
