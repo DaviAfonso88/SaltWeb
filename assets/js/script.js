@@ -113,14 +113,24 @@ const scrollReveal = function () {
 window.addEventListener("scroll", scrollReveal);
 scrollReveal();
 
-// Detect when video exits full-screen mode
+// Detects when the video exits full-screen mode or is paused
+function handleExitFullScreenOrPause() {
+  var videoSection = document.querySelector('.video-top');
+  videoSection.scrollIntoView({ behavior: 'smooth' });
+}
+
 document.addEventListener("fullscreenchange", function () {
   if (!document.fullscreenElement) {
-    // If exited full screen mode, scroll to the video section position
-    var videoSection = document.querySelector('.video-top');
-    videoSection.scrollIntoView({ behavior: 'smooth' });
+    // If you exited full screen mode, perform the function
+    handleExitFullScreenOrPause();
   }
 });
+
+document.addEventListener("pause", function () {
+  // When the video is paused, execute the function
+  handleExitFullScreenOrPause();
+});
+
 
 // Slider
 const items = document.querySelectorAll('.slider .list .item');
