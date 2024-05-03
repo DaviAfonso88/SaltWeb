@@ -41,9 +41,6 @@
    * typography
    */
 
-  --ff-recoleta: "Recoleta", serif;
-  --ff-gordita: "Gordita", sans-serif;
-
   --fs-1: 6rem;
   --fs-2: 5rem;
   --fs-3: 3.8rem;
@@ -140,16 +137,18 @@ address {
 }
 
 html {
-  font-family: var(--ff-gordita);
   font-size: 10px;
   scroll-behavior: smooth;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap");
+
 body {
   background-color: var(--smokey-black);
   color: var(--white);
+  font-family: "Quicksand", sans-serif; /* Use Quicksand como a fonte principal */
   font-size: 1.6rem;
-  font-weight: var(--fw-400);
+  font-weight: 400; /* Você pode ajustar o peso da fonte conforme necessário */
   line-height: 2.15;
   overflow-x: hidden;
 }
@@ -196,7 +195,6 @@ body.active {
 .h4,
 .h5,
 .h6 {
-  font-family: var(--ff-recoleta);
   line-height: 1.2;
 }
 
@@ -272,6 +270,25 @@ body.active {
   object-fit: cover;
   border-radius: 1.5rem;
   box-shadow: 0 4px 8px var(--salt-purple);
+}
+.fa-bars {
+  font-size: 20px;
+  color: var(--white);
+  transition: 0.3s;
+}
+
+.fa-bars:hover {
+  color: var(--salt-purple);
+}
+
+.fa-arrow-right-to-bracket {
+  font-size: 28px;
+  color: var(--white);
+  transition: 0.3s;
+}
+
+.fa-arrow-right-to-bracket:hover {
+  color: var(--salt-purple);
 }
 
 .btn-icon {

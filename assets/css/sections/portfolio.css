@@ -44,12 +44,17 @@
   height: 45px;
 
   --hover-bg-color: var(--black);
-  --hover-text-color: var(--white);
 }
 
-.portfolio-card .btn-icon svg {
-  width: 20px;
+.portfolio-card .btn-icon .fa-arrow-right {
+  font-size: 25px;
   cursor: pointer;
+  color: var(--black);
+  transition: 0.3s;
+}
+
+.portfolio-card .btn-icon .fa-arrow-right:hover {
+  color: var(--white_a70);
 }
 
 .portfolio-card .card-title:is(:hover, :focus) {

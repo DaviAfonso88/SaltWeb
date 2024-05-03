@@ -29,7 +29,8 @@
   position: fixed;
   top: 0;
   right: -280px;
-  background-color: var(--eerie-black);
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo embaçado */
+  backdrop-filter: blur(10px); /* Efeito de embaçamento */
   height: 100vh;
   max-width: 280px;
   width: 100%;
@@ -63,11 +64,11 @@
   transition: var(--transition-1);
 }
 
-.nav-close-btn .one {
+.nav-close-btn .fa-bars {
   transform: rotate(45deg) translate(2px, 2px);
 }
 
-.nav-close-btn .two {
+.nav-close-btn .fa-bars {
   transform: rotate(-45deg);
 }
 
@@ -91,6 +92,7 @@
 
 .navbar-link:is(:hover, :focus-visible) {
   color: var(--salt-purple);
+  text-decoration: underline;
 }
 
 .navbar-title {
