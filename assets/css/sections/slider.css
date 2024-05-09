@@ -55,7 +55,7 @@
 }
 
 .info h2 {
-  font-size: 36px;
+  font-size: 38px;
   margin-bottom: 10px;
   font-weight: 800;
   text-transform: uppercase;
@@ -63,7 +63,7 @@
 }
 
 .info p {
-  font-size: 16px;
+  font-size: 20px;
   padding: 10px;
   margin-bottom: 20px;
   background: rgba(0, 0, 0, 0.349);
