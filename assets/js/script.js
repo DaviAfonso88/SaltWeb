@@ -131,54 +131,40 @@ document.addEventListener("pause", function () {
   handleExitFullScreenOrPause();
 });
 
-
 // Slider
-const items = document.querySelectorAll('.slider .list .item');
-const thumbnails = document.querySelectorAll('.swiper-wrapper .swiper-slide');
-let itemActive = 0;
-let refreshInterval;
+var slides = document.querySelectorAll('.slide');
+var btns = document.querySelectorAll('.btn-nav');
+var arrows = document.querySelectorAll('.arrow');
 
-const goToSlide = index => {
-  clearInterval(refreshInterval);
-  itemActive = (index + items.length) % items.length;
-  updateSlider();
+// Função para navegação manual dos slides
+var manualNav = function (manual) {
+  slides.forEach((slide) => slide.classList.remove('active'));
+  btns.forEach((btn) => btn.classList.remove('active'));
+  slides[manual].classList.add('active');
+  btns[manual].classList.add('active');
 };
 
-const updateSlider = () => {
-  items.forEach(item => item.classList.remove('active'));
-  thumbnails.forEach(thumbnail => thumbnail.classList.remove('active'));
-  items[itemActive].classList.add('active');
-  thumbnails[itemActive].classList.add('active');
-  startAutoSlide();
-};
-
-const startAutoSlide = () => {
-  clearInterval(refreshInterval);
-  refreshInterval = setInterval(() => {
-    goToSlide(itemActive + 1);
-  }, 10000);
-};
-
-thumbnails.forEach((thumbnail, index) => {
-  thumbnail.addEventListener('click', () => {
-    goToSlide(index);
+// Adiciona evento de clique aos botões de navegação
+btns.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    manualNav(i);
   });
 });
 
+// Adiciona evento de clique aos botões de seta
+arrows.forEach((arrow) => {
+  arrow.addEventListener("click", () => {
+    if (arrow.classList.contains('arrow-left')) {
+      var currentSlide = document.querySelector('.slide.active');
+      var currentIndex = Array.from(slides).indexOf(currentSlide);
+      var prevIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+      manualNav(prevIndex);
+    } else if (arrow.classList.contains('arrow-right')) {
+      var currentSlide = document.querySelector('.slide.active');
+      var currentIndex = Array.from(slides).indexOf(currentSlide);
+      var nextIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+      manualNav(nextIndex);
+    }
+  });
+});
 
-    var swiper = new Swiper(".mySwiper", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-      },
-    });
