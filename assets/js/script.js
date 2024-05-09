@@ -131,17 +131,19 @@ document.addEventListener("pause", function () {
   handleExitFullScreenOrPause();
 });
 
-// Slider
-var slides = document.querySelectorAll('.slide');
-var btns = document.querySelectorAll('.btn-nav');
-var arrows = document.querySelectorAll('.arrow');
+// Seleção dos elementos
+const slides = document.querySelectorAll('.slide');
+const btns = document.querySelectorAll('.btn-nav');
+const arrows = document.querySelectorAll('.arrow');
 
 // Função para navegação manual dos slides
-var manualNav = function (manual) {
-  slides.forEach((slide) => slide.classList.remove('active'));
-  btns.forEach((btn) => btn.classList.remove('active'));
-  slides[manual].classList.add('active');
-  btns[manual].classList.add('active');
+const manualNav = (manual) => {
+  slides.forEach((slide, index) => {
+    slide.classList.toggle('active', index === manual);
+  });
+  btns.forEach((btn, index) => {
+    btn.classList.toggle('active', index === manual);
+  });
 };
 
 // Adiciona evento de clique aos botões de navegação
@@ -154,17 +156,11 @@ btns.forEach((btn, i) => {
 // Adiciona evento de clique aos botões de seta
 arrows.forEach((arrow) => {
   arrow.addEventListener("click", () => {
-    if (arrow.classList.contains('arrow-left')) {
-      var currentSlide = document.querySelector('.slide.active');
-      var currentIndex = Array.from(slides).indexOf(currentSlide);
-      var prevIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-      manualNav(prevIndex);
-    } else if (arrow.classList.contains('arrow-right')) {
-      var currentSlide = document.querySelector('.slide.active');
-      var currentIndex = Array.from(slides).indexOf(currentSlide);
-      var nextIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-      manualNav(nextIndex);
-    }
+    const currentSlide = document.querySelector('.slide.active');
+    const currentIndex = Array.from(slides).indexOf(currentSlide);
+    const nextIndex = arrow.classList.contains('arrow-right') ? (currentIndex + 1) % slides.length : (currentIndex - 1 + slides.length) % slides.length;
+    manualNav(nextIndex);
   });
 });
+
 
