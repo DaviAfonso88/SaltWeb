@@ -57,20 +57,31 @@
 }
 
 .info h2 {
+  position: relative; /* Define a posição como relativa */
   font-size: 38px;
   margin-bottom: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
+  color: transparent; /* Define a cor do texto como transparente */
+  background-image: linear-gradient(
+    to right,
+    #ffffff,
+    #92348c
+  ); /* Gradiente de cor de fundo */
+  -webkit-background-clip: text; /* Aplica o gradiente apenas ao texto */
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra sutil ao texto */
 }
 
 .info p {
   font-size: 20px;
-  padding: 10px;
-  margin-bottom: 20px;
-  background: rgba(0, 0, 0, 0.349);
   width: 70%;
-  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(14, 13, 13, 0.295); /* Fundo com transparência */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px #92348c83; /* Sombra suave roxa */
 }
 
 .button-slider {
@@ -159,7 +170,7 @@
 }
 
 /* Estilos para dispositivos móveis */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1000px) {
   .slider-top {
     padding: 50px 20px; /* Redução do padding */
     text-align: center; /* Alinhamento do texto ao centro */
@@ -283,7 +294,7 @@
   .img-slider {
     width: 100%;
     max-width: none; /* Remoção da largura máxima */
-    height: 40vh; /* Altura reduzida */
+    height: 60vh; /* Altura reduzida */
     margin: 0 auto;
     overflow: hidden;
   }
