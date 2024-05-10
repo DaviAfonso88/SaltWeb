@@ -6,7 +6,7 @@
   padding: 100px 140px;
   margin-bottom: 50px;
   z-index: 1;
-  text-align: left; /* Alinhamento do texto à esquerda */
+  text-align: left;
   background: linear-gradient(to bottom, var(--smokey-black) 40%);
 }
 
@@ -18,7 +18,7 @@
   margin: 0 auto;
   border-radius: 1.5rem;
   overflow: hidden;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Adicionando sombra */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .img-slider .slide {
@@ -31,7 +31,7 @@
 
 .img-slider .slide.active {
   clip-path: circle(150% at 0 50%);
-  transition: clip-path 2.5s ease;
+  transition: clip-path 1.5s ease;
 }
 
 .slide img {
@@ -49,29 +49,25 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: left; /* Alinhamento do texto à esquerda */
+  align-items: left;
   padding: 0 20px;
   color: #fff;
-  text-align: left; /* Alinhamento do texto à esquerda */
+  text-align: left;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
 .info h2 {
-  position: relative; /* Define a posição como relativa */
-  font-size: 38px;
+  font-size: 50px;
+  position: relative;
   margin-bottom: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: transparent; /* Define a cor do texto como transparente */
-  background-image: linear-gradient(
-    to right,
-    #ffffff,
-    #92348c
-  ); /* Gradiente de cor de fundo */
-  -webkit-background-clip: text; /* Aplica o gradiente apenas ao texto */
+  color: transparent;
+  background-image: linear-gradient(to right, #ffffff, #92348c);
+  -webkit-background-clip: text;
   background-clip: text;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra sutil ao texto */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .info p {
@@ -79,9 +75,9 @@
   width: 70%;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: rgba(14, 13, 13, 0.295); /* Fundo com transparência */
+  background-color: rgba(14, 13, 13, 0.295);
   border-radius: 10px;
-  box-shadow: 0 4px 6px #92348c83; /* Sombra suave roxa */
+  box-shadow: 0 4px 6px #92348c83;
 }
 
 .button-slider {
@@ -128,17 +124,17 @@
   margin: 0 5px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.5); /* Alterando o estilo da borda */
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* Adicionando transição */
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .navigation .btn-nav.active {
   background: var(--salt-purple);
-  border-color: var(--salt-purple); /* Alterando a cor da borda quando ativo */
+  border-color: var(--salt-purple);
 }
 
 .arrow {
-  position: relative; /* Adicionado para posicionar as setas corretamente */
+  position: relative;
   width: 40px;
   height: 40px;
   border-radius: 2px;
@@ -149,7 +145,7 @@
   align-items: center;
   cursor: pointer;
   background-color: transparent;
-  z-index: 1; /* Ajuste para garantir que as setas fiquem na frente das imagens */
+  z-index: 1;
   transition: background-color 0.3s ease;
 }
 
@@ -158,29 +154,28 @@
 }
 
 .arrow:hover {
-  background-color: var(--salt-purple); /* Cor de fundo ao passar o mouse */
+  background-color: var(--salt-purple);
 }
 
 .arrow-left {
-  left: -20px; /* Posição da seta esquerda */
+  left: -20px;
 }
 
 .arrow-right {
-  right: -20px; /* Posição da seta direita */
+  right: -20px;
 }
 
-/* Estilos para dispositivos móveis */
 @media only screen and (max-width: 1000px) {
   .slider-top {
-    padding: 50px 20px; /* Redução do padding */
-    text-align: center; /* Alinhamento do texto ao centro */
+    padding: 50px 20px;
+    text-align: center;
     background: linear-gradient(to bottom, var(--smokey-black) 40%);
   }
 
   .img-slider {
     width: 100%;
-    max-width: none; /* Remoção da largura máxima */
-    height: 50vh; /* Altura reduzida */
+    max-width: none;
+    height: 50vh;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -200,38 +195,38 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left; /* Centralização do texto */
-    padding: 20px; /* Ajuste do padding */
+    align-items: left;
+    padding: 20px;
     color: #fff;
     background-color: rgba(0, 0, 0, 0.6);
   }
 
   .info h2 {
-    font-size: 24px; /* Redução do tamanho da fonte */
+    font-size: 24px;
     margin-bottom: 10px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px; /* Redução do espaçamento entre letras */
+    letter-spacing: 1px;
   }
 
   .info p {
-    font-size: 14px; /* Redução do tamanho da fonte */
+    font-size: 14px;
     padding: 10px;
     margin-bottom: 20px;
     background: rgba(0, 0, 0, 0.349);
-    width: 90%; /* Ajuste da largura */
+    width: 90%;
   }
 
   .button-slider a {
-    margin-right: 0; /* Remoção da margem direita */
-    font-size: 12px; /* Redução do tamanho do texto */
-    padding: 8px 16px; /* Ajuste do padding */
+    margin-right: 0;
+    font-size: 12px;
+    padding: 8px 16px;
   }
 
   .navigation {
-    bottom: 10px; /* Ajuste da posição */
-    right: 0; /* Alinhamento à esquerda */
-    width: 100%; /* Largura total */
+    bottom: 10px;
+    right: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,8 +234,8 @@
 
   .navigation .btn-nav {
     background: rgba(255, 255, 255, 0.5);
-    width: 8px; /* Redução do tamanho */
-    height: 8px; /* Redução do tamanho */
+    width: 8px;
+    height: 8px;
     margin: 6px;
     border-radius: 50%;
     cursor: pointer;
@@ -252,11 +247,11 @@
   }
 
   .arrow {
-    width: 30px; /* Redução do tamanho */
-    height: 30px; /* Redução do tamanho */
-    border-radius: 20%; /* Redefinição do border-radius */
+    width: 35px;
+    height: 35px;
+    border-radius: 20%;
     border: solid 1px;
-    padding: 10px; /* Redução do padding */
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -270,79 +265,76 @@
   }
 
   .arrow:hover {
-    background-color: var(--salt-purple); /* Cor de fundo ao passar o mouse */
+    background-color: var(--salt-purple);
   }
 
   .arrow-left {
-    left: -20px; /* Posição da seta esquerda */
+    left: -20px;
   }
 
   .arrow-right {
-    right: -20px; /* Posição da seta direita */
+    right: -20px;
   }
 }
 
-/* Estilos para dispositivos com largura de tela até 370px */
-/* Estilos para dispositivos com largura de tela até 580px */
+@media only screen and (max-width: 768px) {
+  .img-slider .slide.active {
+    transition: clip-path 1s ease;
+  }
+}
+
 @media only screen and (max-width: 500px) {
   .slider-top {
-    padding: 30px 10px; /* Redução do padding */
-    text-align: center; /* Alinhamento do texto ao centro */
+    padding: 30px 10px;
+    text-align: center;
     background: linear-gradient(to bottom, var(--smokey-black) 40%);
   }
 
   .img-slider {
     width: 100%;
-    max-width: none; /* Remoção da largura máxima */
-    height: 60vh; /* Altura reduzida */
+    max-width: none;
+    height: 60vh;
     margin: 0 auto;
     overflow: hidden;
   }
 
   .slide .info {
-    align-items: left; /* Centralização do texto */
-    padding: 10px; /* Ajuste do padding */
+    align-items: left;
+    padding: 10px;
   }
 
   .info h2 {
-    font-size: 20px; /* Redução do tamanho da fonte */
+    font-size: 20px;
     margin-bottom: 5px;
   }
 
   .info p {
-    font-size: 13px; /* Redução do tamanho da fonte */
+    font-size: 13px;
     padding: 5px;
     margin-bottom: 10px;
-    width: 100%; /* Ajuste da largura */
+    width: 100%;
   }
 
   .button-slider a {
-    font-size: 12px; /* Redução do tamanho do texto */
-    padding: 6px 12px; /* Ajuste do padding */
-  }
-
-  .navigation {
-    bottom: 5px; /* Ajuste da posição */
-    right: 0; /* Alinhamento à direita */
+    font-size: 12px;
+    padding: 6px 12px;
   }
 
   .navigation .btn-nav {
-    width: 6px; /* Redução do tamanho */
-    height: 6px; /* Redução do tamanho */
-    margin: 4px;
+    display: none;
   }
 
   .arrow {
-    width: 30px; /* Redução do tamanho */
-    height: 30px; /* Redução do tamanho */
-    padding: 6px; /* Redução do padding */
+    width: 35px;
+    height: 35px;
+    padding: 6px;
   }
 
   .arrow-left {
-    left: -10px; /* Posição da seta esquerda */
+    left: -10px;
   }
 
   .arrow-right {
-    right: -10px; /* Posição da seta direita */
+    right: -10px;
   }
 }
