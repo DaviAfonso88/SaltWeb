@@ -31,7 +31,7 @@
 
 .img-slider .slide.active {
   clip-path: circle(150% at 0 50%);
-  transition: clip-path 1.5s ease;
+  transition: clip-path 2.7s ease;
 }
 
 .slide img {
@@ -274,12 +274,6 @@
 
   .arrow-right {
     right: -20px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .img-slider .slide.active {
-    transition: clip-path 1s ease;
   }
 }
 
