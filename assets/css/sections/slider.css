@@ -16,7 +16,9 @@
   max-width: 1700px;
   height: 80vh;
   margin: 0 auto;
+  border-radius: 1.5rem;
   overflow: hidden;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Adicionando sombra */
 }
 
 .img-slider .slide {
@@ -109,18 +111,19 @@
 }
 
 .navigation .btn-nav {
-  background: rgba(255, 255, 255, 0.5);
+  background: transparent;
   width: 12px;
   height: 12px;
   margin: 0 5px;
   border-radius: 50%;
   cursor: pointer;
-  border: none;
-  z-index: 2;
+  border: 2px solid rgba(255, 255, 255, 0.5); /* Alterando o estilo da borda */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Adicionando transição */
 }
 
 .navigation .btn-nav.active {
   background: var(--salt-purple);
+  border-color: var(--salt-purple); /* Alterando a cor da borda quando ativo */
 }
 
 .arrow {
