@@ -31,19 +31,6 @@
   } /* Mantive a largura máxima como unset */
 
   /**
-     * HEADER
-     */
-
-  .navbar {
-    max-width: 320px; /* Ajustei a largura máxima para telas menores */
-    right: -400px; /* Ajustei a posição para telas menores */
-  }
-
-  .navbar.active {
-    transform: translateX(-400px);
-  } /* Ajustei a posição para telas menores */
-
-  /**
      * CATEGORY
      */
 
@@ -90,11 +77,6 @@
 
   .navbar {
     max-width: 500px;
-    right: -500px;
-  }
-
-  .navbar.active {
-    transform: translateX(-500px);
   }
 
   /**
@@ -249,9 +231,41 @@
    * responsive for large than 992px screen
    */
 
-@media (max-width: 992px) {
+@media (max-width: 1130px) {
   .about .container {
     display: grid;
+  }
+  .menu-icon {
+    display: flex;
+  }
+
+  .navbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0px;
+    width: 300px;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    clip-path: polygon(100% 0, 100% 0%, 100% 100%, 100% 100%);
+    transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  .open-menu {
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+    transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  .nav {
+    padding: 20px;
+  }
+
+  .navbar-link {
+    display: block;
+    margin: 1rem 0;
+    top: 90px;
   }
 }
 
@@ -289,26 +303,8 @@
      * HEADER
      */
 
-  .header {
-    padding-block: 30px;
-  }
-
   .navbar {
-    padding: 40px;
-    padding-block-end: 10px;
-  }
-
-  .navbar-link {
-    --fs-7: 2.4rem;
-  }
-
-  .navbar-title {
-    --fs-8: 2.2rem;
-  }
-
-  .navbar-text {
-    font-size: 1.9rem;
-    margin-block-end: 30px;
+    padding: 20px;
   }
 
   /**

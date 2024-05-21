@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 // Function to add event listener to multiple elements
 const addEventOnElements = function (elements, eventType, callback) {
-  elements.forEach(element => element.addEventListener(eventType, callback));
+  elements.forEach((element) => element.addEventListener(eventType, callback));
 };
 
 // Function to add 'loaded' class to loading element after page load
@@ -30,6 +30,24 @@ const closeNav = function () {
   overlay.classList.remove("active");
   body.classList.remove("active");
 };
+
+//nova
+
+let menu = document.querySelector(".menu-icon");
+let navbar = document.querySelector(".navbar");
+
+menu.onclick = () => {
+  menu.classList.toggle("move");
+  navbar.classList.toggle("open-menu");
+};
+
+// Header
+
+let headerList = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+  headerList.classList.toggle("shadow", window.scrollY > 0);
+});
 
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const navLinks = document.querySelectorAll("[data-nav-link]");
@@ -59,7 +77,7 @@ const setLetterEffect = () => {
     const letters = letterBox.textContent.trim();
     letterBox.innerHTML = ""; // Limpar o conteúdo do elemento
 
-    letters.split('').forEach((char, i) => {
+    letters.split("").forEach((char, i) => {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.animationDelay = `${0.05 * i}s`;
@@ -92,7 +110,8 @@ window.addEventListener("load", setLetterEffect);
 const backTopBtn = document.querySelector("[data-back-top-btn]");
 window.addEventListener("scroll", function () {
   const scrollThresholdPercent = 5;
-  const totalScrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  const totalScrollPercent =
+    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
   backTopBtn.textContent = `${totalScrollPercent.toFixed(0)}%`;
   if (totalScrollPercent > scrollThresholdPercent) {
     backTopBtn.classList.add("show");
@@ -104,8 +123,9 @@ window.addEventListener("scroll", function () {
 // Function to reveal elements as they enter the screen
 const revealElements = document.querySelectorAll("[data-reveal]");
 const scrollReveal = function () {
-  revealElements.forEach(element => {
-    const elementIsInScreen = element.getBoundingClientRect().top < window.innerHeight / 1.15;
+  revealElements.forEach((element) => {
+    const elementIsInScreen =
+      element.getBoundingClientRect().top < window.innerHeight / 1.15;
     if (elementIsInScreen) element.classList.add("revealed");
     else element.classList.remove("revealed");
   });
@@ -115,8 +135,8 @@ scrollReveal();
 
 // Detects when the video exits full-screen mode or is paused
 function handleExitFullScreenOrPause() {
-  var videoSection = document.querySelector('.video-top');
-  videoSection.scrollIntoView({ behavior: 'smooth' });
+  var videoSection = document.querySelector(".video-top");
+  videoSection.scrollIntoView({ behavior: "smooth" });
 }
 
 document.addEventListener("fullscreenchange", function () {
@@ -132,17 +152,17 @@ document.addEventListener("pause", function () {
 });
 
 // Seleção dos elementos
-const slides = document.querySelectorAll('.slide');
-const btns = document.querySelectorAll('.btn-nav');
-const arrows = document.querySelectorAll('.arrow');
+const slides = document.querySelectorAll(".slide");
+const btns = document.querySelectorAll(".btn-nav");
+const arrows = document.querySelectorAll(".arrow");
 
 // Função para navegação manual dos slides
 const manualNav = (manual) => {
   slides.forEach((slide, index) => {
-    slide.classList.toggle('active', index === manual);
+    slide.classList.toggle("active", index === manual);
   });
   btns.forEach((btn, index) => {
-    btn.classList.toggle('active', index === manual);
+    btn.classList.toggle("active", index === manual);
   });
 };
 
@@ -156,13 +176,11 @@ btns.forEach((btn, i) => {
 // Adiciona evento de clique aos botões de seta
 arrows.forEach((arrow) => {
   arrow.addEventListener("click", () => {
-    const currentSlide = document.querySelector('.slide.active');
+    const currentSlide = document.querySelector(".slide.active");
     const currentIndex = Array.from(slides).indexOf(currentSlide);
-    const nextIndex = arrow.classList.contains('arrow-right') ? (currentIndex + 1) % slides.length : (currentIndex - 1 + slides.length) % slides.length;
+    const nextIndex = arrow.classList.contains("arrow-right")
+      ? (currentIndex + 1) % slides.length
+      : (currentIndex - 1 + slides.length) % slides.length;
     manualNav(nextIndex);
   });
 });
-
-
-
-

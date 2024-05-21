@@ -98,6 +98,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  scroll-padding-top: 3rem;
 }
 
 li {
@@ -139,6 +141,10 @@ address {
 html {
   font-size: 10px;
   scroll-behavior: smooth;
+}
+
+section {
+  padding: 3rem 0 2rem;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap");

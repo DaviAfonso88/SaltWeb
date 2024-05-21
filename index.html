@@ -111,62 +111,47 @@
     - #HEADER
   -->
 
-  <header class="header" data-header>
-    <div class="container">
+  <header data-header>
+    <div class="nav containerHeader">
       <a href="#" class="logo">
         <img src="./assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
       </a>
 
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <div class="navbar" data-navbar>
+        <li>
+          <a href="#home" class="navbar-link" data-nav-link>Home</a>
+        </li>
 
-      <nav class="navbar" data-navbar>
-        <div class="navbar-top">
+        <li>
+          <a href="#about" class="navbar-link" data-nav-link>Sobre</a>
+        </li>
 
-          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>
-          </button>
-        </div>
+        <li>
+          <a href="#projects" class="navbar-link" data-nav-link>Projetos</a>
+        </li>
 
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <a href="#home" class="navbar-link" data-nav-link>Home</a>
-          </li>
+        <li>
+          <a href="#why" class="navbar-link" data-nav-link>Porquê</a>
+        </li>
 
-          <li class="navbar-item">
-            <a href="#about" class="navbar-link" data-nav-link>Sobre</a>
-          </li>
+        <li>
+          <a href="#schedules" class="navbar-link" data-nav-link>Programações</a>
+        </li>
 
-          <li class="navbar-item">
-            <a href="#events" class="navbar-link" data-nav-link>Eventos</a>
-          </li>
+        <li>
+          <a href="#spotify" class="navbar-link" data-nav-link>Spotify</a>
+        </li>
 
-          <li class="navbar-item">
-            <a href="#why" class="navbar-link" data-nav-link>Porquê</a>
-          </li>
+        <li>
+          <a href="#contact" class="navbar-link" data-nav-link>Contato</a>
+        </li>
+      </div>
 
-          <li class="navbar-item">
-            <a href="#schedules" class="navbar-link" data-nav-link>Programações</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#spotify" class="navbar-link" data-nav-link>Spotify</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#contact" class="navbar-link" data-nav-link>Contato</a>
-          </li>
-        </ul>
-
-        <p class="navbar-title">Nosso Endereço</p>
-
-        <address class="navbar-text">
-          Rua Jair Gonçalves Bastos, 64, Jardim Ipê
-        </address>
-      </nav>
-
-      <div class="overlay" data-nav-toggler data-overlay></div>
+      <div class="menu-icon">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
     </div>
   </header>
 
@@ -312,9 +297,6 @@
               <img src="./assets/images/cultosalt.jpeg" width="212" height="184" loading="lazy" alt="Salt"
                 class="img-cover" />
             </div>
-
-            <img src="./assets/images/about-shape-2.svg" width="239" height="232" loading="lazy" alt=""
-              class="shape shape-2" />
           </figure>
         </div>
       </section>
@@ -335,7 +317,7 @@
       <!-- 
         - #CATEGORY
       -->
-      <p class="section-subtitle container" id="events">
+      <p class="section-subtitle container" id="projects">
         eventos especiais
       </p>
       <section class="section category" aria-label="category">
