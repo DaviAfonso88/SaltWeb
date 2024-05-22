@@ -216,7 +216,7 @@ h3 {
   }
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 526px) {
   #footer_content {
     grid-template-columns: 1fr;
     padding: 2rem;
