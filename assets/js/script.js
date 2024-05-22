@@ -151,36 +151,16 @@ document.addEventListener("pause", function () {
   handleExitFullScreenOrPause();
 });
 
-// Seleção dos elementos
-const slides = document.querySelectorAll(".slide");
-const btns = document.querySelectorAll(".btn-nav");
-const arrows = document.querySelectorAll(".arrow");
-
-// Função para navegação manual dos slides
-const manualNav = (manual) => {
-  slides.forEach((slide, index) => {
-    slide.classList.toggle("active", index === manual);
-  });
-  btns.forEach((btn, index) => {
-    btn.classList.toggle("active", index === manual);
-  });
-};
-
-// Adiciona evento de clique aos botões de navegação
-btns.forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    manualNav(i);
-  });
-});
-
-// Adiciona evento de clique aos botões de seta
-arrows.forEach((arrow) => {
-  arrow.addEventListener("click", () => {
-    const currentSlide = document.querySelector(".slide.active");
-    const currentIndex = Array.from(slides).indexOf(currentSlide);
-    const nextIndex = arrow.classList.contains("arrow-right")
-      ? (currentIndex + 1) % slides.length
-      : (currentIndex - 1 + slides.length) % slides.length;
-    manualNav(nextIndex);
-  });
+// Swiper
+var swiper = new Swiper(".services-content", {
+  spaceBetween: 30,
+  centeredSlides: true,
+  autoplay: {
+    delay: 50000,
+    disableOnInteraction: false,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
 });

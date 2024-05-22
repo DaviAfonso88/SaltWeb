@@ -91,6 +91,12 @@
   <link rel="stylesheet" href="./assets/css/sections/slider.css" />
 
   <!-- 
+    - Link Swiper's CSS 
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+  <!-- 
   - preload images link
 -->
   <link rel="preload" as="image" href="./assets/images/SALT SIMBOLO FUNDO CLARO.png" />
@@ -143,6 +149,10 @@
         </li>
 
         <li>
+          <a href="/pedidos.html" class="navbar-link" data-nav-link>Pedidos</a>
+        </li>
+        <li>
+
           <a href="#contact" class="navbar-link" data-nav-link>Contato</a>
         </li>
       </div>
@@ -476,84 +486,167 @@
         - #SLIDER
       -->
 
-
       <p class="section-subtitle" style="text-align: center;" id="schedules">Programações</p>
-      <section class="slider-top" data-reveal="">
-        <div class="img-slider">
-          <div class="slide active">
-            <img src="assets/images/adolescentes.webp" alt="">
-            <div class="info">
-              <h2 class="h3 card-title">Células</h2>
-              <p class="sub">
-                Oferecemos grupos de células específicos para adolescentes e jovens em nossa igreja,
-                proporcionando um espaço de comunhão e crescimento espiritual
-                adequado às suas necessidades e interesses.
-              </p>
-              <div class="button-slider">
-                <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20COMO%20FUNCIONAM%20AS%20C%C3%89LULAS!%20%F0%9F%93%9A%F0%9F%99%8C"
-                  target="_blank">SAIBA
-                  <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
+      <section class="servicesSlider" data-reveal="">
+        <div class="swiper services-content">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/adolescentes.webp" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>CÉLULAS DE ADOLESCENTES</h2>
+                  <p>Nossa equipe SALT oferece células para adolescentes todas as sextas-feiras às 19 horas. Participe e
+                    encontre um espaço
+                    de conexão, aprendizado e crescimento!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Sexta-feira - 19h</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20COMO%20FUNCIONAM%20AS%20C%C3%89LULAS%20DOS%20ADOLESCENTES!%20%F0%9F%93%9A%F0%9F%99%8C"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Box 2 -->
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/jovens.jpeg" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>CÉLULAS DE JOVENS</h2>
+                  <p>Jovens, juntem-se à nossa equipe SALT e descubram um espaço incrível de conexão, aprendizado e
+                    crescimento! Temos
+                    células especialmente para vocês. Não percam essa oportunidade de fazer parte de algo especial.
+                    Venham e vivam essa
+                    experiência conosco!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Quarta-feira - 19h30</span>
+                    </div>
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Sexta-feira - 22h</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20COMO%20FUNCIONAM%20AS%20C%C3%89LULAS%20DE%20JOVENS!%20%F0%9F%93%9A%F0%9F%99%8C"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Box 3 -->
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/discipulado.webp" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>DISCIPULADO</h2>
+                  <p>Oferecemos programas específicos para solteiros, namorados e casados, adaptados às diversas fases
+                    da vida. Seja você
+                    homem ou mulher, há um espaço para você se aprofundar na sua jornada de fé em nosso discipulado para
+                    jovens. Venha se
+                    conectar, aprender e crescer conosco!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Uma semana reservada por mês</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MELHOR%20COMO%20FUNCIONAM%20OS%20DISCIPULADOS%20DA%20JUVENTUDE!%20%F0%9F%93%9A%F0%9F%99%8C"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Box 4 -->
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/_MG_9729.JPG" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>CULTO SALT</h2>
+                  <p>Venha participar do nosso culto mensal, liderado pela juventude, dedicado a glorificar a Deus de
+                    todo coração. Junte-se
+                    a nós para uma experiência de adoração, comunhão e inspiração espiritual. Todos são bem-vindos!
+                    Esperamos você!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Todo primeiro sábado do mês</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MELHOR%20COMO%20FUNCIONAM%20OS%20CULTOS%20MENSAIS%20DA%20JUVENTUDE!%20%F0%9F%95%AF%EF%B8%8F%F0%9F%99%8C"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Box 5 -->
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/embaixadores.JPG" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>EMBAIXADORES DO REI</h2>
+                  <p>Venha fazer parte dos Embaixadores do Rei! Somos uma organização missionária dedicada a meninos de
+                    8 a 17 anos,
+                    oferecendo uma programação repleta de atividades bíblicas e esportivas. Junte-se a nós para crescer
+                    espiritualmente e se
+                    divertir!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Domingo - 18h</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MAIS%20SOBRE%20OS%20EMBAIXADORES%20DO%20REI%20E%20COMO%20POSSO%20PARTICIPAR!%20%F0%9F%A4%B5"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Box 6 -->
+            <div class="swiper-slide">
+              <div class="service-box">
+                <div class="ser-img">
+                  <img src="assets/images/mensageiras.JPG" alt="">
+                </div>
+                <div class="box-data">
+                  <h2>MENSAGEIRAS DO REI</h2>
+                  <p>Venha fazer parte das Mensageiras do Rei! Somos uma organização missionária voltada para meninas de
+                    8 a 17 anos.
+                    Oferecemos uma variedade de atividades bíblicas e recreativas, proporcionando um ambiente de
+                    crescimento espiritual e
+                    diversão. Junte-se a nós nesta jornada emocionante!
+                  </p>
+                  <div class="package">
+                    <div class="p-box">
+                      <i class="fa-solid fa-circle-check"></i>
+                      <span>Sábado 09h30</span>
+                    </div>
+                    <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MAIS%20SOBRE%20AS%20MENSAGEIRAS%20DO%20REI%20E%20COMO%20POSSO%20PARTICIPAR!%20%F0%9F%92%81"
+                      target="_blank" class="book-now btn">Saiba Mais</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="slide">
-            <img src="assets/images/JPG.webp" alt="">
-            <div class="info">
-              <h2 class="h3 card-title">EBD</h2>
-              <p class="sub">
-                Domingo é dia de escola biblica da juventude,
-                junte-se a nós todos os domingos ás 09H!
-                Rua Jair Gonçalves Bastos, 64, Jardim Ipê (PIB Lagoa Santa)
-              </p>
-              <div class="button-slider">
-                <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MELHOR%20COMO%20FUNCIONA%20A%20EBD%20DA%20JUVENTUDE!%20%F0%9F%93%96%F0%9F%99%8C"
-                  target="_blank">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="slide">
-            <img src="assets/images/MG_9627.webp" alt="">
-            <div class="info">
-              <h2 class="h3 card-title">Culto Salt</h2>
-              <p class="sub">
-                Venha participar conosco do nosso culto mensal, onde a juventude assume a liderança e dedica-se a
-                glorificar a Deus de todo coração. Nosso objetivo é criar um ambiente de adoração e comunhão onde
-                todos são bem-vindos. Junte-se a nós para uma experiência significativa de louvor, ensino e inspiração
-                espiritual. Esperamos você!
-              </p>
-              <div class="button-slider">
-                <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MELHOR%20COMO%20FUNCIONAM%20OS%20CULTOS%20MENSAIS%20DA%20JUVENTUDE!%20%F0%9F%95%AF%EF%B8%8F%F0%9F%99%8C"
-                  target="_blank">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="slide">
-            <img src="assets/images/MG_9718.webp" alt="">
-            <div class="info">
-              <h2 class="h3 card-title">Discipulado</h2>
-              <p class="sub">
-                Oferecemos programas específicos para solteiros, namorados e casados, adaptados às diversas fases da
-                vida.
-                Seja você homem ou mulher, de qualquer idade, há um espaço para você se aprofundar na sua jornada de
-                fé. Venha se conectar, aprender e crescer conosco!
-              </p>
-              <div class="button-slider">
-                <a href="https://wa.me/+553192919718?text=OL%C3%81%21%20%F0%9F%8C%9F%20ACABEI%20DE%20VISITAR%20O%20SITE%20DA%20SALT%20JUVENTUDE%20E%20FIQUEI%20INTERESSADO(A)%20EM%20SABER%20MELHOR%20COMO%20FUNCIONAM%20OS%20DISCIPULADOS%20DA%20JUVENTUDE!%20%F0%9F%93%9A%F0%9F%99%8C"
-                  target="_blank">SAIBA <i class="fa-solid fa-plus" aria-hidden="true"></i></a>
-              </div>
-            </div>
-          </div>
-          <!-- HTML existente -->
-          <div class="navigation">
-            <!-- Setas de navegação -->
-            <div class="arrow arrow-left"><i class="fa-solid fa-arrow-left"></i></i></div>
-            <div class="btn-nav active"></div>
-            <div class="btn-nav"></div>
-            <div class="btn-nav"></div>
-            <div class="btn-nav"></div>
-            <div class="arrow arrow-right"><i class="fa-solid fa-arrow-right"></i></div>
-          </div>
+        </div>
 
+        <div class="slider-btns">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </section>
 
       <!-- 
