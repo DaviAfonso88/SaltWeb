@@ -1,5 +1,3 @@
-// Pedidos
-
 // Function to add 'loaded' class to loading element after page load
 window.addEventListener("load", function () {
   const loadingElement = document.querySelector("[data-loading]");
@@ -9,22 +7,21 @@ window.addEventListener("load", function () {
 
 const form = document.getElementById("form");
 const username = document.getElementById("username");
-const email = document.getElementById("email");
+const phone = document.getElementById("phone");
 const message = document.getElementById("message");
 const prayerRequest = document.getElementById("prayer-request");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-
   checkForm();
-});
-
-email.addEventListener("blur", () => {
-  checkInputEmail();
 });
 
 username.addEventListener("blur", () => {
   checkInputUsername();
+});
+
+phone.addEventListener("blur", () => {
+  checkInputPhone();
 });
 
 message.addEventListener("blur", () => {
@@ -39,8 +36,9 @@ username.addEventListener("input", () => {
   clearError(username);
 });
 
-email.addEventListener("input", () => {
-  clearError(email);
+phone.addEventListener("input", () => {
+  clearError(phone);
+  formatPhoneNumber();
 });
 
 message.addEventListener("input", () => {
@@ -53,16 +51,10 @@ prayerRequest.addEventListener("input", () => {
 
 function checkInputUsername() {
   const usernameValue = username.value.trim();
-
   const MIN_USERNAME_LENGTH = 3;
   const USERNAME_REGEX = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]*$/;
 
-  if (usernameValue === "" || usernameValue.length < MIN_USERNAME_LENGTH) {
-    errorInput(
-      username,
-      `O nome deve ter pelo menos ${MIN_USERNAME_LENGTH} caracteres.`
-    );
-  } else if (!USERNAME_REGEX.test(usernameValue)) {
+  if (!USERNAME_REGEX.test(usernameValue)) {
     errorInput(username, "O nome deve conter apenas letras e espaços.");
   } else {
     const formItem = username.parentElement;
@@ -70,17 +62,34 @@ function checkInputUsername() {
   }
 }
 
-function checkInputEmail() {
-  const emailValue = email.value.trim();
+function formatPhoneNumber() {
+  let phoneValue = phone.value.replace(/\D/g, "");
+  const PHONE_LENGTH = 11;
 
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (phoneValue.length > PHONE_LENGTH) {
+    phoneValue = phoneValue.slice(0, PHONE_LENGTH);
+  }
 
-  if (emailValue === "") {
-    errorInput(email, "O email é obrigatório.");
-  } else if (!EMAIL_REGEX.test(emailValue)) {
-    errorInput(email, "Insira um email válido.");
+  if (phoneValue.length <= 2) {
+    phone.value = `(${phoneValue}`;
+  } else if (phoneValue.length <= 7) {
+    phone.value = `(${phoneValue.slice(0, 2)}) ${phoneValue.slice(2)}`;
   } else {
-    const formItem = email.parentElement;
+    phone.value = `(${phoneValue.slice(0, 2)}) ${phoneValue.slice(
+      2,
+      7
+    )}-${phoneValue.slice(7)}`;
+  }
+}
+
+function checkInputPhone() {
+  const phoneValue = phone.value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
+  const PHONE_REGEX = /^\d{11}$/;
+
+  if (phoneValue !== "" && !PHONE_REGEX.test(phoneValue)) {
+    errorInput(phone, "Insira um número de celular válido com DDD.");
+  } else {
+    const formItem = phone.parentElement;
     formItem.className = "form-content";
   }
 }
@@ -108,10 +117,10 @@ function checkInputPrayerRequest() {
 }
 
 function checkForm() {
-  checkInputUsername();
-  checkInputEmail();
   checkInputMessage();
   checkInputPrayerRequest();
+  checkInputUsername();
+  checkInputPhone();
 
   const formItems = form.querySelectorAll(".form-content");
 
@@ -149,6 +158,13 @@ function clearError(input) {
   textMessage.innerText = "";
 }
 
+// Header
+let headerList = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+  headerList.classList.toggle("shadow", window.scrollY > 0);
+});
+
 let menu = document.querySelector(".menu-icon");
 let navbar = document.querySelector(".navbar");
 
@@ -156,11 +172,3 @@ menu.onclick = () => {
   menu.classList.toggle("move");
   navbar.classList.toggle("open-menu");
 };
-
-// Header
-
-let headerList = document.querySelector("header");
-
-window.addEventListener("scroll", () => {
-  headerList.classList.toggle("shadow", window.scrollY > 0);
-});
