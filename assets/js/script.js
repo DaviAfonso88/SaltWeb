@@ -164,3 +164,44 @@ var swiper = new Swiper(".services-content", {
     prevEl: ".swiper-button-prev",
   },
 });
+// Email validation
+function checkInputEmail() {
+  const email = document.getElementById("email");
+  const emailValue = email.value.trim();
+  const errorMessage = document.getElementById("error-message");
+  const successMessage = document.getElementById("success-message");
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (emailValue === "") {
+    errorInput(email, "O email é obrigatório.");
+    successMessage.style.display = "none";
+  } else if (!EMAIL_REGEX.test(emailValue)) {
+    errorInput(email, "Insira um email válido.");
+    successMessage.style.display = "none";
+  } else {
+    successInput(email);
+  }
+}
+
+function errorInput(input, message) {
+  const inputGroup = input.parentElement;
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.innerText = message;
+  errorMessage.style.display = "block";
+  inputGroup.classList.add("error");
+  inputGroup.classList.remove("success");
+}
+
+function successInput(input) {
+  const inputGroup = input.parentElement;
+  const errorMessage = document.getElementById("error-message");
+  const successMessage = document.getElementById("success-message");
+
+  errorMessage.innerText = "";
+  errorMessage.style.display = "none";
+  successMessage.style.display = "block";
+  inputGroup.classList.remove("error");
+  inputGroup.classList.add("success");
+  input.value = "";
+}

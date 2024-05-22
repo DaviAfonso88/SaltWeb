@@ -28,7 +28,7 @@
 
   :is(.header, .gallery, .category, .portfolio) .container {
     max-width: unset;
-  } /* Mantive a largura máxima como unset */
+  }
 
   /**
      * CATEGORY
@@ -133,34 +133,6 @@
     display: flex;
     column-gap: 30px;
   }
-
-  /**
-     * FOOTER
-     */
-
-  .footer-bottom {
-    padding-block-end: 40px;
-  }
-
-  .footer-bottom .container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-  }
-
-  .footer-bottom .logo {
-    margin: 0;
-  }
-
-  .copyright,
-  .social-list {
-    padding-block-end: 0;
-  }
-
-  .social-list {
-    order: 1;
-    justify-content: flex-end;
-  }
 }
 
 /**
@@ -228,7 +200,7 @@
 }
 
 /**
-   * responsive for large than 992px screen
+   * responsive for large than 1130px screen
    */
 
 @media (max-width: 1130px) {
@@ -268,6 +240,10 @@
     top: 90px;
   }
 }
+
+/**
+   * responsive for large than 992px screen
+   */
 
 @media (min-width: 992px) {
   /**
@@ -486,47 +462,6 @@
     bottom: 0;
     right: 0;
   }
-
-  /**
-     * FOOTER
-     */
-
-  .footer .shape {
-    top: 25%;
-    left: 0;
-  }
-
-  .footer .abs-img {
-    display: block;
-    position: absolute;
-    max-width: max-content;
-    z-index: -1;
-    border-radius: 0.5rem;
-  }
-
-  .footer .abs-img-1 {
-    width: 9%;
-    top: 12%;
-    left: 10%;
-  }
-
-  .footer .abs-img-2 {
-    width: 14%;
-    top: 15%;
-    right: 0;
-  }
-
-  .footer .abs-img-3 {
-    width: 16%;
-    left: 0;
-    bottom: 10%;
-  }
-
-  .footer .abs-img-4 {
-    width: 9%;
-    right: 15%;
-    bottom: 10%;
-  }
 }
 
 /**
@@ -715,28 +650,6 @@
   .portfolio-card:is(:hover, :focus-within) .btn-icon {
     opacity: 1;
   }
-
-  /**
-     * FOOTER
-     */
-
-  .footer-top {
-    padding-block: 300px;
-  }
-
-  .footer-top .section-title {
-    --fs-2: 8rem;
-    margin-block-start: 50px;
-  }
-
-  .footer .btn-icon {
-    width: 90px;
-    height: 90px;
-  }
-
-  .footer .btn-icon img {
-    width: 45px;
-  }
 }
 
 /**
@@ -840,13 +753,5 @@
 
   .portfolio .container {
     padding-inline: 45px;
-  }
-
-  /**
-     * FOOTER
-     */
-
-  .footer-top .container {
-    max-width: 1200px;
   }
 }
