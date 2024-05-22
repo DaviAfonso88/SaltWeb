@@ -60,13 +60,10 @@ function checkInputUsername() {
   if (usernameValue === "" || usernameValue.length < MIN_USERNAME_LENGTH) {
     errorInput(
       username,
-      `O nome de deve ter pelo menos ${MIN_USERNAME_LENGTH} caracteres.`
+      `O nome deve ter pelo menos ${MIN_USERNAME_LENGTH} caracteres.`
     );
   } else if (!USERNAME_REGEX.test(usernameValue)) {
-    errorInput(
-      username,
-      "O nome de usuário deve conter apenas letras e espaços."
-    );
+    errorInput(username, "O nome deve conter apenas letras e espaços.");
   } else {
     const formItem = username.parentElement;
     formItem.className = "form-content";
@@ -126,12 +123,12 @@ function checkForm() {
     showFormMessage();
     setTimeout(function () {
       window.location.reload();
-    }, 4000);
+    }, 3000);
   }
 }
 
 function showFormMessage() {
-  const formMessage = document.getElementById("formMessage");
+  const formMessage = document.getElementById("popup");
   formMessage.style.display = "block";
 }
 

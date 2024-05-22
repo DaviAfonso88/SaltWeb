@@ -104,6 +104,7 @@ select {
   color: var(--white);
   font-size: 1.6rem;
   appearance: none;
+  cursor: pointer;
 }
 
 select option {
@@ -168,8 +169,28 @@ select option:checked {
   visibility: visible;
 }
 
-.form-message {
+.popup {
   display: none;
+  position: absolute;
+  background-color: var(--white);
+  padding: 20px;
+  text-align: center;
+  border-radius: 1.2rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: auto;
+  z-index: 100;
+}
+
+.fa-circle-check {
+  color: rgba(39, 172, 39, 0.808);
+  font-size: 4rem;
+}
+
+.form-message {
+  display: block;
   color: rgba(39, 172, 39, 0.808);
   text-align: center;
 }

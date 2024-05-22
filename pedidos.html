@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="assets/css/sections/style.css" />
 
     <!-- 
+        - font awesome
+      -->
+    <link rel="stylesheet" href="assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
+
+
+    <!-- 
         - header
     -->
     <link rel="stylesheet" href="assets/css/sections/header.css" />
@@ -84,6 +90,11 @@
 
     <div class="container">
 
+        <div class="popup" id="popup">
+            <i class="fa-solid fa-circle-check"></i>
+            <p class="form-message">O seu pedido de oração foi enviado com sucesso!</p>
+        </div>
+
         <p class="card-subtitle" style="text-align: center;">
             A juventude Salt está pronta para orar por você! Por favor, preencha o formulário abaixo com seu pedido de
             oração.
@@ -91,9 +102,7 @@
 
 
         <form id="form" class="form">
-            <div class="form-message" id="formMessage">
-                O seu pedido de oração foi enviado com sucesso!
-            </div>
+
 
             <div class="form-content">
                 <label for="username">Nome</label>
@@ -119,10 +128,11 @@
                     <option value="" selected disabled>Selecione um pedido</option>
                     <option value="saude">Saúde</option>
                     <option value="familia">Família</option>
-                    <option value="Casamento">Casamento</option>
+                    <option value="casamento">Casamento</option>
+                    <option value="estudos">Estudos</option>
                     <option value="trabalho">Trabalho</option>
-                    <option value="Vida Financeira">Vida Financeira</option>
-                    <option value="Área Espiritual">Área Espiritual</option>
+                    <option value="vida financeira">Vida Financeira</option>
+                    <option value="área espiritual">Área Espiritual</option>
                     <option value="outro">Outro</option>
                 </select>
                 <a>Aqui vai a mensagem de erro....</a>
