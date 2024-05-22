@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        - custom style link
+      -->
+    <link rel="stylesheet" href="assets/css/sections/style.css" />
+
+    <!-- 
+        - header
+    -->
+    <link rel="stylesheet" href="assets/css/sections/header.css" />
+
+    <!-- 
+        - pedidos
+    -->
+    <link rel="stylesheet" href="assets/css/sections/pedidos.css" />
+
+    <!-- 
+        - media
+    -->
+    <link rel="stylesheet" href="assets/css/sections/media.css" />
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="loading" data-loading>
+        <img src="assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
+        <img src="assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
+    </div>
+
+    <header data-header>
+        <div class="nav containerHeader">
+            <a href="index.html" class="logo">
+                <img src="assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
+            </a>
+
+            <div class="navbar" data-navbar>
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Home</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Sobre</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Projetos</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Porquê</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Programações</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Spotify</a>
+                </li>
+
+                <li>
+                    <a href="index.html" class="navbar-link" data-nav-link>Pedidos</a>
+                </li>
+                <li>
+
+                    <a href="index.html" class="navbar-link" data-nav-link>Contato</a>
+                </li>
+            </div>
+
+            <div class="menu-icon">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <p class="card-subtitle" style="text-align: center;">
+            A juventude Salt está pronta para orar por você! Por favor, preencha o formulário abaixo com seu pedido de
+            oração.
+        </p>
+
+
+        <form id="form" class="form">
+            <div class="form-message" id="formMessage">
+                O seu pedido de oração foi enviado com sucesso!
+            </div>
+
+            <div class="form-content">
+                <label for="username">Nome</label>
+                <input type="text" id="username" placeholder="Digite o seu nome..." />
+                <a>Aqui vai a mensagem de erro....</a>
+            </div>
+
+            <div class="form-content">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Digite o seu email..." />
+                <a>Aqui vai a mensagem de erro....</a>
+            </div>
+
+            <div class="form-content">
+                <label for="message">Mensagem</label>
+                <textarea id="message" placeholder="Digite sua mensagem..."></textarea>
+                <a>Aqui vai a mensagem de erro....</a>
+            </div>
+
+            <div class="form-content">
+                <label for="prayer-request">Pedido de Oração</label>
+                <select id="prayer-request">
+                    <option value="" selected disabled>Selecione um pedido</option>
+                    <option value="saude">Saúde</option>
+                    <option value="familia">Família</option>
+                    <option value="Casamento">Casamento</option>
+                    <option value="trabalho">Trabalho</option>
+                    <option value="Vida Financeira">Vida Financeira</option>
+                    <option value="Área Espiritual">Área Espiritual</option>
+                    <option value="outro">Outro</option>
+                </select>
+                <a>Aqui vai a mensagem de erro....</a>
+            </div>
+
+            <button type="submit">ENVIAR PEDIDO</button>
+
+        </form>
+
+
+    </div>
+    <script src="assets/js/pedidos.js"></script>
+</body>
+
+</html>
