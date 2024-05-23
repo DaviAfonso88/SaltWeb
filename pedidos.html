@@ -100,19 +100,19 @@
             oração.
         </p>
 
-
-        <form id="form" class="form">
-
+        <form action="https://api.staticforms.xyz/submit" method="post" id="form" class="form">
+            <input type="hidden" name="accessKey" value="e5be926a-ca19-4b13-9d15-eebfb1b5393b"> <!-- Required -->
+            <input type="hidden" name="redirectTo" value="https://saltjuventude.netlify.app/pedidos"> <!-- Optional -->
 
             <div class="form-content">
                 <label for="username">Nome</label>
-                <input type="text" id="username" placeholder="Digite o seu nome..." />
+                <input type="text" id="username" name="name" placeholder="Digite o seu nome..." />
                 <a>Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
                 <label for="number">Número</label>
-                <input type="tel" id="phone" placeholder="(XX) XXXXX-XXXX" />
+                <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" />
                 <a>Aqui vai a mensagem de erro....</a>
             </div>
 
@@ -134,16 +134,12 @@
 
             <div class="form-content">
                 <label for="message">Mensagem</label>
-                <textarea id="message" placeholder="Digite sua mensagem..."></textarea>
+                <textarea id="message" name="message" placeholder="Digite sua mensagem..."></textarea>
                 <a>Aqui vai a mensagem de erro....</a>
             </div>
 
-
-
             <button type="submit">ENVIAR PEDIDO</button>
-
         </form>
-
 
     </div>
     <script src="assets/js/pedidos.js"></script>
