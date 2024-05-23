@@ -100,25 +100,23 @@
             oração.
         </p>
 
-        <form action="https://api.staticforms.xyz/submit" method="post" id="form" class="form">
-            <input type="hidden" name="accessKey" value="e5be926a-ca19-4b13-9d15-eebfb1b5393b"> <!-- Required -->
-            <input type="hidden" name="redirectTo" value="https://saltjuventude.netlify.app/pedidos"> <!-- Optional -->
+        <form action="https://formsubmit.co/daviafonso88@gmail.com" method="POST" id="form" class="form" required>
 
             <div class="form-content">
                 <label for="username">Nome</label>
-                <input type="text" id="username" name="name" placeholder="Digite o seu nome..." />
-                <a>Aqui vai a mensagem de erro....</a>
+                <input type="text" name="name" id="username" placeholder="Digite o seu nome..." required />
+                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
-                <label for="number">Número</label>
-                <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" />
-                <a>Aqui vai a mensagem de erro....</a>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Digite o seu email..." required />
+                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
                 <label for="prayer-request">Pedido de Oração</label>
-                <select id="prayer-request" name="subject">
+                <select name="prayer_request" id="prayer-request" required>
                     <option value="" selected disabled>Selecione um pedido</option>
                     <option value="saude">Saúde</option>
                     <option value="familia">Família</option>
@@ -126,20 +124,25 @@
                     <option value="estudos">Estudos</option>
                     <option value="trabalho">Trabalho</option>
                     <option value="vida financeira">Vida Financeira</option>
-                    <option value="área espiritual">Área Espiritual</option>
+                    <option value="area espiritual">Área Espiritual</option>
                     <option value="outro">Outro</option>
                 </select>
-                <a>Aqui vai a mensagem de erro....</a>
+                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
                 <label for="message">Mensagem</label>
-                <textarea id="message" name="message" placeholder="Digite sua mensagem..."></textarea>
-                <a>Aqui vai a mensagem de erro....</a>
+                <textarea name="message" id="message" placeholder="Digite sua mensagem..." required></textarea>
+                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
+
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://saltjuventude.netlify.app/pedidos">
 
             <button type="submit">ENVIAR PEDIDO</button>
         </form>
+
+
 
     </div>
     <script src="assets/js/pedidos.js"></script>
