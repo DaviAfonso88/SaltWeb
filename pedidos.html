@@ -100,7 +100,8 @@
             oração.
         </p>
 
-        <form action="https://formsubmit.co/daviafonso88@gmail.com" method="POST" id="form" class="form" required>
+        <form action="https://api.staticforms.xyz/submit" method="POST" id="form" class="form" required>
+            <input type="hidden" name="accessKey" value="e5be926a-ca19-4b13-9d15-eebfb1b5393b"> <!-- Required -->
 
             <div class="form-content">
                 <label for="username">Nome</label>
@@ -136,8 +137,7 @@
                 <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://saltjuventude.netlify.app/pedidos">
+            <input type="hidden" name="redirectTo" value="https://saltjuventude.netlify.app/pedidos">
 
             <button type="submit">ENVIAR PEDIDO</button>
         </form>
