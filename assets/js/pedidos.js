@@ -22,3 +22,11 @@ let headerList = document.querySelector("header");
 window.addEventListener("scroll", () => {
   headerList.classList.toggle("shadow", window.scrollY > 0);
 });
+
+document.getElementById("form").addEventListener("submit", function (event) {
+  var prayerRequest = document.getElementById("prayer-request").value;
+  if (!prayerRequest) {
+    event.preventDefault();
+    alert("Por favor, selecione um pedido de oração.");
+  }
+});

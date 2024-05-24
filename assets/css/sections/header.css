@@ -14,7 +14,6 @@ header {
 header.shadow {
   background-color: var(--eerie-black);
   box-shadow: 0 2px 4px var(--white_a15);
-  padding-block: 3px;
   transition: 0.4s ease;
 }
 
