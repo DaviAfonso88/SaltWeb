@@ -126,6 +126,11 @@ h3 {
   opacity: 0.8;
 }
 
+#button-submit[disabled] {
+  cursor: not-allowed;
+  background-color: #8d8a8a;
+}
+
 #footer_copyright {
   display: flex;
   justify-content: center;

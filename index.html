@@ -162,7 +162,7 @@
         </li>
         <li>
 
-          <a href="#footer_content" class="navbar-link" data-nav-link>Contato</a>
+          <a href="#footer" class="navbar-link" data-nav-link>Contato</a>
         </li>
       </div>
 
@@ -834,7 +834,7 @@
     - #FOOTER
   -->
 
-  <footer>
+  <footer id="footer">
     <div id="footer_content">
       <div id="footer_contacts">
         <img src="assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" alt="" width="60" height="40">
@@ -894,15 +894,19 @@
           Digite seu e-mail para tirar suas dúvidas
         </p>
 
-        <div id="input_group">
-          <input type="email" id="email" placeholder="Seu email">
-          <button type="button" onclick="checkInputEmail()">
-            <i class="fa-regular fa-envelope"></i>
-          </button>
-        </div>
-        <p id="error-message" style="display: none;"></p>
-        <p id="success-message" style="display: none;">E-mail enviado com sucesso!</p>
+        <form action="https://formsubmit.co/cfaf5a02238f80d30020010a4c51dde0" method="POST" id="input_group">
 
+          <input type="hidden" name="_next" value="https://saltjuventude.netlify.app">
+          <input type="hidden" name="_autoresponse"
+            value="Agradecemos por compartilhar seu pedido de oração conosco. Estamos aqui para orar por você. ">
+          <input type="hidden" name="_captcha" value="false">
+
+          <input type="email" id="email" name="email" placeholder="Seu email" required>
+          <button type="submit" id="button-submit">
+            <i class="fa-regular fa-envelope" id="envelope-icon"></i>
+            <i class="fa-solid fa-spinner fa-spin" id="spinner-icon" style="display: none; color: var(--with)"></i>
+          </button>
+        </form>
       </div>
     </div>
 

@@ -34,10 +34,12 @@ document.getElementById("form").addEventListener("submit", function (event) {
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form");
   const submitButton = document.getElementById("submit-button");
-  const loadingIndicator = document.getElementById("loading");
+  const spinnerIcon = document.getElementById("spinner");
 
   form.addEventListener("submit", function (event) {
     submitButton.disabled = true;
-    submitButton.textContent = "Enviando...";
+    submitButton.textContent = "Enviando ";
+    spinnerIcon.style.display = "inline-block";
+    submitButton.appendChild(spinnerIcon);
   });
 });
