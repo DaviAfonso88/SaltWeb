@@ -31,15 +31,17 @@ const closeNav = function () {
   body.classList.remove("active");
 };
 
-//nova
+const menu = document.querySelector(".menu-icon");
+const navbar = document.querySelector(".navbar");
 
-let menu = document.querySelector(".menu-icon");
-let navbar = document.querySelector(".navbar");
-
-menu.onclick = () => {
-  menu.classList.toggle("move");
-  navbar.classList.toggle("open-menu");
-};
+if (menu && navbar) {
+  menu.addEventListener("click", () => {
+    menu.classList.toggle("move");
+    navbar.classList.toggle("open-menu");
+    const isOpen = navbar.classList.contains("open-menu");
+    menu.setAttribute("aria-expanded", isOpen);
+  });
+}
 
 // Header
 
