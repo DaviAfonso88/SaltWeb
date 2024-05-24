@@ -30,3 +30,16 @@ document.getElementById("form").addEventListener("submit", function (event) {
     alert("Por favor, selecione um pedido de oração.");
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("form");
+  const submitButton = document.getElementById("submit-button");
+  const loadingIndicator = document.getElementById("loading");
+
+  form.addEventListener("submit", function (event) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Enviando...";
+
+    loadingIndicator.style.display = "block";
+  });
+});
