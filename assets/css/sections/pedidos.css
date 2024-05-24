@@ -195,11 +195,9 @@ select option:checked {
   text-align: center;
 }
 
-#loading {
-  display: none;
-  font-size: 16px;
-  color: #000;
-  margin-top: 10px;
+#submit-button[disabled] {
+  cursor: not-allowed;
+  background-color: #8d8a8a;
 }
 
 @media (max-width: 768px) {

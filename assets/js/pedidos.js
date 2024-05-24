@@ -39,7 +39,5 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (event) {
     submitButton.disabled = true;
     submitButton.textContent = "Enviando...";
-
-    loadingIndicator.style.display = "block";
   });
 });
