@@ -16,7 +16,6 @@ menu.onclick = () => {
 };
 
 // Header
-
 let headerList = document.querySelector("header");
 
 window.addEventListener("scroll", () => {
@@ -31,12 +30,18 @@ document.getElementById("form").addEventListener("submit", function (event) {
   }
 });
 
+//Validation Form
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form");
   const submitButton = document.getElementById("submit-button");
   const spinnerIcon = document.getElementById("spinner");
 
   form.addEventListener("submit", function (event) {
+    var message = document.getElementById("message").value;
+    if (message.length > 600) {
+      event.preventDefault();
+      alert("Por favor, limite sua mensagem a 600 caracteres.");
+    }
     submitButton.disabled = true;
     submitButton.textContent = "Enviando ";
     spinnerIcon.style.display = "inline-block";
