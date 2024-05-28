@@ -24,10 +24,8 @@ const toggleNav = function () {
 
 const closeNav = function () {
   const navbar = document.querySelector("[data-navbar]");
-  const overlay = document.querySelector("[data-overlay]");
   const body = document.body;
   navbar.classList.remove("active");
-  overlay.classList.remove("active");
   body.classList.remove("active");
 };
 

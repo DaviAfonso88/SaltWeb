@@ -14,7 +14,6 @@ header {
 header.shadow {
   background-color: var(--eerie-black);
   box-shadow: 0 2px 4px var(--white_a15);
-  transition: 0.4s ease;
 }
 
 .containerHeader {
