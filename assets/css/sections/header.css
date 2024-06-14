@@ -31,9 +31,9 @@ header.shadow {
 .navbar {
   display: flex;
   align-items: center;
-  column-gap: 4rem;
+  column-gap: 3rem;
   width: 100%;
-  margin-right: 210px;
+  margin-right: 320px;
 }
 
 .navbar-link {
