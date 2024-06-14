@@ -54,6 +54,28 @@ const navLinks = document.querySelectorAll("[data-nav-link]");
 addEventOnElements(navTogglers, "click", toggleNav);
 addEventOnElements(navLinks, "click", closeNav);
 
+function handleSelectChange() {
+  const selectElement = document.getElementById("prayer-request");
+  const selectedValue = selectElement.value;
+  if (selectedValue) {
+    if (selectedValue.startsWith("#")) {
+      // Anchor link handling
+      document
+        .querySelector(selectedValue)
+        .scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Redirect to another page
+      window.location.href = selectedValue;
+    }
+  }
+}
+
+// Adicionar o event listener ao select da navbar
+const prayerRequestSelect = document.getElementById("prayer-request");
+if (prayerRequestSelect) {
+  prayerRequestSelect.addEventListener("change", handleSelectChange);
+}
+
 // Function to activate or deactivate 'active' class on header based on scroll
 const header = document.querySelector("[data-header]");
 const activeElementOnScroll = function () {

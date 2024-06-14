@@ -34,11 +34,18 @@
 </head>
 
 <body>
+    <!-- 
+            -#PRELOADING
+          -->
 
     <div class="loading" data-loading>
-        <img src="assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
-        <img src="assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
+        <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
+        <img src="./assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
     </div>
+
+    <!-- 
+            - #HEADER
+          -->
 
     <header data-header>
         <div class="nav containerHeader">
@@ -79,6 +86,14 @@
 
                     <a href="index.html" class="navbar-link" data-nav-link>Contato</a>
                 </li>
+
+                <li id="select-container">
+                    <select name="prayer_request" id="prayer-request" onchange="handleSelectChange(this)">
+                        <option value="" selected disabled>Para Você</option>
+                        <option value="pedidos.html">Pedidos</option>
+                        <option value="contribuicao.html">Contribua</option>
+                    </select>
+                </li>
             </div>
 
             <div class="menu-icon">
@@ -91,11 +106,6 @@
 
     <div class="container">
 
-        <div class="popup" id="popup">
-            <i class="fa-solid fa-circle-check"></i>
-            <p class="form-message">O seu pedido de oração foi enviado com sucesso!</p>
-        </div>
-
         <p class="card-subtitle" style="text-align: center;">
             A juventude Salt está pronta para orar por você! Por favor, preencha o formulário abaixo com seu pedido de
             oração.
@@ -106,20 +116,15 @@
             <input type="hidden" name="_next" value="https://saltjuventude.netlify.app/pedidos">
             <input type="hidden" name="_subject" value="Novo pedido de oração!">
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="Novo pedido de oração!">
-
-
 
             <div class="form-content">
                 <label for="username">Nome</label>
                 <input type="text" name="name" id="username" placeholder="Digite o seu nome..." required />
-                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="Digite o seu email..." required />
-                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
@@ -136,14 +141,12 @@
                     <option value="area espiritual">Área Espiritual</option>
                     <option value="outro">Outro</option>
                 </select>
-                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <div class="form-content">
                 <label for="message">Mensagem</label>
                 <textarea name="message" id="message" placeholder="Digite sua mensagem..." required
                     maxlength="600"></textarea>
-                <a class="error-message">Aqui vai a mensagem de erro....</a>
             </div>
 
             <button type="submit" id="submit-button">ENVIAR PEDIDO <i class="fa-solid fa-spinner fa-spin" id="spinner"
@@ -154,6 +157,7 @@
         </form>
     </div>
     <script src="assets/js/pedidos.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>

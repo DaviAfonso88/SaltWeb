@@ -158,11 +158,15 @@
         </li>
 
         <li>
-          <a href="pedidos.html" class="navbar-link" data-nav-link>Pedidos</a>
-        </li>
-        <li>
-
           <a href="#footer" class="navbar-link" data-nav-link>Contato</a>
+        </li>
+
+        <li>
+          <select name="prayer_request" id="prayer-request" required onchange="handleSelectChange(this)">
+            <option value="" selected disabled>Para Você</option>
+            <option value="pedidos.html">Pedidos</option>
+            <option value="contribuicao.html">Contribua</option>
+          </select>
         </li>
       </div>
 
@@ -919,8 +923,6 @@
         <form action="https://formsubmit.co/f9c12ce1e5de1644d0e01d2941509e17" method="POST" id="input_group">
 
           <input type="hidden" name="_next" value="https://saltjuventude.netlify.app">
-          <input type="hidden" name="_autoresponse"
-            value="Agradecemos por compartilhar seu pedido de oração conosco. Estamos aqui para orar por você. ">
           <input type="hidden" name="_subject" value="Quero tirar minhas dúvidas">
           <input type="hidden" name="_captcha" value="false">
 

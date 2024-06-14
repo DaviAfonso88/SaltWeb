@@ -96,14 +96,11 @@ body {
 }
 
 select {
-  width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid var(--salt-purple);
   background-color: transparent;
   color: var(--white);
   font-size: 1.6rem;
-  appearance: none;
   cursor: pointer;
 }
 
@@ -150,65 +147,7 @@ select option:checked {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.form-content.error textarea,
-.form-content.error select {
-  border-color: #ff3b2598;
-}
-
-.form-content.error a {
-  color: #ff3b2598;
-  visibility: visible;
-}
-
-.form-content.error input {
-  border-color: #ff3b2598;
-}
-
-.form-content.error a {
-  color: #ff3b2598;
-  visibility: visible;
-}
-
-.popup {
-  display: none;
-  position: absolute;
-  background-color: var(--white);
-  padding: 20px;
-  text-align: center;
-  border-radius: 1.2rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: auto;
-  z-index: 100;
-}
-
-.fa-circle-check {
-  color: rgba(39, 172, 39, 0.808);
-  font-size: 4rem;
-}
-
-.form-message {
-  display: block;
-  color: rgba(39, 172, 39, 0.808);
-  text-align: center;
-}
-
 #submit-button[disabled] {
   cursor: not-allowed;
   background-color: #8d8a8a;
-}
-
-@media (max-width: 768px) {
-  .form-content.error a {
-    font-size: 1.2rem;
-    position: absolute;
-    left: 0;
-    visibility: visible;
-    color: #ff3b2598;
-  }
-  .form-message {
-    font-size: 1.2rem;
-  }
 }

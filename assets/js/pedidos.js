@@ -1,4 +1,25 @@
-// Pedidos
+"use strict";
+
+// Function to handle select change
+function handleSelectChange(selectElement) {
+  const selectedValue = selectElement.value;
+  if (selectedValue) {
+    if (selectedValue.startsWith("#")) {
+      // Anchor link handling
+      document
+        .querySelector(selectedValue)
+        .scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Redirect to another page
+      window.location.href = selectedValue;
+    }
+  }
+}
+
+// Function to add event listener to multiple elements
+const addEventOnElements = function (elements, eventType, callback) {
+  elements.forEach((element) => element.addEventListener(eventType, callback));
+};
 
 // Function to add 'loaded' class to loading element after page load
 window.addEventListener("load", function () {
@@ -7,27 +28,58 @@ window.addEventListener("load", function () {
   document.body.classList.remove("active");
 });
 
-let menu = document.querySelector(".menu-icon");
-let navbar = document.querySelector(".navbar");
-
-menu.onclick = () => {
-  menu.classList.toggle("move");
-  navbar.classList.toggle("open-menu");
+// Function to toggle mobile menu
+const toggleNav = function () {
+  const navbar = document.querySelector("[data-navbar]");
+  const overlay = document.querySelector("[data-overlay]");
+  const body = document.body;
+  navbar.classList.toggle("active");
+  overlay.classList.toggle("active");
+  body.classList.toggle("active");
 };
 
-// Header
-let headerList = document.querySelector("header");
+const closeNav = function () {
+  const navbar = document.querySelector("[data-navbar]");
+  const body = document.body;
+  navbar.classList.remove("active");
+  body.classList.remove("active");
+};
 
-window.addEventListener("scroll", () => {
-  headerList.classList.toggle("shadow", window.scrollY > 0);
-});
+const menu = document.querySelector(".menu-icon");
+const navbar = document.querySelector(".navbar");
 
-document.getElementById("form").addEventListener("submit", function (event) {
-  var prayerRequest = document.getElementById("prayer-request").value;
-  if (!prayerRequest) {
-    event.preventDefault();
-    alert("Por favor, selecione um pedido de oração.");
+if (menu && navbar) {
+  menu.addEventListener("click", () => {
+    menu.classList.toggle("move");
+    navbar.classList.toggle("open-menu");
+    const isOpen = navbar.classList.contains("open-menu");
+    menu.setAttribute("aria-expanded", isOpen);
+  });
+}
+
+// Function to activate or deactivate 'active' class on header based on scroll
+const header = document.querySelector("[data-header]");
+const activeElementOnScroll = function () {
+  const scrollThreshold = 50;
+  if (window.scrollY > scrollThreshold) {
+    header.classList.add("active");
+  } else {
+    header.classList.remove("active");
   }
+};
+
+// Email validation
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("input_group");
+  const submitButton = document.getElementById("button-submit");
+  const envelopeIcon = document.getElementById("envelope-icon");
+  const spinnerIcon = document.getElementById("spinner-icon");
+
+  form.addEventListener("submit", function (event) {
+    submitButton.disabled = true;
+    envelopeIcon.style.display = "none";
+    spinnerIcon.style.display = "inline-block";
+  });
 });
 
 //Validation Form
