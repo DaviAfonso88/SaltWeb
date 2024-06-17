@@ -45,6 +45,7 @@ p {
 
 .section {
   background-image: linear-gradient(to left, #d156c973, hsl(0, 0%, 100%));
+  background-color: var(--white);
   padding: var(--padding);
   margin: var(--margin);
   border-radius: var(--radius);
