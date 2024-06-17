@@ -68,20 +68,6 @@ const activeElementOnScroll = function () {
   }
 };
 
-// Email validation
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("input_group");
-  const submitButton = document.getElementById("button-submit");
-  const envelopeIcon = document.getElementById("envelope-icon");
-  const spinnerIcon = document.getElementById("spinner-icon");
-
-  form.addEventListener("submit", function (event) {
-    submitButton.disabled = true;
-    envelopeIcon.style.display = "none";
-    spinnerIcon.style.display = "inline-block";
-  });
-});
-
 //Validation Form
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form");

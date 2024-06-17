@@ -1,0 +1,138 @@
+:root {
+  --radius: 12px;
+  --padding: 20px;
+  --margin: 20px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --transition: 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--smokey-black);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--padding);
+}
+
+main {
+  display: flex;
+  flex-direction: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px 0;
+}
+
+h3 {
+  font-size: 4rem;
+}
+
+p {
+  font-size: 2.8rem;
+  font-style: italic;
+}
+
+.section {
+  background-image: linear-gradient(to left, #d156c973, hsl(0, 0%, 100%));
+  padding: var(--padding);
+  margin: var(--margin);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  transition: transform var(--transition);
+  box-shadow: 0 4px 50px #92348c79;
+}
+
+.section:hover {
+  transform: translateY(-5px);
+}
+
+.qr-container {
+  margin: var(--padding) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-image {
+  max-width: 48%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.copy-button {
+  background-color: var(--salt-purple);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background-color var(--transition);
+}
+
+.copy-button:hover {
+  background-color: #7a2b71;
+}
+
+.steps-list {
+  list-style: none;
+  margin: 70px;
+  text-align: left;
+}
+
+.steps-list li {
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+}
+
+.steps-list li i {
+  margin-right: 15px;
+  color: var(--salt-purple);
+  font-size: 2rem;
+}
+
+@media (max-width: 1247px) {
+  main {
+    flex-direction: column;
+  }
+  .qr-image {
+    max-width: 65%;
+  }
+}
+
+@media (max-width: 630px) {
+  h3 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 2rem;
+  }
+  .steps-list {
+    margin: 0px;
+    margin-top: 20px;
+  }
+  .steps-list li {
+    font-size: 1.3rem;
+  }
+  .copy-button {
+    padding: 10px 20px;
+    font-size: 1.3rem;
+  }
+}

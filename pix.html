@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doe via Pix - Juventude da Igreja</title>
+    <link rel="stylesheet" href="pix.css">
     <!-- 
-        - custom style link
-      -->
-    <link rel="stylesheet" href="assets/css/sections/style.css" />
+    - favicon
+  -->
+    <link rel="shortcut icon" href="assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
 
     <!-- 
-        - font awesome
-      -->
+      - font awesome
+    -->
     <link rel="stylesheet" href="assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
 
+    <!-- 
+       - custom style link
+    -->
+    <link rel="stylesheet" href="./assets/css/sections/style.css" />
 
     <!-- 
-        - header
+      - custom header link
     -->
-    <link rel="stylesheet" href="assets/css/sections/header.css" />
+    <link rel="stylesheet" href="./assets/css/sections//header.css" />
 
     <!-- 
-        - contribuicao
+      - custom header link
     -->
-    <link rel="stylesheet" href="assets/css/sections/contribuicao.css" />
+    <link rel="stylesheet" href="./assets/css/sections//header.css" />
 
     <!-- 
-        - media
+        - pix
     -->
-    <link rel="stylesheet" href="assets/css/sections/media.css" />
+    <link rel="stylesheet" href="assets/css/sections/pix.css" />
 
-    <title>Contribua</title>
+    <!-- 
+        - custom media link
+      -->
+    <link rel="stylesheet" href="./assets/css/sections/media.css" />
+
 </head>
 
 <body>
-
     <!-- 
-        -#PRELOADING
-      -->
+        - #PRELOADING
+    -->
 
     <div class="loading" data-loading>
         <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
@@ -46,13 +55,12 @@
 
     <!-- 
         - #HEADER
-      -->
+    -->
 
     <header data-header>
         <div class="nav containerHeader">
             <a href="index.html" class="logo">
-                <img src="./assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40"
-                    alt="Salt home" />
+                <img src="assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
             </a>
 
             <div class="navbar" data-navbar>
@@ -85,14 +93,15 @@
                 </li>
 
                 <li>
+
                     <a href="index.html" class="navbar-link" data-nav-link>Contato</a>
                 </li>
 
-                <li>
-                    <select name="prayer_request" id="prayer-request" required onchange="handleSelectChange(this)">
+                <li id="select-container">
+                    <select name="prayer_request" id="prayer-request" onchange="handleSelectChange(this)">
                         <option value="" selected disabled>Para Você</option>
                         <option value="pedidos.html">Pedidos</option>
-                        <option value="#events">Contribua</option>
+                        <option value="contribuicao.html">Contribua</option>
                     </select>
                 </li>
             </div>
@@ -104,42 +113,28 @@
             </div>
         </div>
     </header>
+    <main>
+        <section class="section pix">
+            <h3>Doe via Pix</h3>
+            <div class="content-wrapper" style="justify-content: center;">
+                <div class="qr-container">
+                    <img src="assets/images/pix.png" alt="QR Code para doação" class="qr-image">
+                </div>
+                <button class="copy-button" onclick="copyQRCode()">Copiar QR Code</button>
+            </div>
+        </section>
+        <section class="section qr">
+            <h3>Como Funciona</h3>
+            <p>É fácil e rápido!</p>
+            <ol class="steps-list">
+                <li><i class="fas fa-mobile-alt"></i> Abra o aplicativo do seu banco.</li>
+                <li><i class="fas fa-qrcode"></i> Selecione a opção de pagamento via Pix.</li>
+                <li><i class="fas fa-camera"></i> Escaneie o QR Code ou copie e cole o código Pix.</li>
+                <li><i class="fas fa-coins"></i> Insira o valor que deseja doar e confirme.</li>
+            </ol>
+        </section>
+    </main>
 
-    <div class="container">
-        <div class="card">
-            <div class="box">
-                <div class="content">
-                    <h2>01</h2>
-                    <h3>Lanche Salt</h3>
-                    <p>Ajude a tornar o Culto Salt ainda mais especial! Contribua com o lanche dos nossos jovens.</p>
-                    <a href="https://shortlurl.com/CantinaSalt" target="_blank">Contribuir</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="box">
-                <div class="content">
-                    <h2>02</h2>
-                    <h3>Acampa Salt</h3>
-                    <p>Contribua com amor para o acampamento da juventude, de acordo com sua vontade e possibilidade.
-                    </p>
-                    <a href="https://wa.me/553182449215?text=Ol%C3%A1%21%20Gostaria%20de%20contribuir%20para%20o%20acampamento%20da%20juventude%20Salt.%20Como%20posso%20ajudar%3F"
-                        target="_blank">Contribuir</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="box">
-                <div class="content">
-                    <h2>03</h2>
-                    <h3>Juventude</h3>
-                    <p>Contribua como desejar para o desenvolvimento da nossa juventude na PIBLS.
-                    </p>
-                    <a href="pix.html">Contribuir</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="assets/js/script.js"></script>
 </body>
 

@@ -200,3 +200,21 @@ document.addEventListener("DOMContentLoaded", function () {
     spinnerIcon.style.display = "inline-block";
   });
 });
+
+// Copy QRCode
+function copyQRCode() {
+  const pixCode =
+    "00020126460014br.gov.bcb.pix0124juventudepibls@gmail.com5204000053039865802BR5924THIAGO SILVA OLIVEIRA ME6006Brasil62290525202406171502PAVXOCX9BNYDD6304B848";
+  navigator.clipboard
+    .writeText(pixCode)
+    .then(() => {
+      const button = document.querySelector(".copy-button");
+      button.textContent = "Copiado!";
+      setTimeout(() => {
+        button.textContent = "Copiar Código Pix";
+      }, 5000);
+    })
+    .catch((err) => {
+      alert("Falha ao copiar o código Pix.");
+    });
+}
