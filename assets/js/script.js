@@ -29,6 +29,7 @@ const closeNav = function () {
   body.classList.remove("active");
 };
 
+// Menu mobile
 const menu = document.querySelector(".menu-icon");
 const navbar = document.querySelector(".navbar");
 
@@ -42,7 +43,6 @@ if (menu && navbar) {
 }
 
 // Header
-
 let headerList = document.querySelector("header");
 
 window.addEventListener("scroll", () => {
@@ -70,7 +70,9 @@ function handleSelectChange() {
   }
 }
 
-// Adicionar o event listener ao select da navbar
+// Header dropdown
+
+// Add o event listener ao select da navbar
 const prayerRequestSelect = document.getElementById("prayer-request");
 if (prayerRequestSelect) {
   prayerRequestSelect.addEventListener("change", handleSelectChange);

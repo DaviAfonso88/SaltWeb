@@ -161,13 +161,22 @@
           <a href="#footer" class="navbar-link" data-nav-link>Contato</a>
         </li>
 
-        <li>
-          <select name="prayer_request" id="prayer-request" required onchange="handleSelectChange(this)">
-            <option value="" selected disabled>Para Você</option>
-            <option value="requests.html">Pedidos</option>
-            <option value="contribution.html">Contribua</option>
-          </select>
-        </li>
+        <div class="dropdown">
+          <li>
+            <a href="#" id="link-sub" class="navbar-link">Movimentos</a>
+          </li>
+          <ul class="sub-menu">
+            <li>
+              <a href="requests.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
+            </li>
+            <li>
+              <a href="contribution.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
+            </li>
+            <li>
+              <a href="contribution.html" class="navbar-linkdrop" data-nav-link>Ministerios</a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="menu-icon">

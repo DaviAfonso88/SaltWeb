@@ -45,6 +45,17 @@ header.shadow {
   cursor: pointer;
 }
 
+.navbar-linkdrop {
+  position: relative;
+  font-weight: 500;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.navbar-linkdrop:hover {
+  color: var(--salt-purple);
+}
+
 .navbar-link::after {
   content: "";
   position: absolute;
@@ -59,6 +70,40 @@ header.shadow {
 .navbar-link:hover.navbar-link::after {
   width: 100%;
   transition: 0.3s all cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  background: var(--eerie-black);
+  color: var(--white);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  border-radius: 0.5rem;
+  z-index: 1;
+  list-style-type: none;
+  margin: 0;
+  top: 100%;
+  width: 150px; /* largura do submenu para telas menores */
+  text-align: left; /* alinhamento do texto dentro do submenu */
+}
+
+.sub-menu li {
+  margin-right: 0;
+  padding: 0 15px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown .sub-menu {
+  display: none;
+  text-align: left;
+}
+
+.dropdown:hover .sub-menu {
+  display: block;
 }
 
 .menu-icon {
