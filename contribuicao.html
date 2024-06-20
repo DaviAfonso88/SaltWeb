@@ -21,22 +21,23 @@
     <link rel="stylesheet" href="assets/css/sections/header.css" />
 
     <!-- 
-        - requests
+        - contribution
     -->
-    <link rel="stylesheet" href="assets/css/sections/requests.css" />
+    <link rel="stylesheet" href="assets/css/sections/contribution.css" />
 
     <!-- 
         - media
     -->
     <link rel="stylesheet" href="assets/css/sections/media.css" />
 
-    <title>Pedidos</title>
+    <title>Contribua</title>
 </head>
 
 <body>
+
     <!-- 
-        - #PRELOADING
-    -->
+        -#PRELOADING
+      -->
 
     <div class="loading" data-loading>
         <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
@@ -45,12 +46,13 @@
 
     <!-- 
         - #HEADER
-    -->
+      -->
 
     <header data-header>
         <div class="nav containerHeader">
             <a href="index.html" class="logo">
-                <img src="assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
+                <img src="./assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40"
+                    alt="Salt home" />
             </a>
 
             <div class="navbar" data-navbar>
@@ -83,7 +85,6 @@
                 </li>
 
                 <li>
-
                     <a href="index.html" class="navbar-link" data-nav-link>Contato</a>
                 </li>
 
@@ -93,13 +94,13 @@
                     </li>
                     <ul class="sub-menu">
                         <li>
-                            <a href="requests.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
+                            <a href="pedidos.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
                         </li>
                         <li>
-                            <a href="contribution.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
+                            <a href="contribuicao.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
                         </li>
                         <li>
-                            <a href="contribution.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
+                            <a href="contribuicao.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
                         </li>
                     </ul>
                 </div>
@@ -114,58 +115,40 @@
     </header>
 
     <div class="container">
-
-        <p class="card-subtitle" style="text-align: center;">
-            A juventude Salt está pronta para orar por você! Por favor, preencha o formulário abaixo com seu pedido de
-            oração.
-        </p>
-
-        <form action="https://formsubmit.co/f9c12ce1e5de1644d0e01d2941509e17" method="POST" id="form" class="form">
-
-            <input type="hidden" name="_next" value="https://saltjuventude.netlify.app/pedidos">
-            <input type="hidden" name="_subject" value="Novo pedido de oração!">
-            <input type="hidden" name="_captcha" value="false">
-
-            <div class="form-content">
-                <label for="username">Nome</label>
-                <input type="text" name="name" id="username" placeholder="Digite o seu nome..." required />
+        <div class="card">
+            <div class="box">
+                <div class="content">
+                    <h2>01</h2>
+                    <h3>Lanche Salt</h3>
+                    <p>Ajude a tornar o Culto Salt ainda mais especial! Contribua com o lanche dos nossos jovens.</p>
+                    <a href="https://shortlurl.com/CantinaSalt" target="_blank">Contribuir</a>
+                </div>
             </div>
-
-            <div class="form-content">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite o seu email..." required />
+        </div>
+        <div class="card">
+            <div class="box">
+                <div class="content">
+                    <h2>02</h2>
+                    <h3>Acampa Salt</h3>
+                    <p>Contribua com amor para o acampamento da juventude, de acordo com sua vontade e possibilidade.
+                    </p>
+                    <a href="https://wa.me/553182449215?text=Ol%C3%A1%21%20Gostaria%20de%20contribuir%20para%20o%20acampamento%20da%20juventude%20Salt.%20Como%20posso%20ajudar%3F"
+                        target="_blank">Contribuir</a>
+                </div>
             </div>
-
-            <div class="form-content">
-                <label for="prayer-request">Pedido de Oração</label>
-                <select name="prayer_request" id="prayer-request" required>
-                    <option value="" selected disabled>Selecione um pedido</option>
-                    <option value="saude">Saúde</option>
-                    <option value="familia">Família</option>
-                    <option value="casamento">Casamento</option>
-                    <option value="namoro">Namoro</option>
-                    <option value="estudos">Estudos</option>
-                    <option value="trabalho">Trabalho</option>
-                    <option value="vida financeira">Vida Financeira</option>
-                    <option value="area espiritual">Área Espiritual</option>
-                    <option value="outro">Outro</option>
-                </select>
+        </div>
+        <div class="card">
+            <div class="box">
+                <div class="content">
+                    <h2>03</h2>
+                    <h3>Juventude</h3>
+                    <p>Contribua como desejar para o desenvolvimento da nossa juventude na PIBLS.
+                    </p>
+                    <a href="pix.html">Contribuir</a>
+                </div>
             </div>
-
-            <div class="form-content">
-                <label for="message">Mensagem</label>
-                <textarea name="message" id="message" placeholder="Digite sua mensagem..." required
-                    maxlength="600"></textarea>
-            </div>
-
-            <button type="submit" id="submit-button">ENVIAR PEDIDO <i class="fa-solid fa-spinner fa-spin" id="spinner"
-                    style="display: none;"></i>
-            </button>
-
-
-        </form>
+        </div>
     </div>
-    <script src="assets/js/pedidos.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 
