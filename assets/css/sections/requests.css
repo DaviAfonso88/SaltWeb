@@ -1,33 +1,6 @@
-:root {
-  /**
-   * cores
-   */
-  --smokey-black: hsl(0, 0%, 7%);
-  --smokey-black-transparent: hsla(0, 0%, 7%, 0.575);
-  --eerie-black: hsl(0, 0%, 9%);
-  --white_a9: hsla(0, 0%, 100%, 0.09);
-  --white_a15: hsla(0, 0%, 100%, 0.15);
-  --white_a25: hsla(0, 0%, 100%, 0.25);
-  --white_a50: hsla(0, 0%, 100%, 0.5);
-  --white_a70: hsla(0, 0%, 100%, 0.7);
-  --white_a75: hsla(0, 0%, 100%, 0.75);
-  --white_a80: hsla(0, 0%, 100%, 0.8);
-  --jet-1: hsl(0, 0%, 20%);
-  --jet-2: hsl(0, 0%, 16%);
-  --white: hsl(0, 0%, 100%);
-  --black: hsl(0, 0%, 0%);
-  --salt-purple: #92348c;
-
-  /**
-   * cores do gradiente
-   */
-  --gradient-1: linear-gradient(180deg, transparent, var(--smokey-black));
-  --gradient-2: linear-gradient(
-    180deg,
-    var(--smokey-black) 25%,
-    hsla(0, 0%, 0%, 0.6) 80%
-  );
-}
+/*-----------------------------------*\
+  #REQUESTS
+\*-----------------------------------*/
 
 body {
   background: var(--smokey-black);
