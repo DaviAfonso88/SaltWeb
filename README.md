@@ -16,6 +16,10 @@
 > Bem-vindo ao repositório do projeto do site da juventude da Primeira Igreja Batista em Lagoa Santa. Este projeto foi desenvolvido com o objetivo de criar um site funcional e atrativo para a comunidade jovem da igreja.
 
 <br>
+
+Acesse o site por aqui 👉 [Juventude Salt](https://saltjuventude.netlify.app/)
+
+<br>
 <br>
 
 ## 💻 Tecnologias Utilizadas 
