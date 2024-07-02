@@ -21,6 +21,7 @@
 
 a {
   cursor: default;
+  pointer-events: none;
 }
 
 .category-card .card-title {
