@@ -370,6 +370,15 @@ body.active {
   stroke: var(--hover-text-color, var(--black));
 }
 
+.card-subtitle {
+  color: var(--white_a50);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  line-height: 1.5;
+  margin-block: 10px 100px;
+  text-transform: uppercase;
+}
+
 .section-subtitle {
   color: var(--white_a25);
   font-size: var(--fs-7);

@@ -3,7 +3,9 @@
 \*-----------------------------------*/
 
 .portfolio {
-  padding-block-end: 100px;
+  margin: 0 auto;
+  margin-top: 100px;
+  text-align: center;
 }
 
 .portfolio .section-title {

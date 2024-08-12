@@ -5,41 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doe via Pix - Juventude da PIBLS</title>
-    <link rel="stylesheet" href="pix.css">
+    <link rel="stylesheet" href="../assets/css/sections/pix.css">
     <!-- 
     - favicon
   -->
-    <link rel="shortcut icon" href="assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
+    <link rel="shortcut icon" href="../assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
 
     <!-- 
       - font awesome
     -->
-    <link rel="stylesheet" href="assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
 
     <!-- 
        - custom style link
     -->
-    <link rel="stylesheet" href="./assets/css/sections/style.css" />
+    <link rel="stylesheet" href="../assets/css/sections/style.css" />
 
     <!-- 
       - custom header link
     -->
-    <link rel="stylesheet" href="./assets/css/sections//header.css" />
+    <link rel="stylesheet" href="../assets/css/sections//header.css" />
 
     <!-- 
       - custom header link
     -->
-    <link rel="stylesheet" href="./assets/css/sections//header.css" />
+    <link rel="stylesheet" href="../assets/css/sections//header.css" />
 
     <!-- 
         - pix
     -->
-    <link rel="stylesheet" href="assets/css/sections/pix.css" />
+    <link rel="stylesheet" href="../assets/css/sections/pix.css" />
 
     <!-- 
         - custom media link
       -->
-    <link rel="stylesheet" href="./assets/css/sections/media.css" />
+    <link rel="stylesheet" href="../assets/css/sections/media.css" />
 
 </head>
 
@@ -49,8 +49,8 @@
     -->
 
     <div class="loading" data-loading>
-        <img src="./assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
-        <img src="./assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
+        <img src="../assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
+        <img src="../assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
     </div>
 
     <!-- 
@@ -59,57 +59,41 @@
 
     <header data-header>
         <div class="nav containerHeader">
-            <a href="index.html" class="logo">
-                <img src="assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40" alt="Salt home" />
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40"
+                    alt="Salt home" />
             </a>
 
             <div class="navbar" data-navbar>
                 <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Home</a>
+                    <a href="../index.html" class="navbar-link" data-nav-link>Sobre</a>
                 </li>
 
                 <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Sobre</a>
+                    <a href="../pages/programações.html" class="navbar-link" data-nav-link>Programações</a>
                 </li>
 
                 <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Projetos</a>
+                    <a href="../pages/eventos.html" class="navbar-link" data-nav-link>Eventos</a>
                 </li>
 
                 <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Porquê</a>
-                </li>
-
-                <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Programações</a>
-                </li>
-
-                <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Eventos</a>
-                </li>
-
-                <li>
-                    <a href="index.html" class="navbar-link" data-nav-link>Spotify</a>
-                </li>
-
-                <li>
-
-                    <a href="index.html" class="navbar-link" data-nav-link>Contato</a>
+                    <a href="../pages/spotify.html" class="navbar-link" data-nav-link>Spotify</a>
                 </li>
 
                 <div class="dropdown">
                     <li>
-                        <a href="#" id="link-sub" class="navbar-link">Movimentos</a>
+                        <p id="link-sub" class="navbar-link">Movimentos</p>
                     </li>
                     <ul class="sub-menu">
                         <li>
-                            <a href="pedidos.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
+                            <a href="./pedidos.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
                         </li>
                         <li>
-                            <a href="contribuicao.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
+                            <a href="./contribuicao.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
                         </li>
                         <li>
-                            <a href="cursos.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
+                            <a href="./cursos.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
                         </li>
                     </ul>
                 </div>
@@ -127,7 +111,7 @@
             <h3>Contribua via Pix</h3>
             <div class="content-wrapper" style="justify-content: center;">
                 <div class="qr-container">
-                    <img src="assets/images/pix.png" alt="QR Code para doação" class="qr-image">
+                    <img src="../assets/images/pix.png" alt="QR Code para doação" class="qr-image">
                 </div>
                 <button class="copy-button" onclick="copyQRCode()">Copiar QR Code</button>
             </div>
@@ -143,8 +127,8 @@
             </ol>
         </section>
     </main>
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/pix.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/pix.js"></script>
 </body>
 
 </html>

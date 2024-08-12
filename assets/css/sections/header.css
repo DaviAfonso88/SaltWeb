@@ -84,8 +84,8 @@ header.shadow {
   list-style-type: none;
   margin: 0;
   top: 100%;
-  width: 150px; /* largura do submenu para telas menores */
-  text-align: left; /* alinhamento do texto dentro do submenu */
+  width: 150px;
+  text-align: left;
 }
 
 .sub-menu li {
