@@ -2,332 +2,333 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 
+        - primary meta tags
+    -->
     <title>Cursos</title>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Juventude Salt - PIBLS">
+    <meta property="og:title" content="Juventude Salt - CURSOS">
     <meta property="og:image"
         content="https://saltjuventude.netlify.app/assets/images/SALT%20SIMBOLO%20DEGRADE%203.png">
-    <meta property="og:description" content="Cursos da juventude salt">
+    <meta property="og:description" content="Cursos da Juventude Salt!">
+
+    <!-- 
+            - favicon
+            -->
+    <link rel="shortcut icon" href="../assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
+
+    <!-- 
+                - font awesome
+            -->
+    <link rel="stylesheet" href="../assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
+
+    <!-- 
+                - custom style link
+            -->
+    <link rel="stylesheet" href="../assets/css/sections/style.css" />
+
+    <!-- 
+                - custom header link
+            -->
+    <link rel="stylesheet" href="../assets/css/sections//header.css" />
+
+    <!-- 
+                - courses
+            -->
+    <link rel="stylesheet" href="../assets/css/sections/courses.css" />
+
+    <!-- 
+                - custom footer link
+              -->
+    <link rel="stylesheet" href="../assets/css/sections/footer.css" />
+
+    <!-- 
+                - custom media link
+            -->
+    <link rel="stylesheet" href="../assets/css/sections/media.css" />
+
 </head>
 
 <body>
     <!-- 
-    - favicon
-    -->
-    <link rel="shortcut icon" href="../assets/images/SALT SIMBOLO FUNDO CLARO.png" type="image/svg+xml" />
-
-    <!-- 
-        - font awesome
-    -->
-    <link rel="stylesheet" href="../assets/css/fontawesome-free-6.5.1-web/css/all.min.css">
-
-    <!-- 
-        - custom style link
-    -->
-    <link rel="stylesheet" href="../assets/css/sections/style.css" />
-
-    <!-- 
-        - custom header link
-    -->
-    <link rel="stylesheet" href="../assets/css/sections//header.css" />
-
-    <!-- 
-        - courses
-    -->
-    <link rel="stylesheet" href="../assets/css/sections/courses.css" />
-
-    <!-- 
-        - custom footer link
-      -->
-    <link rel="stylesheet" href="../assets/css/sections/footer.css" />
-
-    <!-- 
-        - custom media link
-    -->
-    <link rel="stylesheet" href="../assets/css/sections/media.css" />
-
-    </head>
-
-    <body>
-        <!-- 
             - #PRELOADING
         -->
 
-        <div class="loading" data-loading>
-            <img src="../assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
-            <img src="../assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
-        </div>
+    <div class="loading" data-loading>
+        <img src="../assets/images/SALT SIMBOLO FUNDO CLARO.png" width="55" height="55" alt="loading" class="img" />
+        <img src="../assets/images/loading-circle.svg" width="70" height="70" alt="" class="circle" />
+    </div>
 
-        <!-- 
+    <!-- 
             - #HEADER
         -->
 
-        <header data-header>
-            <div class="nav containerHeader">
-                <a href="../index.html" class="logo">
-                    <img src="../assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40"
-                        alt="Salt home" />
-                </a>
+    <header data-header>
+        <div class="nav containerHeader">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png" width="60" height="40"
+                    alt="Salt home" />
+            </a>
 
-                <div class="navbar" data-navbar>
+            <div class="navbar" data-navbar>
+                <li>
+                    <a href="../index.html" class="navbar-link" data-nav-link>Sobre</a>
+                </li>
+
+                <li>
+                    <a href="../pages/programacoes.html" class="navbar-link" data-nav-link>Programações</a>
+                </li>
+
+                <li>
+                    <a href="../pages/eventos.html" class="navbar-link" data-nav-link>Eventos</a>
+                </li>
+
+                <li>
+                    <a href="../pages/spotify.html" class="navbar-link" data-nav-link>Spotify</a>
+                </li>
+
+                <div class="dropdown">
                     <li>
-                        <a href="../index.html" class="navbar-link" data-nav-link>Sobre</a>
+                        <p id="link-sub" class="navbar-link">Movimentos</p>
                     </li>
-
-                    <li>
-                        <a href="../pages/programacoes.html" class="navbar-link" data-nav-link>Programações</a>
-                    </li>
-
-                    <li>
-                        <a href="../pages/eventos.html" class="navbar-link" data-nav-link>Eventos</a>
-                    </li>
-
-                    <li>
-                        <a href="../pages/spotify.html" class="navbar-link" data-nav-link>Spotify</a>
-                    </li>
-
-                    <div class="dropdown">
+                    <ul class="sub-menu">
                         <li>
-                            <p id="link-sub" class="navbar-link">Movimentos</p>
+                            <a href="./pedidos.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
                         </li>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="./pedidos.html" class="navbar-linkdrop" data-nav-link>Pedidos</a>
-                            </li>
-                            <li>
-                                <a href="./contribuicao.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
-                            </li>
-                            <li>
-                                <a href="./cursos.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="menu-icon">
-                    <div class="line1"></div>
-                    <div class="line2"></div>
-                    <div class="line3"></div>
+                        <li>
+                            <a href="./contribuicao.html" class="navbar-linkdrop" data-nav-link>Contribua</a>
+                        </li>
+                        <li>
+                            <a href="./cursos.html" class="navbar-linkdrop" data-nav-link>Cursos</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </header>
 
-        <!-- 
+            <div class="menu-icon">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 
             - #HERO
         -->
 
-        <div class="bg-home">
-            <main class="hero container">
-                <h1>Bem-vindo aos Ministérios e Cursos da Juventude de nossa igreja!</h1>
-                <p>Oferecemos uma variedade de cursos e atividades que inspiram e capacitam os jovens espiritualmente.
-                </p>
-            </main>
-        </div>
+    <div class="bg-home">
+        <main class="hero container">
+            <h1>Bem-vindo aos Ministérios e Cursos da Juventude de nossa igreja!</h1>
+            <p>Oferecemos uma variedade de cursos e atividades que inspiram e capacitam os jovens espiritualmente.
+            </p>
+        </main>
+    </div>
 
 
-        <!-- 
+    <!-- 
             - #ABOUT
         -->
 
-        <section class="about">
-            <div class="container about-content" data-reveal="">
-                <div>
-                    <img src="../assets/images/financeiro.png" alt="">
-                </div>
-
-                <div class="about-description">
-                    <h2>Financeiro</h2>
-                    <p>Nosso ministério do Financeiro oferece uma ampla gama de atividades, incluindo a gestão
-                        financeira de nossas
-                        lojas e cantinas,
-                        elaboração de planilhas organizacionais, e uma administração eficiente e transparente para
-                        apoiar nossas iniciativas e
-                        eventos. Junte-se a nós e faça parte de um grupo que está sempre em busca de crescimento,
-                        aprendizado e serviço ao
-                        próximo!</p>
-                </div>
+    <section class="about">
+        <div class="container about-content" data-reveal="">
+            <div>
+                <img src="../assets/images/financeiro.png" alt="">
             </div>
-            <div class="container about-content" data-reveal="">
-                <div>
-                    <img src="../assets/images/comunicação.png" alt="">
-                </div>
 
-                <div class="about-description">
-                    <h2>Comunicação</h2>
-                    <p>Nosso ministério de Comunicação abrange redes sociais, stories, fotografia, design, entrevistas e
-                        vídeos, sempre
-                        buscando maneiras criativas de conectar e engajar nossa juventude. Venha fazer parte de um grupo
-                        dinâmico e inovador!</p>
-                </div>
+            <div class="about-description">
+                <h2>Financeiro</h2>
+                <p>Nosso ministério do Financeiro oferece uma ampla gama de atividades, incluindo a gestão
+                    financeira de nossas
+                    lojas e cantinas,
+                    elaboração de planilhas organizacionais, e uma administração eficiente e transparente para
+                    apoiar nossas iniciativas e
+                    eventos. Junte-se a nós e faça parte de um grupo que está sempre em busca de crescimento,
+                    aprendizado e serviço ao
+                    próximo!</p>
             </div>
-            <div class="container about-content" data-reveal="">
-                <div>
-                    <img src="../assets/images/gestão.png" alt="">
-                </div>
-
-                <div class="about-description">
-                    <h2>Gestão</h2>
-                    <p>Nosso ministério de Gestão abrange multimídia, sonoplastia, louvor, acolhimento, logística e
-                        planejamento, assegurando
-                        que todas as nossas atividades e eventos sejam bem organizados e impactantes. Junte-se a nós e
-                        contribua para um
-                        ambiente harmonioso e eficiente!</p>
-                </div>
+        </div>
+        <div class="container about-content" data-reveal="">
+            <div>
+                <img src="../assets/images/comunicação.png" alt="">
             </div>
-        </section>
-        <main class="ministry container">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScS8NzAEo5CCzME6rFhLYY7VLlwewcN8jwxXUZpfhHu9qlF5g/viewform"
-                class="button-contact" target="_blank">Seja um voluntário!</a>
 
-        </main>
+            <div class="about-description">
+                <h2>Comunicação</h2>
+                <p>Nosso ministério de Comunicação abrange redes sociais, stories, fotografia, design, entrevistas e
+                    vídeos, sempre
+                    buscando maneiras criativas de conectar e engajar nossa juventude. Venha fazer parte de um grupo
+                    dinâmico e inovador!</p>
+            </div>
+        </div>
+        <div class="container about-content" data-reveal="">
+            <div>
+                <img src="../assets/images/gestão.png" alt="">
+            </div>
 
-        <!-- 
+            <div class="about-description">
+                <h2>Gestão</h2>
+                <p>Nosso ministério de Gestão abrange multimídia, sonoplastia, louvor, acolhimento, logística e
+                    planejamento, assegurando
+                    que todas as nossas atividades e eventos sejam bem organizados e impactantes. Junte-se a nós e
+                    contribua para um
+                    ambiente harmonioso e eficiente!</p>
+            </div>
+        </div>
+    </section>
+    <main class="ministry container">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScS8NzAEo5CCzME6rFhLYY7VLlwewcN8jwxXUZpfhHu9qlF5g/viewform"
+            class="button-contact" target="_blank">Seja um voluntário!</a>
+
+    </main>
+
+    <!-- 
             - #SERVICES
         -->
 
-        <section class="services">
-            <div class="services-content container">
-                <h2>Salt School</h2>
-                <p>O Salt School é o programa de capacitação e treinamento da juventude Salt, focado na formação de
-                    lideranças em diversos
-                    âmbitos de atuação na juventude da igreja local.</p>
+    <section class="services">
+        <div class="services-content container">
+            <h2>Salt School</h2>
+            <p>O Salt School é o programa de capacitação e treinamento da juventude Salt, focado na formação de
+                lideranças em diversos
+                âmbitos de atuação na juventude da igreja local.</p>
+        </div>
+
+        <section class="haircuts" data-reveal="">
+
+            <div class="haircut">
+                <img src="../assets/images/oração.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso de Intercessores</strong>
+                </div>
             </div>
 
-            <section class="haircuts" data-reveal="">
-
-                <div class="haircut">
-                    <img src="../assets/images/oração.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso de Intercessores</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/células.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso de Líderes de Células</strong>
                 </div>
+            </div>
 
-                <div class="haircut">
-                    <img src="../assets/images/células.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso de Líderes de Células</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/namesa.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso de Acolhimento</strong>
                 </div>
+            </div>
 
-                <div class="haircut">
-                    <img src="../assets/images/namesa.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso de Acolhimento</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/reino.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Mentoria</strong>
                 </div>
+            </div>
 
-                <div class="haircut">
-                    <img src="../assets/images/reino.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Mentoria</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/videiras.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso para Discipuladores</strong>
                 </div>
+            </div>
 
-                <div class="haircut">
-                    <img src="../assets/images/videiras.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso para Discipuladores</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/lideres.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso de líderes</strong>
                 </div>
+            </div>
 
-                <div class="haircut">
-                    <img src="../assets/images/lideres.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso de líderes</strong>
-                    </div>
+            <div class="haircut">
+                <img src="../assets/images/doutrina.jpeg" alt="">
+                <div class="haircut-info">
+                    <strong>Curso para o Mês da Juventude</strong>
                 </div>
-
-                <div class="haircut">
-                    <img src="../assets/images/doutrina.jpeg" alt="">
-                    <div class="haircut-info">
-                        <strong>Curso para o Mês da Juventude</strong>
-                    </div>
-                </div>
-
-            </section>
-
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyrlW6mBcM2ClnWS2_1onaSruNiV5OAj70Z3Ih0Qp_dSoaIQ/viewform"
-                class="button-subscribe" target="_blank">Inscreva-se</a>
-
+            </div>
 
         </section>
 
-        <!-- 
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyrlW6mBcM2ClnWS2_1onaSruNiV5OAj70Z3Ih0Qp_dSoaIQ/viewform"
+            class="button-subscribe" target="_blank">Inscreva-se</a>
+
+
+    </section>
+
+    <!-- 
             - #ASSESSMENTS
         -->
 
-        <section class="section__container" data-reveal="left">
-            <div class="title">
-                <h2>DEPOIMENTOS
-                </h2>
-                <p>O que nossos jovens dizem sobre nossos cursos.</p>
+    <section class="section__container" data-reveal="left">
+        <div class="title">
+            <h2>DEPOIMENTOS
+            </h2>
+            <p>O que nossos jovens dizem sobre nossos cursos.</p>
+        </div>
+        <div class="testimonials__grid">
+            <div class="card">
+                <i class="fa-solid fa-quote-left"></i>
+                <p>
+                    Participar do curso "Líderes do Amanhã" da minha igreja foi transformador, aprendendo
+                    habilidades de liderança e valores
+                    cristãos com mentores dedicados. As atividades práticas fortaleceram minha conexão com a
+                    comunidade. Recomendo a jovens
+                    que buscam crescer como líderes guiados pela fé.
+                </p>
+                <hr />
+                <img src="../assets/images/img_depoimento.jpeg" alt="user" />
+                <p class="name">Heloi Alves</p>
             </div>
-            <div class="testimonials__grid">
-                <div class="card">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>
-                        Participar do curso "Líderes do Amanhã" da minha igreja foi transformador, aprendendo
-                        habilidades de liderança e valores
-                        cristãos com mentores dedicados. As atividades práticas fortaleceram minha conexão com a
-                        comunidade. Recomendo a jovens
-                        que buscam crescer como líderes guiados pela fé.
-                    </p>
-                    <hr />
-                    <img src="../assets/images/img_depoimento.jpeg" alt="user" />
-                    <p class="name">Heloi Alves</p>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>
-                        Participar do curso "Líderes do Amanhã" na juventude da minha igreja foi uma experiência
-                        marcante. Aprendi habilidades
-                        de liderança avançadas e valores cristãos. Recomendo este curso a todos os jovens que
-                        buscam crescer como líderes fundamentados na fé.
-                    </p>
-                    <hr />
-                    <img src="../assets/images/img_depoimento2.jpeg" alt="user" />
-                    <p class="name">Daniel Afonso</p>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>
-                        Minha participação no curso "Líderes do Amanhã" da juventude da minha igreja foi extremamente
-                        impactante. Durante o
-                        curso, adquiri habilidades de liderança de alto nível e absorvi princípios cristãos essenciais.
-                        Recomendo
-                        entusiasticamente este curso a todos os jovens que desejam expandir sua liderança com uma base
-                        sólida na fé.
-                    </p>
-                    <hr />
-                    <img src="../assets/images/img_depoimento3.jpeg" alt="user" />
-                    <p class="name">Deyvid Carvalho</p>
-                </div>
+            <div class="card">
+                <i class="fa-solid fa-quote-left"></i>
+                <p>
+                    Participar do curso "Líderes do Amanhã" na juventude da minha igreja foi uma experiência
+                    marcante. Aprendi habilidades
+                    de liderança avançadas e valores cristãos. Recomendo este curso a todos os jovens que
+                    buscam crescer como líderes fundamentados na fé.
+                </p>
+                <hr />
+                <img src="../assets/images/img_depoimento2.jpeg" alt="user" />
+                <p class="name">Daniel Afonso</p>
             </div>
-        </section>
+            <div class="card">
+                <i class="fa-solid fa-quote-left"></i>
+                <p>
+                    Minha participação no curso "Líderes do Amanhã" da juventude da minha igreja foi extremamente
+                    impactante. Durante o
+                    curso, adquiri habilidades de liderança de alto nível e absorvi princípios cristãos essenciais.
+                    Recomendo
+                    entusiasticamente este curso a todos os jovens que desejam expandir sua liderança com uma base
+                    sólida na fé.
+                </p>
+                <hr />
+                <img src="../assets/images/img_depoimento3.jpeg" alt="user" />
+                <p class="name">Deyvid Carvalho</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- 
+    <!-- 
             - #FOOTER
         -->
 
-        <footer id="footer">
+    <footer id="footer">
 
-            <div id="footer_copyright">
-                &#169
-                2024 Juventude Salt
-            </div>
+        <div id="footer_copyright">
+            &#169
+            2024 Juventude Salt
+        </div>
 
-        </footer>
+    </footer>
 
-        <a href="https://wa.me/+553192919718?text=Gostaria%20de%20esclarecer%20d%C3%BAvidas%20sobre%20os%20minist%C3%A9rios%20e%20cursos%20da%20juventude%20Salt."
-            class="btn-whatsapp" target="_blank">
-            <img src="../assets/images/whatssapp.svg" alt="botao whatsapp">
-            <span class="tooltip-text">Tire suas dúvidas</span>
-        </a>
+    <a href="https://wa.me/+553192919718?text=Gostaria%20de%20esclarecer%20d%C3%BAvidas%20sobre%20os%20minist%C3%A9rios%20e%20cursos%20da%20juventude%20Salt."
+        class="btn-whatsapp" target="_blank">
+        <img src="../assets/images/whatssapp.svg" alt="botao whatsapp">
+        <span class="tooltip-text">Tire suas dúvidas</span>
+    </a>
 
-        <script src="../assets/js/script.js"></script>
-    </body>
-
-</html>
+    <script src="../assets/js/script.js"></script>
+</body>
