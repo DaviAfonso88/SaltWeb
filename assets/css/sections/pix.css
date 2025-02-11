@@ -4,48 +4,55 @@
   --margin: 20px;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --transition: 0.3s ease;
+  --primary-color: #92348c;
+  --secondary-color: #7a2b71;
+  --background-color: #1a1a1a;
+  --text-color: #fff;
+  --white: #ffffff;
 }
 
-*,
-*::before,
-*::after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background-color: var(--smokey-black);
+  background-color: var(--background-color);
   color: var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: var(--padding);
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
 main {
   display: flex;
-  flex-direction: wrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 1200px;
-  margin: 40px 0;
+  margin: 40px auto;
+  gap: 20px;
 }
 
 h3 {
-  font-size: 4rem;
+  font-size: 3.5rem;
+  margin-bottom: 10px;
 }
 
 p {
-  font-size: 2.8rem;
+  font-size: 2rem;
   font-style: italic;
+  line-height: 1.5;
 }
 
 .section {
-  background-image: linear-gradient(to left, #d156c973, hsl(0, 0%, 100%));
-  background-color: var(--white);
+  background: linear-gradient(to left, #d156c973, var(--white));
   padding: var(--padding);
   margin: var(--margin);
   border-radius: var(--radius);
@@ -53,12 +60,13 @@ p {
   text-align: center;
   width: 100%;
   max-width: 600px;
-  transition: transform var(--transition);
-  box-shadow: 0 4px 50px #92348c79;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 4px 20px rgba(146, 52, 140, 0.5);
 }
 
 .section:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 30px rgba(146, 52, 140, 0.6);
 }
 
 .qr-container {
@@ -69,71 +77,98 @@ p {
 }
 
 .qr-image {
-  max-width: 48%;
+  max-width: 50%;
   height: auto;
   border-radius: var(--radius);
+  transition: transform var(--transition);
+}
+
+.qr-image:hover {
+  transform: scale(1.05);
 }
 
 .copy-button {
-  background-color: var(--salt-purple);
+  background-color: var(--primary-color);
   color: var(--white);
   border: none;
   padding: 12px 24px;
   font-size: 1.4rem;
+  margin: 0 auto;
   cursor: pointer;
   border-radius: var(--radius);
-  transition: background-color var(--transition);
+  transition: background-color var(--transition), transform var(--transition);
 }
 
 .copy-button:hover {
-  background-color: #7a2b71;
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
 }
 
 .steps-list {
   list-style: none;
-  margin: 70px;
+  margin: 50px auto;
   text-align: left;
+  max-width: 600px;
 }
 
 .steps-list li {
   margin-bottom: 15px;
-  font-size: 1.6rem;
+  font-size: 1.9rem;
   display: flex;
   align-items: center;
 }
 
 .steps-list li i {
   margin-right: 15px;
-  color: var(--salt-purple);
+  color: var(--primary-color);
   font-size: 2rem;
 }
 
-@media (max-width: 1247px) {
-  main {
-    flex-direction: column;
-  }
-  .qr-image {
-    max-width: 65%;
-  }
-}
-
-@media (max-width: 630px) {
+@media (max-width: 1024px) {
   h3 {
     font-size: 3rem;
   }
-
   p {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+  .qr-image {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+  .section {
+    max-width: 90%;
+  }
+  .qr-image {
+    max-width: 80%;
   }
   .steps-list {
-    margin: 0px;
-    margin-top: 20px;
+    margin: 20px auto;
   }
   .steps-list li {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
   .copy-button {
     padding: 10px 20px;
     font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 2.5rem;
+  }
+  p {
+    font-size: 1.6rem;
+  }
+  .steps-list li {
+    font-size: 1.2rem;
+  }
+  .qr-image {
+    max-width: 90%;
   }
 }
