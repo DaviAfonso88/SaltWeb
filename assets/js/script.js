@@ -220,3 +220,34 @@ function copyQRCode() {
       alert("Falha ao copiar o código Pix.");
     });
 }
+
+// Curso
+
+function openModal() {
+  const modal = document.getElementById("modal");
+  if (modal) {
+    modal.style.display = "flex";
+    document.querySelector(".modal-content").style.display = "block";
+  }
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  if (modal) {
+    modal.style.display = "none";
+    document.querySelector(".modal-content").style.display = "none";
+  }
+}
+
+function redirectToWhatsApp() {
+  window.location.href = "https://chat.whatsapp.com/seu-link-aqui";
+}
+
+// Garante que o modal e o conteúdo do modal iniciem ocultos ao carregar a página
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("modal");
+  const modalContent = document.querySelector(".modal-content");
+
+  if (modal) modal.style.display = "none";
+  if (modalContent) modalContent.style.display = "none";
+});

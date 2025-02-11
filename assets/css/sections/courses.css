@@ -12,20 +12,29 @@ body {
   padding: 0 8px;
 }
 
+.bg-home {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  padding: 2rem;
+  color: white;
+}
+
 .bg-home::before {
   content: "";
-  display: block;
   position: absolute;
-  background-image: linear-gradient(to bottom, rgba(194, 56, 21, 0.1), var(--smokey-black)), url("/SaltWeb/assets/images/ministérios2.JPG");
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: -1;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
+    url("/SaltWeb/assets/images/_MG_9729.JPG");
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: 50% 0;
-  opacity: 0.4;
+  z-index: -1;
+  opacity: 0.8;
+  filter: brightness(0.9);
 }
 
 .hero {
@@ -46,19 +55,104 @@ body {
 .hero p {
   text-align: center;
   margin: 14px 0;
+  font-size: 20px;
 }
 
-.button-contact {
+.btn-inscrever {
   padding: 14px 28px;
-  color: var(--white);
+  color: var(--black);
   background-color: transparent;
   border: 1px solid var(--salt-purple);
+  border-radius: 8px;
   font-size: 18px;
   font-weight: 600;
   margin: 14px 0;
-  animation: scaleButton 0.8s alternate infinite;
+  transition: 0.25s;
 }
-
+.btn-inscrever:hover {
+  background-color: var(--salt-purple);
+  color: var(--white);
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.modal-content h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.modal-buttons button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  flex: 1;
+  margin: 0 5px;
+  transition: 0.3s;
+}
+.btn-cancel {
+  background-color: #ccc;
+  color: #333;
+}
+.btn-cancel:hover {
+  background-color: #bbb;
+}
+.btn-confirm {
+  background-color: #28a745;
+  color: white;
+}
+.btn-confirm:hover {
+  background-color: #218838;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+}
+.close:hover {
+  color: #000;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 .button-contact:hover {
   background-color: var(--salt-purple);
 }
@@ -89,39 +183,6 @@ body {
     font-size: 24px;
   }
 }
-.about {
-  overflow: hidden;
-  color: var(--white);
-}
-
-.about-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 34px 14px 64px 14px;
-}
-.about-content img {
-  width: 100%;
-  box-shadow: 0 4px 8px var(--salt-purple);
-}
-.about-content h2 {
-  font-style: italic;
-}
-
-.about-content div {
-  flex: 1;
-}
-
-.about-description h2 {
-  font-size: 38px;
-  margin-bottom: 24px;
-}
-.about-description p {
-  margin-bottom: 14px;
-  line-height: 150%;
-  font-size: 18px;
-}
 
 .ministry {
   color: var(--white);
@@ -132,11 +193,6 @@ body {
   margin-bottom: 30px;
 }
 
-@media screen and (max-width: 768px) {
-  .about-content {
-    flex-direction: column;
-  }
-}
 .services {
   background-color: var(--white);
   color: var(--black);
@@ -201,23 +257,6 @@ body {
   padding: 14px;
   background-color: var(--white);
   z-index: 99;
-}
-
-.button-subscribe {
-  padding: 14px 28px;
-  color: var(--black);
-  background-color: transparent;
-  border: 1px solid var(--salt-purple);
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  margin: 14px 0;
-  transition: 0.25s;
-}
-
-.button-subscribe:hover {
-  background-color: var(--salt-purple);
-  color: var(--white);
 }
 
 @media screen and (max-width: 1150px) {
@@ -356,4 +395,4 @@ body {
   .btn-whatsapp img {
     max-width: 64px;
   }
-}/*# sourceMappingURL=courses.css.map */
+} /*# sourceMappingURL=courses.css.map */
