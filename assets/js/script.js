@@ -234,5 +234,6 @@ function closeModal() {
 // Função para redirecionar ao WhatsApp
 function redirectToWhatsApp() {
   // Substitua o número abaixo com o número real para redirecionamento
-  window.location.href = "https://wa.me/1234567890"; // Exemplo de link para WhatsApp
+  window.location.href =
+    "https://wa.me/https://chat.whatsapp.com/H55ZPQ4z2xYHyq5UyIbKlM"; // Exemplo de link para WhatsApp
 }
