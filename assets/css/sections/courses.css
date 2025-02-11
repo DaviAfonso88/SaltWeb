@@ -18,7 +18,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 100vh;
+  height: 70vh;
   padding: 2rem;
   color: white;
 }
@@ -60,6 +60,7 @@ body {
 
 .btn-inscrever {
   padding: 14px 28px;
+  color: var(--white);
   color: var(--black);
   background-color: transparent;
   border: 1px solid var(--salt-purple);
@@ -67,82 +68,107 @@ body {
   font-size: 18px;
   font-weight: 600;
   margin: 14px 0;
-  transition: 0.25s;
+  transition: 0.3s;
 }
 .btn-inscrever:hover {
   background-color: var(--salt-purple);
   color: var(--white);
 }
+/* Estilos para o modal */
 .modal {
-  display: none;
+  display: none; /* Inicialmente escondido */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
   justify-content: center;
   align-items: center;
 }
+
+/* Estilos para o conteúdo do modal */
 .modal-content {
-  background: white;
-  padding: 20px;
+  background-color: #fff;
+  padding: 25px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
 }
+
+/* Estilos para o título e texto */
 .modal-content h2 {
-  margin-bottom: 15px;
-  font-size: 20px;
+  font-size: 24px;
   color: #333;
+  margin-bottom: 10px;
 }
+
 .modal-content p {
   font-size: 16px;
   color: #555;
   margin-bottom: 20px;
 }
+
+/* Botões dentro do modal */
 .modal-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
+
 .modal-buttons button {
-  padding: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.3s ease;
   flex: 1;
   margin: 0 5px;
-  transition: 0.3s;
 }
+
 .btn-cancel {
-  background-color: #ccc;
+  background-color: #e0e0e0;
   color: #333;
 }
+
 .btn-cancel:hover {
-  background-color: #bbb;
+  background-color: #c1c1c1;
 }
+
 .btn-confirm {
   background-color: #28a745;
   color: white;
 }
+
 .btn-confirm:hover {
   background-color: #218838;
 }
+
+/* Estilo para o ícone de fechar */
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 18px;
+  font-size: 24px;
   cursor: pointer;
-  color: #666;
+  color: #999;
 }
+
 .close:hover {
   color: #000;
 }
+
+/* Animação do fadeIn */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
