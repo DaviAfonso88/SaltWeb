@@ -13,26 +13,29 @@
   align-items: center;
   gap: 10px;
   border-radius: var(--radius-5);
-  overflow: auto hidden;
   scroll-snap-type: inline mandatory;
   overscroll-behavior-inline: contain;
 }
 
 .slider-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
   position: relative;
-  width: 70%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 1rem;
-  overflow: hidden;
-  scroll-snap-align: start;
   margin: auto;
+  background-color: transparent;
 }
 
 .slider-item .banner-img {
   width: 100%;
-  object-fit: cover;
-  object-position: right;
+  height: auto;
+  object-fit: contain; /* ← mostra a imagem inteira */
+  object-position: center;
+  border-radius: 1rem;
+  overflow: auto hidden;
 }
 
 .banner-content {

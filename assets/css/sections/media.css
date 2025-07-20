@@ -39,12 +39,6 @@
   }
 }
 
-@media (max-width: 570px) {
-  /**
-   * #BANNER
-   */
-}
-
 /**
    * responsive for large than 575px screen
    */
@@ -145,6 +139,7 @@
 
   .slider-item {
     aspect-ratio: 5 / 3;
+    flex-direction: column;
   }
 
   .banner-btn {
@@ -203,11 +198,6 @@
   /**
    * #BANNER 
    */
-
-  .slider-item {
-    aspect-ratio: auto;
-    height: 350px;
-  }
 
   .banner-text {
     --fs-7: 1.125rem;
