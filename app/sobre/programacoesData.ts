@@ -43,7 +43,7 @@ export const programacoes: Programacao[] = [
     titulo: "Culto SALT",
     descricao:
       "O ponto de encontro de toda a juventude. Uma noite com louvor vibrante, palavra relevante e muita comunhão.",
-    data: "Todo 1º sexta do mês",
+    data: "Toda 1º sexta do mês",
     horario: "19:45",
     imagem: "/images/culto-salt.jpg",
     linkBotao: "/eventos",
