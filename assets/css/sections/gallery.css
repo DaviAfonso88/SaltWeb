@@ -1,0 +1,75 @@
+/*-----------------------------------*\
+  #GALLERY
+\*-----------------------------------*/
+
+.gallery-list {
+  display: grid;
+  gap: 30px;
+}
+
+.gallery-item,
+.gallery-card {
+  position: relative;
+}
+
+.gallery-card {
+  animation: changeCard 10s linear infinite;
+}
+
+.gallery-item .gallery-card:last-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  animation-delay: 5s;
+}
+
+@keyframes changeCard {
+  0%,
+  55%,
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  5%,
+  50% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.gallery .scroll-down {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-content: center;
+  margin-inline: auto;
+  margin-block-start: 55px;
+  border: 1px solid var(--white_a15);
+  border-radius: var(--radius-circle);
+  transition: var(--transition-2);
+  animation: scrollDown 2.5s linear infinite alternate;
+  box-shadow: 0 4px 8px var(--salt-purple);
+  cursor: pointer;
+}
+
+.gallery .scroll-down img {
+  height: 100%;
+}
+
+.gallery .scroll-down:is(:hover, :focus-visible) {
+  background-color: var(--salt-purple);
+  border-color: var(--salt-purple);
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(12px);
+  }
+}

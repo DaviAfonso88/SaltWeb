@@ -1,0 +1,126 @@
+/*-----------------------------------*\
+  #REQUESTS
+\*-----------------------------------*/
+
+body {
+  background: var(--smokey-black);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card-subtitle {
+  color: var(--white_a50);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
+  line-height: 1.5;
+  margin-block: 10px 25px;
+}
+
+.pre-form-text {
+  margin-bottom: 20px;
+}
+
+.pre-form-text p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.form-content {
+  margin-bottom: 20px;
+}
+
+.form {
+  padding: 18px;
+  border: 1px solid var(--white_a15);
+  border-radius: 14px;
+}
+
+.form-content {
+  margin-bottom: 8px;
+  padding-bottom: 18px;
+  position: relative;
+}
+
+.form-content label {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: var(--salt-purple);
+}
+
+.form-content input,
+.form-content textarea,
+.form-content select {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  border: 2px solid var(--jet-1);
+  background-color: transparent;
+  color: var(--white);
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: var(--white);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--smokey-black);
+  color: var(--white);
+  font-size: 1.6rem;
+}
+
+select option:hover {
+  background-color: var(--salt-purple);
+  color: var(--white);
+}
+
+select option:checked {
+  background-color: var(--salt-purple);
+  color: var(--white);
+}
+
+.form-content a {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  visibility: hidden;
+  color: var(--white);
+}
+
+.form button {
+  background-color: var(--salt-purple);
+  color: var(--white);
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  border: 0;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.form button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#submit-button[disabled] {
+  cursor: not-allowed;
+  background-color: #8d8a8a;
+}

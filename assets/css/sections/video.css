@@ -1,0 +1,25 @@
+/*-----------------------------------*\
+  #VIDEO
+\*-----------------------------------*/
+
+.video {
+  height: 80vh;
+  position: relative;
+  text-align: center;
+  z-index: 0;
+}
+.video-top {
+  text-align: center;
+}
+
+.fa-circle-play {
+  color: var(--white);
+  margin-bottom: 30px;
+}
+
+.trailer video {
+  width: 60%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 5px solid var(--salt-purple);
+  border-radius: 1.5rem;
+}

@@ -1,0 +1,149 @@
+/*-----------------------------------*\
+  #SLIDER
+\*-----------------------------------*/
+
+.servicesSlider {
+  max-width: 950px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.servicesSlider .heading {
+  margin-bottom: 1rem;
+}
+
+.ser-img {
+  position: relative;
+  width: 380px;
+  height: 450px;
+  margin-top: 1rem;
+}
+
+.ser-img::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  border: 1px solid var(--salt-purple);
+  background: transparent;
+  z-index: -1;
+}
+
+.ser-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.service-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.box-data h2 {
+  font-size: 2.2rem;
+}
+
+.box-data p {
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin: 1.5rem 0;
+  color: var(--white_a50);
+}
+
+.package {
+  display: grid;
+  row-gap: 1rem;
+  margin: 2rem 0 1rem;
+}
+
+.p-box {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.p-box .fa-circle-check {
+  font-size: 1.2rem;
+  color: var(--salt-purple);
+}
+
+.p-box span {
+  font-weight: 500;
+}
+
+.book-now {
+  max-width: 150px;
+  text-align: center;
+  border: 1px solid var(--white);
+  border-radius: 0.2rem;
+  color: var(--white);
+  margin-top: 1.5rem;
+  transition: 0.3s;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.book-now:hover {
+  border: 1px solid var(--salt-purple);
+  background: var(--salt-purple);
+}
+
+.slider-btns {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 1.5rem auto 1.5rem auto;
+  margin-bottom: 200px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: static !important;
+  transform: translate(0, 0);
+  margin: 10px 0 0 10px !important;
+  background-color: var(--salt-purple);
+  width: 100px !important;
+  height: 45px !important;
+  border-radius: 5px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 20px !important;
+  font-weight: 800;
+  color: var(--white) !important;
+}
+
+@media (max-width: 1130px) {
+  .heading,
+  .services .heading {
+    font-size: 1.3rem;
+  }
+
+  .ser-img {
+    width: 344px;
+    height: 395px;
+  }
+
+  .service-box {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .servicesSlider {
+    max-width: 70%;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 520px) {
+  .ser-img {
+    width: 95%;
+  }
+}

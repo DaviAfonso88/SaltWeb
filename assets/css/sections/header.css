@@ -1,0 +1,136 @@
+/*-----------------------------------*\
+  #HEADER
+\*-----------------------------------*/
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition: 0.4s ease;
+}
+
+header.shadow {
+  background-color: var(--eerie-black);
+  box-shadow: 0 2px 4px var(--white_a15);
+}
+
+.containerHeader {
+  max-width: 960px;
+  margin: auto;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  column-gap: 3rem;
+  width: 100%;
+  margin-right: 320px;
+}
+
+.navbar-link {
+  position: relative;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: var(--white);
+  transition: 0.3s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.navbar-linkdrop {
+  position: relative;
+  font-weight: 500;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.navbar-linkdrop:hover {
+  color: var(--salt-purple);
+}
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--salt-purple);
+  transition: 0.3s all cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar-link:hover.navbar-link::after {
+  width: 100%;
+  transition: 0.3s all cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  background: var(--eerie-black);
+  color: var(--white);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  border-radius: 0.5rem;
+  z-index: 1;
+  list-style-type: none;
+  margin: 0;
+  top: 100%;
+  width: 150px;
+  text-align: left;
+}
+
+.sub-menu li {
+  margin-right: 0;
+  padding: 0 15px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown .sub-menu {
+  display: none;
+  text-align: left;
+}
+
+.dropdown:hover .sub-menu {
+  display: block;
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 5px;
+  cursor: pointer;
+  z-index: 200;
+  transition: 0.3s;
+}
+
+.menu-icon div {
+  display: block;
+  background: var(--white);
+  height: 3px;
+  width: 25px;
+  transition: 0.3s;
+}
+
+.move .line1 {
+  transform: rotate(-45deg) translate(-7px, 5px);
+}
+.move .line2 {
+  opacity: 0;
+}
+.move .line3 {
+  transform: rotate(45deg) translate(-6px, -5px);
+}

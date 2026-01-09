@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "saltweb",
   "version": "0.1.0",
   "private": true,
@@ -25,5 +26,9 @@
     "eslint-config-next": "16.0.10",
     "tailwindcss": "^4",
     "typescript": "^5"
+=======
+  "dependencies": {
+    "swiper": "^11.1.0"
+>>>>>>> main
   }
 }
