@@ -142,11 +142,7 @@ export default function ContactForm() {
             ></textarea>
           </div>
 
-          <BotaoPrimario
-            type="submit"
-            disabled={loading}
-            className="w-full text-primary hover:text-white hover:bg-primary hover:cursor-pointer"
-          >
+          <BotaoPrimario className="w-full text-primary hover:text-white hover:bg-primary hover:cursor-pointer">
             {loading ? (
               <Loader2 className="animate-spin mr-2" size={20} />
             ) : (

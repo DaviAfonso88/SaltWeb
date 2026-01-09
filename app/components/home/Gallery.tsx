@@ -14,7 +14,6 @@ export default function Gallery() {
             { src: "/images/avalanche.jpg", alt: "Avalanche" },
             { src: "/images/pescador.jpeg", alt: "Pescador" },
             { src: "/images/turma-de-minas.jpeg", alt: "Turma de Minas" },
-            ,
           ].map((img, i) => (
             <div
               key={i}

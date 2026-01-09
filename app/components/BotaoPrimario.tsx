@@ -19,6 +19,7 @@ export default function BotaoPrimario({
   className = "",
   target,
   rel,
+  ...props
 }: BotaoPrimarioProps) {
   const baseClasses =
     "inline-block px-6 py-3 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-transparent hover:shadow-[#e5e7eb]";
