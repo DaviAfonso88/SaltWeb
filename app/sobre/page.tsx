@@ -108,7 +108,7 @@ export default function Sobre() {
                 redor com os valores do Reino.
               </p>
               <BotaoPrimario
-                href="https://wa.me/5561992150997?text=Olá%20Pastor%20Davi,%20gostaria%20de%20conversar%20com%20você."
+                href="https://wa.me/553192919718?text=Olá%20Pastor%20Davi,%20gostaria%20de%20conversar%20com%20você."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full transition duration-300 transform hover:scale-105 shadow-lg"
