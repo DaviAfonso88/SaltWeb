@@ -61,7 +61,7 @@ export default function Modal({
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:bg-background"
+          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:cursor-pointer"
           aria-label="Fechar modal"
         >
           <X size={24} />

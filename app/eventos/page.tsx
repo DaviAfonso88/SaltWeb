@@ -25,15 +25,17 @@ export default function Eventos() {
       {/* Header */}
       <header className="py-24 text-center bg-card/20 bg-gradient-to-b from-[#18181b] via-[#1f1f23] to-[#27272a]">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold font-heading">Nossos Eventos</h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <h1 className="text-5xl font-bold font-heading animate-fade-in">
+            Nossos Eventos
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in">
             Participe de nossos encontros e cresça em comunhão e fé.
           </p>
         </div>
       </header>
 
       {/* Events Grid */}
-      <main className="py-24 bg-gradient-to-b from-[#27272a] via-[#1f1f23] to-[#18181b]">
+      <main className="py-24 bg-gradient-to-b from-[#27272a] via-[#1f1f23] to-[#18181b] ">
         <div className="container mx-auto px-6">
           {eventos.length === 0 ? (
             <p className="text-center text-muted-foreground text-lg">

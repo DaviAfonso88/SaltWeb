@@ -51,7 +51,12 @@ export default function ProgramacaoCard({
             <span>{horario}</span>
           </div>
         </div>
-        <BotaoPrimario href={linkBotao} variant="default">
+        <BotaoPrimario
+          href={linkBotao}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="default"
+        >
           {textoBotao}
         </BotaoPrimario>
       </div>

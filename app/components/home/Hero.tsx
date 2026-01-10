@@ -12,10 +12,10 @@ export default function Hero() {
         {/* Subtle pattern overlay */}
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between gap-12 animate-fade-in">
+      <div className="relative z-10 container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Left Section: Content */}
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold font-heading text-white tracking-tight leading-tight mb-4 drop-shadow-lg">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold font-heading text-white tracking-tight leading-tight mb-4 drop-shadow-lg animate-fade-in">
             Juventude Salt
           </h1>
 
@@ -38,7 +38,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end animate-fade-in">
           <Image
             src="/images/SALT SIMBOLO DEGRADE.png"
             alt="Juventude Salt Logo"

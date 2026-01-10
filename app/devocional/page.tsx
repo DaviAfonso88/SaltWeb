@@ -63,6 +63,8 @@ export default function DevocionalPage() {
             {devocionaisFiltrados.map((devocional, i) => (
               <Link
                 href={devocional.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 key={i}
                 className="group block p-6 rounded-xl bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b] shadow-sm transition-all duration-300 hover:shadow-[#92348c] "
               >

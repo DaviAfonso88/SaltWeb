@@ -26,10 +26,10 @@ export default function Contribua() {
       {/* Header */}
       <header className="py-24 text-center bg-card/20 bg-gradient-to-b from-[#18181b] via-[#1f1f23] to-[#27272a]">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold font-heading text-foreground">
+          <h1 className="text-5xl font-bold font-heading text-foreground animate-fade-in">
             Contribua
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in">
             Sua generosidade faz a diferença na obra da Juventude Salt.{" "}
             <br></br>Seja parte do que Deus está fazendo em nossa juventude.
             Toda contribuição é uma semente de fé e amor.

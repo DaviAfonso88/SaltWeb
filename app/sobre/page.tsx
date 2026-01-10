@@ -10,10 +10,10 @@ export default function Sobre() {
       {/* Header */}
       <header className="py-24 text-center bg-gradient-to-b from-[#18181b] via-[#1f1f23] to-[#27272a]">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold font-heading text-foreground">
+          <h1 className="text-5xl font-bold font-heading text-foreground animate-fade-in">
             Sobre Nós
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in">
             Conheça a trajetória e os valores que movem a Juventude Salt.
           </p>
         </div>
