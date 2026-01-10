@@ -7,7 +7,7 @@ export type Devocional = {
 export const devocionais: Devocional[] = [
   {
     titulo: "Semana 01",
-    link: "https://www.canva.com/design/DAG9bauMwGQ/yzDhGVUWeKn82r7piCImGQ/view?utm_content=DAG9bauMwGQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h79b650c793",
+    link: "https://drive.google.com/file/d/1VJCsMYpSqk6odH7bt9P97HjjaCexIGVp/view?usp=sharing",
     mes: "JAN",
   },
 ];
