@@ -1,18 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { devocionais } from "./data";
+import { useState, useEffect } from "react";
+import { getDevocionais, type Devocional } from "./data";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const meses = [...new Set(devocionais.map((d) => d.mes))];
-
 export default function DevocionalPage() {
+  const [devocionais, setDevocionais] = useState<Devocional[]>([]);
   const [mesSelecionado, setMesSelecionado] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const data = await getDevocionais();
+      setDevocionais(data);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  const meses = [...new Set(devocionais.map((d) => d.mes))];
 
   const devocionaisFiltrados = mesSelecionado
     ? devocionais.filter((d) => d.mes === mesSelecionado)
     : devocionais;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <p className="text-foreground">Carregando devocionais...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background text-foreground">
@@ -60,22 +80,28 @@ export default function DevocionalPage() {
 
           {/* Devotionals Grid */}
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {devocionaisFiltrados.map((devocional, i) => (
-              <Link
-                href={devocional.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={i}
-                className="group block p-6 rounded-xl bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b] shadow-sm transition-all duration-300 hover:shadow-[#92348c] "
-              >
-                <h3 className="text-xl font-semibold font-heading text-foreground mb-2">
-                  {devocional.titulo}
-                </h3>
-                <span className="flex items-center text-sm font-semibold text-primary/80 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1">
-                  Ler agora <ArrowRight className="ml-2 h-4 w-4" />
-                </span>
-              </Link>
-            ))}
+            {devocionaisFiltrados.length === 0 && !loading ? (
+              <p className="col-span-full text-center text-foreground/70">
+                Nenhum devocional encontrado para o mês selecionado.
+              </p>
+            ) : (
+              devocionaisFiltrados.map((devocional, i) => (
+                <Link
+                  href={devocional.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={i}
+                  className="group block p-6 rounded-xl bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b] shadow-sm transition-all duration-300 hover:shadow-[#92348c] "
+                >
+                  <h3 className="text-xl font-semibold font-heading text-foreground mb-2">
+                    {devocional.titulo}
+                  </h3>
+                  <span className="flex items-center text-sm font-semibold text-primary/80 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1">
+                    Ler agora <ArrowRight className="ml-2 h-4 w-4" />
+                  </span>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </main>

@@ -4,10 +4,19 @@ export type Devocional = {
   mes: string;
 };
 
-export const devocionais: Devocional[] = [
-  {
-    titulo: "Semana 01",
-    link: "https://drive.google.com/file/d/1VJCsMYpSqk6odH7bt9P97HjjaCexIGVp/view?usp=sharing",
-    mes: "JAN",
-  },
-];
+export async function getDevocionais(): Promise<Devocional[]> {
+  try {
+    const response = await fetch(
+      "https://daviafonso88.github.io/juventudesalt-dados/devocional.json",
+      { cache: "no-store" }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.devocionais;
+  } catch (error) {
+    console.error("Failed to fetch devocionais:", error);
+    return [];
+  }
+}
