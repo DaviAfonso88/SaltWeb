@@ -5,6 +5,8 @@ import CardEvento from "../components/CardEvento";
 import Modal from "../components/Modal";
 import { eventos, Evento } from "./data";
 import { CalendarDays, MapPin } from "lucide-react";
+import PageHeader from '../components/PageHeader';
+import PageSection from '../components/PageSection';
 
 export default function Eventos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,39 +23,29 @@ export default function Eventos() {
   };
 
   return (
-    <div className="bg-background text-foreground">
-      {/* Header */}
-      <header className="py-24 text-center bg-card/20 bg-gradient-to-b from-[#18181b] via-[#1f1f23] to-[#27272a]">
-        <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold font-heading animate-fade-in">
-            Nossos Eventos
-          </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in">
-            Participe de nossos encontros e cresça em comunhão e fé.
-          </p>
-        </div>
-      </header>
+    <main>
+      <PageHeader
+        title="Nossos Eventos"
+        subtitle="Participe de nossos encontros e cresça em comunhão e fé."
+      />
 
-      {/* Events Grid */}
-      <main className="py-24 bg-gradient-to-b from-[#27272a] via-[#1f1f23] to-[#18181b] ">
-        <div className="container mx-auto px-6">
-          {eventos.length === 0 ? (
-            <p className="text-center text-muted-foreground text-lg">
-              Nenhum evento programado no momento. Fique ligado!
-            </p>
-          ) : (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {eventos.map((evento, i) => (
-                <CardEvento
-                  key={i}
-                  {...evento}
-                  onViewDetails={handleViewDetails}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </main>
+      <PageSection>
+        {eventos.length === 0 ? (
+          <p className="text-center text-muted-foreground text-lg">
+            Nenhum evento programado no momento. Fique ligado!
+          </p>
+        ) : (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {eventos.map((evento, i) => (
+              <CardEvento
+                key={i}
+                {...evento}
+                onViewDetails={handleViewDetails}
+              />
+            ))}
+          </div>
+        )}
+      </PageSection>
 
       {/* Event Details Modal */}
       <Modal
@@ -99,6 +91,6 @@ export default function Eventos() {
           </div>
         )}
       </Modal>
-    </div>
+    </main>
   );
 }
