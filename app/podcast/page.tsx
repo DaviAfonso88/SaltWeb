@@ -1,15 +1,12 @@
-import { episodios } from './data';
-import CardPodcast from '../components/CardPodcast';
-import PageHeader from '../components/PageHeader';
-import PageSection from '../components/PageSection';
+import { episodios } from "./data";
+import CardPodcast from "../components/CardPodcast";
+import PageHeader from "../components/PageHeader";
+import PageSection from "../components/PageSection";
 
 export default function PodcastPage() {
   return (
     <main>
-      <PageHeader
-        title="Salt Talks"
-        subtitle="Conversas que dão sabor à fé."
-      />
+      <PageHeader title="Salt Talks" subtitle="Conversas que dão sabor à fé." />
       <PageSection>
         {episodios.length === 0 ? (
           <p className="text-center text-muted-foreground text-lg">
