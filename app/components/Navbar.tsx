@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/sobre", label: "Sobre" },
   { href: "/eventos", label: "Eventos" },
   { href: "/devocional", label: "Devocional" },
+  { href: "/podcast", label: "Podcast" },
   { href: "/contribua", label: "Contribua" },
 ];
 

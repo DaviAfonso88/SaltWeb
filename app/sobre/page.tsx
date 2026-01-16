@@ -77,6 +77,39 @@ export default function Sobre() {
         </div>
       </section>
 
+      <section className="py-24 bg-gradient-to-t from-sky-900/10 to-zinc-900">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Text on the left */}
+            <div>
+              <h2 className="text-4xl font-bold font-heading mb-6 text-foreground">
+                Podcast Salt Talks
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                O Salt Talks é um espaço de conversa, aprendizado e aprofundamento bíblico. A partir das aulas da nossa Escola Bíblica, exploramos temas teológicos de forma clara e prática, ajudando alunos e ouvintes a pensarem a fé cristã com mais profundidade e propósito.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Um podcast para quem deseja ir além do raso e viver uma fé bem fundamentada.
+              </p>
+              <BotaoPrimario
+                href="/podcast"
+                className="inline-flex items-center px-6 py-3"
+              >
+                Ouvir Agora
+              </BotaoPrimario>
+            </div>
+            {/* Image on the right */}
+            <div className="flex justify-center items-center">
+              <img
+                src="/images/salt-talks.png"
+                alt="Arte do Podcast Salt Talks"
+                className="rounded-2xl shadow-lg max-w-sm w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Youth Pastor Section */}
       <section className="py-24 bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b]">
         <div className="container mx-auto px-6">

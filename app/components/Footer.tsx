@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Smartphone } from "lucide-react";
+import { Instagram, Smartphone, Podcast } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
   { href: "/sobre", label: "Sobre" },
   { href: "/eventos", label: "Eventos" },
   { href: "/devocional", label: "Devocional" },
+  { href: "/podcast", label: "Podcast" },
   { href: "/contribua", label: "Contribua" },
 ];
 
@@ -47,6 +48,15 @@ export default function Footer() {
                 aria-label="WhatsApp"
               >
                 <Smartphone size={24} className="text-primary" />{" "}
+              </a>
+              <a
+                href="https://open.spotify.com/show/0tXOSImjZs2Tl8ZKA9cVpD?si=d67a02d3afe2499f"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-card hover:scale-110 hover:shadow-[0_0_20px_rgba(146,52,140,0.5)] transition-all duration-300"
+                aria-label="Spotify"
+              >
+                <Podcast size={24} className="text-primary" />{" "}
               </a>
             </div>
           </div>
