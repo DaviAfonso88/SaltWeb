@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/sobre", label: "Sobre" },
-  { href: "/eventos", label: "Eventos" },
-  { href: "/devocional", label: "Devocional" },
-  { href: "/podcast", label: "Podcast" },
-  { href: "/contribua", label: "Contribua" },
+  { href: "/", label: "HOME" },
+  { href: "/sobre", label: "SOBRE" },
+  { href: "/eventos", label: "EVENTOS" },
+  { href: "/devocional", label: "DEVOCIONAL" },
+  { href: "/podcast", label: "PODCAST" },
+  { href: "/contribua", label: "CONTRIBUA" },
 ];
 
 export default function Navbar() {
@@ -30,39 +30,50 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        hasScrolled ? "bg-card/95 shadow-md backdrop-blur-sm" : "bg-background"
+        hasScrolled
+          ? "  bg-card/97 backdrop-blur-sm shadow-lg shadow-purple-500/10  border-purple-500/20 "
+          : "bg"
       }`}
     >
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png"
-            alt="Juventude Salt Logo"
-            width={50}
-            height={50}
-          />
-        </Link>
+        <div className="flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/SALT LOGO PRINCIPAL FUNDO ESCURO.png"
+              alt="Juventude Salt Logo"
+              width={50}
+              height={50}
+            />
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="font-medium text-muted-foreground hover:text-[#92348c] transition-colors duration-300"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex flex-grow justify-center">
+          <ul className="flex items-center gap-8">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="font-normal text-gray-300 hover:text-[#92348c] transition-colors duration-300 relative group"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="hidden md:flex flex-shrink-0">
+          <Link href="/#contato">
+            <button className="bg-transparent font-normal text-[#92348c] border border-[#92348c] px-6 py-2 uppercase tracking-wider transition-all duration-300 hover:bg-[#92348c]  hover:text-black cursor-pointer">
+              Contato
+            </button>
+          </Link>
+        </div>
 
         {/* Mobile Nav Toggle */}
         <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-foreground"
-          >
+          <button onClick={() => setIsOpen(!isOpen)} className="text-white">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -70,20 +81,32 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-card/95 backdrop-blur-sm">
-          <ul className="flex flex-col items-center gap-6 py-8">
+        <div className="md:hidden bg-card/95 backdrop-blur-sm transition-all duration-300 px-6 py-4">
+          <hr className="border-[#92348c]" />
+          <ul className="flex flex-col items-start gap-4 py-8">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="font-semibold text-lg text-foreground hover:text-primary transition-colors duration-300"
+                  className="font-semibold text-base text-gray-300 hover:text-white transition-colors duration-300"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
+          <div className="mt-4 w-full">
+            <Link
+              href="/#contato"
+              onClick={() => setIsOpen(false)}
+              className="w-full"
+            >
+              <button className="bg-transparent font-normal text-[#92348c] border border-[#92348c] w-full py-3 uppercase tracking-wider transition-all duration-300 hover:bg-[#92348c]  hover:text-black cursor-pointer">
+                Contato
+              </button>
+            </Link>
+          </div>
         </div>
       )}
     </header>

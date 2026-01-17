@@ -73,7 +73,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-[#18181b] via-[#27272a] to-[#1f1f23] ">
+    <section id="contato" className="py-24 bg-gradient-to-br from-[#18181b] via-[#27272a] to-[#1f1f23] ">
       <div className="container mx-auto px-6 text-center  ">
         <h2 className="text-4xl font-bold font-heading text-foreground mb-4">
           Entre em Contato
