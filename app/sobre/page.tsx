@@ -86,10 +86,15 @@ export default function Sobre() {
                 Podcast Salt Talks
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                O Salt Talks é um espaço de conversa, aprendizado e aprofundamento bíblico. A partir das aulas da nossa Escola Bíblica, exploramos temas teológicos de forma clara e prática, ajudando alunos e ouvintes a pensarem a fé cristã com mais profundidade e propósito.
+                O Salt Talks é um espaço de conversa, aprendizado e
+                aprofundamento bíblico. A partir das aulas da nossa Escola
+                Bíblica, exploramos temas teológicos de forma clara e prática,
+                ajudando alunos e ouvintes a pensarem a fé cristã com mais
+                profundidade e propósito.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Um podcast para quem deseja ir além do raso e viver uma fé bem fundamentada.
+                Um podcast para quem deseja ir além do raso e viver uma fé bem
+                fundamentada.
               </p>
               <BotaoPrimario
                 href="/podcast"

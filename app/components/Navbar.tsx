@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import BotaoPrimario from "./BotaoPrimario";
 
 const navLinks = [
   { href: "/", label: "HOME" },
@@ -64,11 +65,9 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex flex-shrink-0">
-          <Link href="/#contato">
-            <button className="bg-transparent font-normal text-[#92348c] border border-[#92348c] px-6 py-2 uppercase tracking-wider transition-all duration-300 hover:bg-[#92348c]  hover:text-black cursor-pointer">
-              Contato
-            </button>
-          </Link>
+          <BotaoPrimario href="/#contato" className="w-full uppercase">
+            Contato
+          </BotaoPrimario>
         </div>
 
         {/* Mobile Nav Toggle */}
@@ -97,15 +96,9 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="mt-4 w-full">
-            <Link
-              href="/#contato"
-              onClick={() => setIsOpen(false)}
-              className="w-full"
-            >
-              <button className="bg-transparent font-normal text-[#92348c] border border-[#92348c] w-full py-3 uppercase tracking-wider transition-all duration-300 hover:bg-[#92348c]  hover:text-black cursor-pointer">
-                Contato
-              </button>
-            </Link>
+            <BotaoPrimario href="/#contato" className="  w-full">
+              Contato
+            </BotaoPrimario>
           </div>
         </div>
       )}
