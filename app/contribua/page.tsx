@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { Smartphone, QrCode, Copy } from "lucide-react";
 import BotaoPrimario from "../components/BotaoPrimario";
-import PageHeader from '../components/PageHeader';
-import PageSection from '../components/PageSection';
+import PageHeader from "../components/PageHeader";
+import PageSection from "../components/PageSection";
 
 export default function Contribua() {
   const pixKey = "juventudepibls@gmail.com";
@@ -93,8 +93,7 @@ export default function Contribua() {
               />
             </div>
             <p className="text-muted-foreground text-center mb-6">
-              Escaneie o QR Code acima diretamente pelo aplicativo do seu
-              banco.
+              Escaneie o QR Code acima diretamente pelo aplicativo do seu banco.
             </p>
 
             {/* Copy Pix Key Button */}

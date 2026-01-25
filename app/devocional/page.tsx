@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { getDevocionais, type Devocional } from "./data";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import PageHeader from '../components/PageHeader';
-import PageSection from '../components/PageSection';
+import PageHeader from "../components/PageHeader";
+import PageSection from "../components/PageSection";
 
 export default function DevocionalPage() {
   const [devocionais, setDevocionais] = useState<Devocional[]>([]);

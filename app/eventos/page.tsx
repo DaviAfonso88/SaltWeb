@@ -5,8 +5,8 @@ import CardEvento from "../components/CardEvento";
 import Modal from "../components/Modal";
 import { eventos, Evento } from "./data";
 import { CalendarDays, MapPin } from "lucide-react";
-import PageHeader from '../components/PageHeader';
-import PageSection from '../components/PageSection';
+import PageHeader from "../components/PageHeader";
+import PageSection from "../components/PageSection";
 
 export default function Eventos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
