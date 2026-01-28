@@ -1,12 +1,14 @@
+import SectionLabel from "../SectionLabel";
+
 export default function Gallery() {
   return (
     <section className="section-spacing bg-gradient-to-b from-background via-card/20 to-background relative overflow-hidden">
       <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
       <div className="container-elegant relative z-10">
         <div className="text-center mb-20 animate-fade-in-up">
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+          <SectionLabel>
             Momentos
-          </span>
+          </SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
             Nossa Juventude em <span className="text-gradient">Ação</span>
           </h2>

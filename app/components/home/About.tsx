@@ -1,4 +1,5 @@
 import BotaoPrimario from "../BotaoPrimario";
+import SectionLabel from "../SectionLabel";
 
 export default function About() {
   return (
@@ -6,9 +7,9 @@ export default function About() {
       <div className="absolute inset-0 bg-dot-pattern opacity-20"></div>
       <div className="container-elegant grid md:grid-cols-2 gap-16 items-center relative z-10">
         <div className="text-center md:text-left space-y-6 animate-fade-in-up">
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase">
+          <SectionLabel withMargin={false}>
             Quem somos
-          </span>
+          </SectionLabel>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
             Juventude <span className="text-gradient">Salt</span>

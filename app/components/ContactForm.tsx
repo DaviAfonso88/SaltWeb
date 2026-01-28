@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BotaoPrimario from "./BotaoPrimario";
+import SectionLabel from "./SectionLabel";
 import { Mail, Loader2 } from "lucide-react";
 
 export default function ContactForm() {
@@ -77,9 +78,9 @@ export default function ContactForm() {
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       <div className="container-elegant text-center relative z-10">
         <div className="mb-16 animate-fade-in-up">
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+          <SectionLabel>
             Conecte-se
-          </span>
+          </SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground mb-6">
             Entre em <span className="text-gradient">Contato</span>
           </h2>

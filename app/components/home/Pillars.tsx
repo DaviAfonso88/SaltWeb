@@ -1,4 +1,5 @@
 import { Feather, Users, HeartHandshake } from "lucide-react";
+import SectionLabel from "../SectionLabel";
 
 export default function Pillars() {
   return (
@@ -6,9 +7,9 @@ export default function Pillars() {
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       <div className="container-elegant text-center relative z-10">
         <div className="mb-20 animate-fade-in-up">
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+          <SectionLabel>
             Fundamentos
-          </span>
+          </SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
             Nossos <span className="text-gradient">Pilares</span>
           </h2>

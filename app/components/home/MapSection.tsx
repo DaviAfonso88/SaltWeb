@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MapPin, Copy, ExternalLink, Check } from "lucide-react";
+import SectionLabel from "../SectionLabel";
 
 export default function MapSection() {
   const address =
@@ -23,9 +24,9 @@ export default function MapSection() {
       <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
       <div className="container-elegant relative z-10">
         <div className="text-center mb-16 animate-fade-in-up">
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+          <SectionLabel>
             Localização
-          </span>
+          </SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
             Onde Nos <span className="text-gradient">Encontrar</span>
           </h2>
