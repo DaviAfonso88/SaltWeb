@@ -28,12 +28,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${inter.variable} ${poppins.variable} bg-neutral-900
- text-white flex flex-col min-h-screen`}
+        className={`${inter.variable} ${poppins.variable} bg-background text-foreground flex flex-col min-h-screen font-sans`}
       >
         <Navbar />
 
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow relative">{children}</main>
 
         <Footer />
       </body>

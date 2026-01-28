@@ -73,19 +73,26 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contato" className="py-24 bg-gradient-to-br from-[#18181b] via-[#27272a] to-[#1f1f23] ">
-      <div className="container mx-auto px-6 text-center  ">
-        <h2 className="text-4xl font-bold font-heading text-foreground mb-4">
-          Entre em Contato
-        </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
-          Se você busca crescer na fé, criar amizades verdadeiras e viver algo
-          maior, a Juventude Salt é o seu lugar.
-        </p>
+    <section id="contato" className="section-spacing bg-gradient-to-br from-background via-card/30 to-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <div className="container-elegant text-center relative z-10">
+        <div className="mb-16 animate-fade-in-up">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+            Conecte-se
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground mb-6">
+            Entre em <span className="text-gradient">Contato</span>
+          </h2>
+          <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+            Se você busca crescer na fé, criar amizades verdadeiras e viver algo
+            maior, a Juventude Salt é o seu lugar.
+          </p>
+        </div>
 
         <form
           onSubmit={handleSubmit}
-          className="max-w-md mx-auto p-8 rounded-lg bg-zinc-800 shadow-lg  shadow-[#92348c]"
+          className="max-w-lg mx-auto p-10 rounded-2xl glass-effect border border-border/50 shadow-2xl animate-fade-in-up"
+          style={{ animationDelay: "0.2s" }}
         >
           <div className="mb-6">
             <label
@@ -100,7 +107,7 @@ export default function ContactForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
-              className="w-full px-4 py-2 rounded-md bg-zinc-900 border border-muted-foreground/20 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm"
               placeholder="Seu nome completo"
               required
             />
@@ -118,7 +125,7 @@ export default function ContactForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
-              className="w-full px-4 py-2 rounded-md bg-zinc-900 border border-muted-foreground/20 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm"
               placeholder="seu.email@exemplo.com"
               required
             />
@@ -136,7 +143,7 @@ export default function ContactForm() {
               onChange={(e) => setUserMessage(e.target.value)}
               disabled={loading}
               rows={5}
-              className="w-full px-4 py-2 rounded-md bg-zinc-900 border border-muted-foreground/20 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm resize-none"
               placeholder="Sua mensagem..."
               required
             ></textarea>

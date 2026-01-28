@@ -2,12 +2,18 @@ import { Feather, Users, HeartHandshake } from "lucide-react";
 
 export default function Pillars() {
   return (
-    <section className="py-24 bg-zinc-900 animate-fade-in">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold font-heading text-foreground mb-16">
-          Nossos Pilares
-        </h2>
-        <div className="grid gap-10 md:grid-cols-3">
+    <section className="section-spacing bg-gradient-to-b from-card via-background to-card relative">
+      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div className="container-elegant text-center relative z-10">
+        <div className="mb-20 animate-fade-in-up">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary/80 uppercase mb-4">
+            Fundamentos
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
+            Nossos <span className="text-gradient">Pilares</span>
+          </h2>
+        </div>
+        <div className="grid gap-8 md:grid-cols-3">
           {[
             {
               icon: (
@@ -37,15 +43,21 @@ export default function Pillars() {
           ].map((item, i) => (
             <div
               key={i}
-              className="rounded-lg border border-primary/20 bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b] p-8 transition-all duration-300 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/10 hover:scale-105"
+              className="group relative rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 transition-all duration-500 hover:border-primary/50 hover:shadow-glow hover:shadow-primary/20 hover:-translate-y-2 animate-fade-in-up"
+              style={{ animationDelay: `${i * 0.1}s` }}
             >
-              {item.icon}
-              <h3 className="text-2xl font-bold font-heading text-foreground mt-6">
-                {item.titulo}
-              </h3>
-              <p className="mt-4 text-muted-foreground leading-relaxed">
-                {item.texto}
-              </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative">
+                <div className="inline-flex p-4 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                  {item.icon}
+                </div>
+                <h3 className="text-2xl font-bold font-heading text-foreground mt-6 mb-4">
+                  {item.titulo}
+                </h3>
+                <p className="text-foreground/70 leading-relaxed">
+                  {item.texto}
+                </p>
+              </div>
             </div>
           ))}
         </div>

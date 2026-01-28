@@ -30,13 +30,13 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         hasScrolled
-          ? "  bg-card/97 backdrop-blur-sm shadow-lg shadow-purple-500/10  border-purple-500/20 "
-          : "bg"
+          ? "bg-card/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-border/50"
+          : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <nav className="container-elegant py-5 flex justify-between items-center">
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2">
             <Image
@@ -55,9 +55,10 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="font-normal text-gray-300 hover:text-[#92348c] transition-colors duration-300 relative group"
+                  className="font-medium text-sm text-foreground/80 hover:text-primary transition-all duration-300 relative group tracking-wide uppercase"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </li>
             ))}
@@ -80,15 +81,14 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-card/95 backdrop-blur-sm transition-all duration-300 px-6 py-4">
-          <hr className="border-[#92348c]" />
-          <ul className="flex flex-col items-start gap-4 py-8">
+        <div className="md:hidden bg-card/95 backdrop-blur-xl border-t border-border/50 transition-all duration-300 px-6 py-6">
+          <ul className="flex flex-col items-start gap-6 py-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="font-semibold text-base text-gray-300 hover:text-white transition-colors duration-300"
+                  className="font-semibold text-base text-foreground/80 hover:text-primary transition-colors duration-300 uppercase tracking-wide"
                 >
                   {link.label}
                 </Link>

@@ -10,14 +10,11 @@ import PageSection from "../components/PageSection";
 export default function DevocionalPage() {
   const [devocionais, setDevocionais] = useState<Devocional[]>([]);
   const [mesSelecionado, setMesSelecionado] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
       const data = await getDevocionais();
       setDevocionais(data);
-      setLoading(false);
     }
     fetchData();
   }, []);
@@ -28,13 +25,6 @@ export default function DevocionalPage() {
     ? devocionais.filter((d) => d.mes === mesSelecionado)
     : devocionais;
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <p className="text-foreground">Carregando devocionais...</p>
-      </div>
-    );
-  }
 
   return (
     <main>
@@ -73,7 +63,7 @@ export default function DevocionalPage() {
 
         {/* Devotionals Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {devocionaisFiltrados.length === 0 && !loading ? (
+          {devocionaisFiltrados.length === 0 && devocionaisFiltrados.length > 0 ? (
             <p className="col-span-full text-center text-foreground/70">
               Nenhum devocional encontrado para o mês selecionado.
             </p>

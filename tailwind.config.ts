@@ -13,12 +13,15 @@ const config: Config = {
           DEFAULT: "#92348c",
           light: "#a74e9f",
           dark: "#7a2b74",
+          lighter: "#c06bb8",
+          darker: "#6a2564",
         },
         secondary: "#f2a900",
-        background: "#18181b",
-        foreground: "#e4e4e7",
+        background: "#0a0a0b",
+        foreground: "#fafafa",
         "muted-foreground": "#a1a1aa",
-        card: "#27272a",
+        card: "#1a1a1d",
+        border: "#ffffff",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
@@ -40,9 +43,32 @@ const config: Config = {
             "background-position": "right center",
           },
         },
+        "shimmer": {
+          "0%": {
+            "background-position": "-1000px 0",
+          },
+          "100%": {
+            "background-position": "1000px 0",
+          },
+        },
+        "pulse-glow": {
+          "0%, 100%": {
+            opacity: "0.5",
+          },
+          "50%": {
+            opacity: "1",
+          },
+        },
       },
       animation: {
         "animate-gradient-xy": "gradient-xy 15s ease infinite",
+        "animate-shimmer": "shimmer 3s linear infinite",
+        "animate-pulse-glow": "pulse-glow 2s ease-in-out infinite",
+      },
+      boxShadow: {
+        "glow": "0 0 20px rgba(146, 52, 140, 0.3)",
+        "glow-lg": "0 0 40px rgba(146, 52, 140, 0.4)",
+        "inner-glow": "inset 0 0 20px rgba(146, 52, 140, 0.1)",
       },
     },
   },

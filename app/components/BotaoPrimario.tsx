@@ -22,12 +22,12 @@ export default function BotaoPrimario({
   ...props
 }: BotaoPrimarioProps) {
   const baseClasses =
-    "inline-block px-6 py-3 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-transparent hover:shadow-[#e5e7eb]";
+    "inline-flex items-center justify-center px-8 py-3.5 font-semibold rounded-xl transition-all duration-300 ease-out transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background";
 
   const variantClasses = {
-    default: "bg-[#92348c] text-white hover:bg-primary-light hover:shadow-lg ",
-    outline: "border-2 border-[#92348c] text-primary hover:bg-[#92348c]",
-    subtle: "bg-primary/5 text-primary hover:bg-primary/20",
+    default: "bg-primary text-white hover:bg-primary-light hover:shadow-glow hover:shadow-primary/50",
+    outline: "border-2 border-primary/60 text-primary hover:bg-primary hover:text-white hover:border-primary hover:shadow-glow",
+    subtle: "bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-inner-glow",
   };
 
   const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${className}`;
