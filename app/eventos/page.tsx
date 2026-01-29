@@ -61,13 +61,13 @@ export default function Eventos() {
         {selectedEvent && (
           <div className="space-y-4">
             {selectedEvent.imagem && (
-              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-border/30">
+              <div className="relative w-full rounded-2xl overflow-hidden border border-border/30">
                 <Image
                   src={selectedEvent.imagem}
                   alt={selectedEvent.titulo}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 700px"
-                  className="object-cover"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
               </div>
