@@ -1,4 +1,5 @@
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import type { Evento } from "../eventos/data";
 
 type CardEventoProps = Evento & {
@@ -6,53 +7,105 @@ type CardEventoProps = Evento & {
 };
 
 export default function CardEvento({
+  id,
   titulo,
-  data,
-  mes,
   imagem,
-  link,
   description,
-  location,
+  dateISO,
+  tags,
+  locationName,
+  address,
+  mapsUrl,
+  link,
+  linkLabel,
   onViewDetails,
 }: CardEventoProps) {
+  const eventDate = new Date(dateISO);
+  const dateText = new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(eventDate);
+
+  const timeText = new Intl.DateTimeFormat("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(eventDate);
+
   return (
-    <div className="group relative overflow-hidden rounded-lg bg-card transition-all duration-300 hover:bg-card/70 flex flex-col">
+    <div className="group relative overflow-hidden rounded-2xl bg-card/60 border border-border/30 transition-all duration-500 hover:border-primary/40 hover:shadow-glow hover:shadow-primary/10 flex flex-col">
       {imagem && (
-        <div className="h-48 w-full overflow-hidden flex-shrink-0">
-          <img
+        <div className="relative h-52 w-full overflow-hidden flex-shrink-0">
+          <Image
             src={imagem}
             alt={titulo}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            priority={false}
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
         </div>
       )}
       <div className="p-6 flex flex-col flex-grow">
-        <div className="flex items-start justify-between mb-4">
-          <div className="mr-4 text-center flex-shrink-0">
-            <div className="text-3xl font-bold text-primary">{data}</div>
-            <div className="text-sm font-semibold text-muted-foreground">
-              {mes}
-            </div>
-          </div>
-          <h3 className="text-xl font-bold font-heading text-foreground text-left flex-grow">
+        <div className="space-y-4 mb-6">
+          <h3 className="text-xl font-bold font-heading text-foreground text-left">
             {titulo}
           </h3>
+
+          <div className="flex flex-col gap-2 text-sm text-foreground/70">
+            <div className="flex items-center gap-2">
+              <CalendarDays className="h-4 w-4 text-primary" />
+              <span>
+                {dateText} • {timeText}
+              </span>
+            </div>
+            {(locationName || address) && (
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span className="line-clamp-1">
+                  {locationName ?? address}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {tags.slice(0, 3).map((tag) => (
+                <span
+                  key={`${id}-${tag}`}
+                  className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <p className="text-sm text-foreground/70 leading-relaxed line-clamp-3">
+            {description}
+          </p>
         </div>
         <button
           onClick={() =>
             onViewDetails({
+              id,
               titulo,
-              data,
-              mes,
               imagem,
-              link,
               description,
-              location,
+              dateISO,
+              tags,
+              locationName,
+              address,
+              mapsUrl,
+              link,
+              linkLabel,
             })
           }
-          className="mt-auto flex items-center self-start text-sm font-semibold text-primary hover:text-[#92348c] hover:cursor-pointer -light transition-colors duration-300"
+          className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-light hover:cursor-pointer transition-colors duration-300"
         >
-          Ver detalhes <ArrowRight className="ml-1 h-4 w-4" />
+          Ver detalhes <ArrowRight className="h-4 w-4" />
         </button>
       </div>
     </div>

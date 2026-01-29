@@ -17,6 +17,8 @@ export default function Modal({
   title,
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -26,11 +28,16 @@ export default function Modal({
     };
 
     if (isOpen) {
+      previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
+      // foca o botão de fechar por padrão
+      setTimeout(() => closeBtnRef.current?.focus(), 0);
     } else {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "unset";
+      // devolve o foco para quem abriu o modal
+      previouslyFocusedRef.current?.focus?.();
     }
 
     return () => {
@@ -47,10 +54,36 @@ export default function Modal({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Tab") return;
+    if (!modalRef.current) return;
+
+    const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey) {
+      if (document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex justify-center items-center p-4 overflow-y-auto"
       onClick={handleOverlayClick}
+      onKeyDown={handleKeyDown}
     >
       <div
         ref={modalRef}
@@ -58,8 +91,10 @@ export default function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
         <button
+          ref={closeBtnRef}
           onClick={onClose}
           className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:cursor-pointer"
           aria-label="Fechar modal"
@@ -74,7 +109,9 @@ export default function Modal({
             {title}
           </h2>
         )}
-        <div className="text-foreground text-sm md:text-base">{children}</div>
+        <div id="modal-description" className="text-foreground text-sm md:text-base">
+          {children}
+        </div>
       </div>
     </div>
   );
