@@ -3,6 +3,7 @@ import ValueCard from "../components/ValueCard";
 import BotaoPrimario from "../components/BotaoPrimario";
 import { programacoes } from "./programacoesData";
 import { Smartphone } from "lucide-react";
+import ServirForm from "../components/ServirForm";
 
 export default function Sobre() {
   return (
@@ -182,6 +183,9 @@ export default function Sobre() {
           </div>
         </div>
       </section>
+
+      {/* Servir Form Section */}
+      <ServirForm />
     </div>
   );
 }
