@@ -87,7 +87,7 @@ export default function Modal({
     >
       <div
         ref={modalRef}
-        className="relative bg-card rounded-lg shadow-xl border border-card-light w-full max-w-lg p-6 md:p-8 transform transition-all duration-300 scale-100 opacity-100"
+        className="relative bg-card rounded-lg shadow-xl border border-card-light w-full max-w-3xl p-6 md:p-8 transform transition-all duration-300 scale-100 opacity-100"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
