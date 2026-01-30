@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         <p><strong>Telefone:</strong> ${phone}</p>
         <p><strong>Ministério de Interesse:</strong> ${ministry}</p>
         <br/>
-        <p>Responder para: ${phone}</p>
+        <p>Entre em contato com o líder do ministério sobre o novo voluntário: ${name}</p>
       `,
     };
 
