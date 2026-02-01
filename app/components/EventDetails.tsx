@@ -39,7 +39,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
           />
         </div>
       )}
-      <p className="text-2xl font-bold text-foreground -mb-2 pt-2">
+      <p className="text-2xl font-bold text-foreground mb-4 pt-2">
         {event.titulo}
       </p>
 
