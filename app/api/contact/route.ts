@@ -1,60 +1,122 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { z } from "zod";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 
-// Email validation regex (basic)
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Escape HTML para evitar injeção no e-mail
+const escapeHTML = (str: string) =>
+  str.replace(/[&<>'"]/g, (tag) =>
+    ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "'": "&#39;",
+      '"': "&quot;",
+    }[tag] || tag)
+  );
+
+// Schema com honeypot
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Nome é obrigatório.").max(100),
+  email: z.string().trim().email("E-mail inválido.").max(150),
+  message: z
+    .string()
+    .trim()
+    .min(1, "Mensagem é obrigatória.")
+    .max(2000, "Mensagem muito longa."),
+  website: z.string().optional(), // honeypot
+});
+
+// Upstash Rate Limit
+const redis = Redis.fromEnv();
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(5, "1 m"), // 5 req por minuto por IP
+  analytics: true,
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await req.json();
+    // IP real (Vercel / Proxy)
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "unknown-ip";
 
-    // 1. Basic Validation
-    if (!name || name.trim() === "") {
+    // Rate limit
+    const rl = await ratelimit.limit(`contact:${ip}`);
+    if (!rl.success) {
       return NextResponse.json(
-        { message: "Nome é obrigatório." },
+        { message: "Muitas tentativas. Aguarde um pouco e tente novamente." },
+        { status: 429 }
+      );
+    }
+
+    const body = await req.json();
+    const result = contactSchema.safeParse(body);
+
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      const errorMessage =
+        errors.name?.[0] || errors.email?.[0] || errors.message?.[0];
+
+      return NextResponse.json(
+        { message: errorMessage || "Dados inválidos." },
         { status: 400 }
       );
     }
-    if (!email || !emailRegex.test(email)) {
+
+    const { name, email, message, website } = result.data;
+
+    // Honeypot: bot preenche campo escondido
+    if (website && website.trim().length > 0) {
       return NextResponse.json(
-        { message: "E-mail é obrigatório e deve ser válido." },
-        { status: 400 }
+        { message: "Mensagem enviada com sucesso!" },
+        { status: 200 }
       );
     }
-    if (!message || message.trim() === "") {
+
+    // Envs SMTP
+    const host = process.env.EMAIL_HOST;
+    const user = process.env.EMAIL_USER;
+    const pass = process.env.EMAIL_PASS;
+    const port = Number(process.env.EMAIL_PORT || 587);
+
+    if (!host || !user || !pass) {
+      console.error("Config SMTP ausente (EMAIL_HOST/EMAIL_USER/EMAIL_PASS).");
       return NextResponse.json(
-        { message: "Mensagem é obrigatória." },
-        { status: 400 }
+        { message: "Falha ao enviar mensagem. Tente novamente mais tarde." },
+        { status: 500 }
       );
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: parseInt(process.env.EMAIL_PORT || "587", 10),
-      secure: process.env.EMAIL_PORT === "465",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+      host,
+      port,
+      secure: port === 465, // fix correto
+      auth: { user, pass },
     });
 
-    // 3. Email Content
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    const safeName = escapeHTML(name);
+    const safeEmail = escapeHTML(email);
+    const safeMessage = escapeHTML(message).replace(/\n/g, "<br/>");
+
+    await transporter.sendMail({
+      from: user,
       to: "juventudesalt@pibls.com",
-      subject: `Novo Contato do Site - ${name}`,
+      replyTo: email, // muito bom para responder direto
+      subject: `Novo Contato do Site - ${safeName}`,
       html: `
         <p>Você recebeu uma nova mensagem do formulário de contato do site:</p>
-        <p><strong>Nome:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Mensagem:</strong> ${message}</p>
+        <p><strong>Nome:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Mensagem:</strong></p>
+        <p>${safeMessage}</p>
         <br/>
-        <p>Responder para: ${email}</p>
+        <p><strong>Responder para:</strong> ${safeEmail}</p>
       `,
-    };
-
-    // 4. Send Email
-    await transporter.sendMail(mailOptions);
+    });
 
     return NextResponse.json(
       { message: "Mensagem enviada com sucesso!" },

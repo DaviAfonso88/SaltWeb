@@ -9,6 +9,8 @@ export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
+
   const [loading, setLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackMessageType, setFeedbackMessageType] = useState<
@@ -47,21 +49,25 @@ export default function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, message: userMessage }),
+        body: JSON.stringify({
+          name,
+          email,
+          message: userMessage,
+          website, // honeypot
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setFeedbackMessage(
-          data.feedbackMessage || "Mensagem enviada com sucesso!"
-        );
+        setFeedbackMessage(data.message || "Mensagem enviada com sucesso!");
         setFeedbackMessageType("success");
         setName("");
         setEmail("");
         setUserMessage("");
+        setWebsite(""); // reset honeypot
       } else {
-        setFeedbackMessage(data.feedbackMessage || "Falha ao enviar mensagem.");
+        setFeedbackMessage(data.message || "Falha ao enviar mensagem.");
         setFeedbackMessageType("error");
       }
     } catch (error) {
@@ -74,13 +80,14 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contato" className="section-spacing bg-gradient-to-br from-background via-card/30 to-background relative overflow-hidden">
+    <section
+      id="contato"
+      className="section-spacing bg-gradient-to-br from-background via-card/30 to-background relative overflow-hidden"
+    >
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       <div className="container-elegant text-center relative z-10">
         <div className="mb-16 animate-fade-in-up">
-          <SectionLabel>
-            Conecte-se
-          </SectionLabel>
+          <SectionLabel>Conecte-se</SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground mb-6">
             Entre em <span className="text-gradient">Contato</span>
           </h2>
@@ -113,6 +120,7 @@ export default function ContactForm() {
               required
             />
           </div>
+
           <div className="mb-6">
             <label
               htmlFor="email"
@@ -131,6 +139,7 @@ export default function ContactForm() {
               required
             />
           </div>
+
           <div className="mb-6">
             <label
               htmlFor="message"
@@ -148,6 +157,20 @@ export default function ContactForm() {
               placeholder="Sua mensagem..."
               required
             ></textarea>
+          </div>
+
+          {/* Honeypot (anti-bot) */}
+          <div className="hidden">
+            <label htmlFor="website">Website</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              autoComplete="off"
+              tabIndex={-1}
+            />
           </div>
 
           <BotaoPrimario className="w-full text-primary hover:text-white hover:bg-primary hover:cursor-pointer">

@@ -9,6 +9,8 @@ type BotaoPrimarioProps = {
   className?: string;
   target?: string;
   rel?: string;
+  disabled?: boolean;
+
 };
 
 export default function BotaoPrimario({
@@ -19,6 +21,8 @@ export default function BotaoPrimario({
   className = "",
   target,
   rel,
+  disabled = false,
+
   ...props
 }: BotaoPrimarioProps) {
   const baseClasses =
