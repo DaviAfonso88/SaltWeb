@@ -23,26 +23,6 @@ export default function ContactForm() {
     setFeedbackMessage("");
     setFeedbackMessageType(null);
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!name.trim()) {
-      setFeedbackMessage("Por favor, digite seu nome.");
-      setFeedbackMessageType("error");
-      setLoading(false);
-      return;
-    }
-    if (!emailRegex.test(email)) {
-      setFeedbackMessage("Por favor, digite um e-mail válido.");
-      setFeedbackMessageType("error");
-      setLoading(false);
-      return;
-    }
-    if (!userMessage.trim()) {
-      setFeedbackMessage("Por favor, digite sua mensagem.");
-      setFeedbackMessageType("error");
-      setLoading(false);
-      return;
-    }
-
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -153,6 +133,7 @@ export default function ContactForm() {
               onChange={(e) => setUserMessage(e.target.value)}
               disabled={loading}
               rows={5}
+              maxLength={2000}
               className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm resize-none"
               placeholder="Sua mensagem..."
               required

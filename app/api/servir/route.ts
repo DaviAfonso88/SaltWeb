@@ -31,7 +31,7 @@ const servirSchema = z.object({
 const redis = Redis.fromEnv();
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(5, "1 m"), // 5 req/min por IP
+  limiter: Ratelimit.slidingWindow(3, "1 m"), // 3 req/min por IP
   analytics: true,
 });
 
