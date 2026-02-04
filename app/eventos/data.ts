@@ -28,7 +28,7 @@ export const eventos: Evento[] = [
     description:
       "No nosso próximo Culto SALT, com o tema “Eles Precisam Saber”, vamos nos reunir para celebrar tudo o que Deus fez e continua fazendo através do Projeto Missionário.",
     dateISO: "2026-02-06T19:30:00-03:00",
-    imagem: "/images/evento01.jpg",
+    imagem: "/images/evento.jpeg",
     tags: ["Culto", "Juventude", "Comunhão"],
     locationName: "PIB Lagoa Santa",
     address:
