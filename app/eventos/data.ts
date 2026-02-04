@@ -23,12 +23,12 @@ export type Evento = {
 
 export const eventos: Evento[] = [
   {
-    id: "culto-salt-2026-01-31",
+    id: "culto-salt-2026-02-06",
     titulo: "Culto Salt",
     description:
-      "Venha viver o primeiro culto da SALT do ano, um momento especial de celebração com a posse dos novos líderes da juventude.",
-    dateISO: "2026-01-31T19:30:00-03:00",
-    imagem: "/images/culto-start.png",
+      "No nosso próximo Culto SALT, com o tema “Eles Precisam Saber”, vamos nos reunir para celebrar tudo o que Deus fez e continua fazendo através do Projeto Missionário.",
+    dateISO: "2026-02-06T19:30:00-03:00",
+    imagem: "/images/evento01.jpg",
     tags: ["Culto", "Juventude", "Comunhão"],
     locationName: "PIB Lagoa Santa",
     address:
