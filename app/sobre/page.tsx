@@ -57,23 +57,37 @@ export default function Sobre() {
             Nossos Valores
           </SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-12">
-            O nosso <span className="text-gradient">Porquê</span>
+            Declaração de <span className="text-gradient">Propósitos</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <ValueCard
-              icon="Lightbulb"
-              title="O que queremos"
-              description="Glorificar a Deus, servir a igreja, amar as pessoas, fazer discípulos, pregar o verdadeiro evangelho e transformar as pessoas."
+              icon="Heart"
+              title="Amamos a Deus"
+              description="O verdadeiro discipulado de Jesus cumpre o maior
+                      mandamento, que resume toda a Lei de Moisés. Em
+                      primeiro lugar, amar a Deus e, consequentemente, ao
+                      próximo. Isso ocorre quando buscamos adorar, obedecer
+                      e confiar em Deus."
             />
             <ValueCard
               icon="Handshake"
-              title="Como?"
-              description="Cultuando, servindo, pertencendo, cuidando, ensinando e transformando."
+              title="Servimos à Igreja"
+              description="Quando recebemos o Senhor como Salvador,
+
+                “o próprio
+                Espírito confirma ao nosso espírito que somos filhos de
+                Deus” (Rm 8.16). Dessa forma, passamos não apenas a
+                amá-lo, mas somos capacitados pelo próprio Espírito
+                Santo para servi-lo."
             />
             <ValueCard
-              icon="Heart"
-              title="O quê?"
-              description="Por meio da adoração no culto, pelo servir a igreja, através da comunhão uns com os outros, mediante ao discipulado que imite a Cristo, fazendo o uso do evangelho e de ações que refletem a luz de Deus no mundo."
+              icon="Lightbulb"
+              title="Discipulamos pessoas"
+              description="Cumprir o IDE é evangelizar e batizar novos discípulos,
+                mas não para por aí. Cabe a todo seguidor de Jesus,
+                enquanto peregrino na terra, caminhar ao lado de outros
+                discípulos, como Jesus fez no caminho de Emaús, e
+                ensinar toda a Escritura."
               initialChars={100}
             />
           </div>
