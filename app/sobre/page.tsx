@@ -72,7 +72,7 @@ export default function Sobre() {
             <ValueCard
               icon="Handshake"
               title="Servimos à Igreja"
-              description="Quando recebemos o Senhor como Salvador,
+              description="Quando recebemos o Senhor como Salvador, 
 
                 “o próprio
                 Espírito confirma ao nosso espírito que somos filhos de
@@ -80,9 +80,10 @@ export default function Sobre() {
                 amá-lo, mas somos capacitados pelo próprio Espírito
                 Santo para servi-lo."
             />
+            
             <ValueCard
               icon="Lightbulb"
-              title="Discipulamos pessoas"
+              title="Discipulamos Pessoas"
               description="Cumprir o IDE é evangelizar e batizar novos discípulos,
                 mas não para por aí. Cabe a todo seguidor de Jesus,
                 enquanto peregrino na terra, caminhar ao lado de outros
