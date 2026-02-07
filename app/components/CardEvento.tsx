@@ -9,7 +9,7 @@ type CardEventoProps = Evento & {
 export default function CardEvento({
   id,
   titulo,
-  imagem,
+  imagens,
   description,
   dateISO,
   tags,
@@ -34,10 +34,10 @@ export default function CardEvento({
 
   return (
     <div className="group relative overflow-hidden rounded-2xl bg-card/60 border border-border/30 transition-all duration-500 hover:border-primary/40 hover:shadow-glow hover:shadow-primary/10 flex flex-col">
-      {imagem && (
+      {imagens && imagens.length > 0 && (
         <div className="relative h-52 w-full overflow-hidden flex-shrink-0">
           <Image
-            src={imagem}
+            src={imagens[0]}
             alt={titulo}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -92,7 +92,7 @@ export default function CardEvento({
             onViewDetails({
               id,
               titulo,
-              imagem,
+              imagens,
               description,
               dateISO,
               tags,

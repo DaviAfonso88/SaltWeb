@@ -17,26 +17,40 @@ const Spinner = () => (
 );
 
 export default function EventDetails({ event }: EventDetailsProps) {
-  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
+    {}
+  );
+
+  const handleImageLoading = (url: string, done: boolean) => {
+    setLoadingStates((prev) => ({ ...prev, [url]: !done }));
+  };
 
   return (
     <div className="space-y-4">
-      {event.imagem && (
-        <div className="relative w-full rounded-2xl overflow-hidden border border-border/30">
-          {/* Placeholder with the same aspect ratio as the image */}
-          <div className="w-full aspect-[3/2] bg-background/50 flex justify-center items-center">
-            {isImageLoading && <Spinner />}
-          </div>
-          <Image
-            src={event.imagem}
-            alt={event.titulo}
-            width={1200}
-            height={800}
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${
-              isImageLoading ? "opacity-0" : "opacity-100"
-            }`}
-            onLoadingComplete={() => setIsImageLoading(false)}
-          />
+      {event.imagens && event.imagens.length > 0 && (
+        <div className="flex overflow-x-auto space-x-4 pb-4 -mx-6 px-6">
+          {event.imagens.map((imagem, index) => (
+            <div
+              key={index}
+              className="relative w-full flex-shrink-0 snap-center rounded-2xl overflow-hidden border border-border/30 max-w-[80vw] md:max-w-md"
+            >
+              <div className="w-full aspect-[3/2] bg-background/50 flex justify-center items-center">
+                {loadingStates[imagem] !== false && <Spinner />}
+              </div>
+              <Image
+                src={imagem}
+                alt={`${event.titulo} - Imagem ${index + 1}`}
+                width={800}
+                height={533}
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${
+                  loadingStates[imagem] !== false ? "opacity-0" : "opacity-100"
+                }`}
+                onLoadingComplete={() => handleImageLoading(imagem, true)}
+                onLoad={() => handleImageLoading(imagem, false)}
+                onError={() => handleImageLoading(imagem, true)}
+              />
+            </div>
+          ))}
         </div>
       )}
       <p className="text-2xl font-bold text-foreground mb-4 pt-2">
