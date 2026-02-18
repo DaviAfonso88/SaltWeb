@@ -18,7 +18,7 @@ const Spinner = () => (
 
 export default function EventDetails({ event }: EventDetailsProps) {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
-    {}
+    {},
   );
 
   const handleImageLoading = (url: string, done: boolean) => {
@@ -73,7 +73,8 @@ export default function EventDetails({ event }: EventDetailsProps) {
         <div className="flex items-center text-muted-foreground">
           <MapPin className="mr-2 h-5 w-5 text-primary" />
           <span>
-            {event.locationName ?? ""}{event.locationName && event.address ? " — " : ""}
+            {event.locationName ?? ""}
+            {event.locationName && event.address ? " — " : ""}
             {event.address ?? ""}
           </span>
         </div>
@@ -99,7 +100,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
             href={event.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-xl bg-primary text-white hover:bg-primary-light hover:shadow-glow transition-all duration-300"
+            className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-xl bg-primary text-black hover:bg-primary-light hover:shadow-glow transition-all duration-300"
           >
             <ExternalLink className="h-4 w-4" />
             {event.linkLabel ?? "Saiba mais"}

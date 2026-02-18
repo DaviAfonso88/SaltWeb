@@ -4,6 +4,9 @@ import { useState } from "react";
 import BotaoPrimario from "./BotaoPrimario";
 import SectionLabel from "./SectionLabel";
 import { Mail, Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -82,68 +85,56 @@ export default function ContactForm() {
           className="max-w-lg mx-auto p-10 rounded-2xl glass-effect border border-border/50 shadow-2xl animate-fade-in-up"
           style={{ animationDelay: "0.2s" }}
         >
-          <div className="mb-6">
-            <label
-              htmlFor="name"
-              className="block text-left text-sm font-medium text-foreground mb-2"
-            >
+          <div className="grid w-full items-center gap-1.5 mb-6">
+            <Label htmlFor="name" className="text-left">
               Nome
-            </label>
-            <input
+            </Label>
+            <Input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
-              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm"
               placeholder="Seu nome completo"
               required
             />
           </div>
 
-          <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block text-left text-sm font-medium text-foreground mb-2"
-            >
+          <div className="grid w-full items-center gap-1.5 mb-6">
+            <Label htmlFor="email" className="text-left">
               E-mail
-            </label>
-            <input
+            </Label>
+            <Input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
-              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm"
               placeholder="seu.email@exemplo.com"
               required
             />
           </div>
 
-          <div className="mb-6">
-            <label
-              htmlFor="message"
-              className="block text-left text-sm font-medium text-foreground mb-2"
-            >
+          <div className="grid w-full gap-1.5 mb-6">
+            <Label htmlFor="message" className="text-left">
               Mensagem
-            </label>
-            <textarea
+            </Label>
+            <Textarea
               id="message"
               value={userMessage}
               onChange={(e) => setUserMessage(e.target.value)}
               disabled={loading}
               rows={5}
               maxLength={2000}
-              className="w-full px-5 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 backdrop-blur-sm resize-none"
               placeholder="Sua mensagem..."
               required
-            ></textarea>
+            />
           </div>
 
           {/* Honeypot (anti-bot) */}
           <div className="hidden">
-            <label htmlFor="website">Website</label>
-            <input
+            <Label htmlFor="website">Website</Label>
+            <Input
               type="text"
               id="website"
               name="website"
@@ -154,7 +145,7 @@ export default function ContactForm() {
             />
           </div>
 
-          <BotaoPrimario className="w-full text-primary hover:text-white hover:bg-primary hover:cursor-pointer">
+          <BotaoPrimario className="w-full hover:cursor-pointer">
             {loading ? (
               <Loader2 className="animate-spin mr-2" size={20} />
             ) : (

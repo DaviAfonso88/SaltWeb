@@ -21,9 +21,7 @@ export default function Sobre() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionLabel>
-                Nossa História
-              </SectionLabel>
+              <SectionLabel>Nossa História</SectionLabel>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 text-foreground">
                 De Onde <span className="text-gradient">Viemos</span>
               </h2>
@@ -53,9 +51,7 @@ export default function Sobre() {
       {/* Values */}
       <section className="py-24 bg-card/20 bg-zinc-900">
         <div className="container mx-auto px-6 text-center">
-          <SectionLabel>
-            Nossos Valores
-          </SectionLabel>
+          <SectionLabel>Nossos Valores</SectionLabel>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-12">
             Declaração de <span className="text-gradient">Propósitos</span>
           </h2>
@@ -80,7 +76,7 @@ export default function Sobre() {
                 amá-lo, mas somos capacitados pelo próprio Espírito
                 Santo para servi-lo."
             />
-            
+
             <ValueCard
               icon="Lightbulb"
               title="Discipulamos Pessoas"
@@ -100,9 +96,7 @@ export default function Sobre() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Text on the left */}
             <div>
-              <SectionLabel>
-                Ouça Agora
-              </SectionLabel>
+              <SectionLabel>Ouça Agora</SectionLabel>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 text-foreground">
                 Podcast <span className="text-gradient">Salt Talks</span>
               </h2>
@@ -152,9 +146,7 @@ export default function Sobre() {
 
             {/* Right Column: Pastor's Info */}
             <div className="w-full md:w-2/3 text-center md:text-left">
-              <SectionLabel>
-                Liderança
-              </SectionLabel>
+              <SectionLabel>Liderança</SectionLabel>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-4 text-foreground">
                 Pastor da <span className="text-gradient">Juventude</span>
               </h2>
@@ -173,7 +165,7 @@ export default function Sobre() {
                 href="https://wa.me/553192919718?text=Olá%20Pastor%20Davi,%20gostaria%20de%20conversar%20com%20você."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full transition duration-300 transform hover:scale-105 shadow-lg"
+                className="hover:cursor-pointer"
               >
                 <Smartphone size={20} className="mr-2" />
                 Fale com o Pastor
@@ -187,9 +179,7 @@ export default function Sobre() {
       <section className="py-24 bg-card/20 bg-gradient-to-br from-[#18181b] via-[#92348c]/10 to-[#18181b]">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <SectionLabel>
-              Agenda
-            </SectionLabel>
+            <SectionLabel>Agenda</SectionLabel>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground">
               Nossas <span className="text-gradient">Programações</span>
             </h2>

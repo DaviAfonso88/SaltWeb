@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 type BotaoPrimarioProps = {
   children: React.ReactNode;
@@ -10,7 +11,6 @@ type BotaoPrimarioProps = {
   target?: string;
   rel?: string;
   disabled?: boolean;
-
 };
 
 export default function BotaoPrimario({
@@ -22,19 +22,21 @@ export default function BotaoPrimario({
   target,
   rel,
   disabled = false,
-
   ...props
 }: BotaoPrimarioProps) {
-  const baseClasses =
-    "inline-flex items-center justify-center px-8 py-3.5 font-semibold rounded-xl transition-all duration-300 ease-out transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background";
 
-  const variantClasses = {
-    default: "bg-primary text-white hover:bg-primary-light hover:shadow-glow hover:shadow-primary/50",
-    outline: "border-2 border-primary/60 text-primary hover:bg-primary hover:text-white hover:border-primary hover:shadow-glow",
-    subtle: "bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-inner-glow",
+  // Map our variants to shadcn variants
+  const getVariant = () => {
+    switch (variant) {
+      case "outline":
+        return "outline";
+      case "subtle":
+        return "secondary";
+      case "default":
+      default:
+        return "default";
+    }
   };
-
-  const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
   const content = (
     <span className="flex items-center justify-center gap-2">{children}</span>
@@ -42,15 +44,32 @@ export default function BotaoPrimario({
 
   if (href) {
     return (
-      <Link href={href} className={combinedClasses} target={target} rel={rel}>
-        {content}
-      </Link>
+      <Button
+        variant={getVariant()}
+        size="lg"
+        className={className}
+        disabled={disabled}
+        asChild
+        onClick={onClick}
+        {...props}
+      >
+        <Link href={href} target={target} rel={rel}>
+          {content}
+        </Link>
+      </Button>
     );
   }
 
   return (
-    <button onClick={onClick} className={combinedClasses}>
+    <Button
+      variant={getVariant()}
+      size="lg"
+      className={className}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
       {content}
-    </button>
+    </Button>
   );
 }
