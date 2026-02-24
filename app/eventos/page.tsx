@@ -57,7 +57,9 @@ export default function Eventos() {
         onClose={handleCloseModal}
         title="Detalhes do Evento"
       >
-        {selectedEvent && <EventDetails event={selectedEvent} />}
+        {selectedEvent && (
+          <EventDetails key={selectedEvent.id} event={selectedEvent} />
+        )}
       </Modal>
     </main>
   );

@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
 import type { Evento } from "../eventos/data";
@@ -30,15 +30,6 @@ export default function EventDetails({ event }: EventDetailsProps) {
     setLoadingStates((prev) => ({ ...prev, [url]: !done }));
   };
 
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [event.id]);
-
-  useEffect(() => {
-    if (activeIndex >= images.length && images.length > 0) {
-      setActiveIndex(0);
-    }
-  }, [activeIndex, images.length]);
 
   const goToIndex = (index: number) => {
     if (totalImages === 0) {
@@ -110,7 +101,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
                 <button
                   type="button"
                   onClick={() => goToIndex(activeIndex - 1)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow-md backdrop-blur hover:bg-background"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-3 text-2xl leading-none shadow-md backdrop-blur hover:bg-background"
                   aria-label="Imagem anterior"
                 >
                   ‹
@@ -118,7 +109,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
                 <button
                   type="button"
                   onClick={() => goToIndex(activeIndex + 1)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow-md backdrop-blur hover:bg-background"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-3 text-2xl leading-none shadow-md backdrop-blur hover:bg-background"
                   aria-label="Próxima imagem"
                 >
                   ›
@@ -165,7 +156,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
           <MapPin className="mr-2 h-5 w-5 text-primary" />
           <span>
             {event.locationName ?? ""}
-            {event.locationName && event.address ? " — " : ""}
+            {event.locationName && event.address ? " â€” " : ""}
             {event.address ?? ""}
           </span>
         </div>
@@ -201,3 +192,4 @@ export default function EventDetails({ event }: EventDetailsProps) {
     </div>
   );
 }
+
