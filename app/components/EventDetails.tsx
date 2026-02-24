@@ -22,7 +22,9 @@ export default function EventDetails({ event }: EventDetailsProps) {
   );
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
-  const totalImages = event.imagens?.length ?? 0;
+  const images = event.imagens ?? [];
+  const totalImages = images.length;
+  const activeImage = images[activeIndex];
 
   const handleImageLoading = (url: string, done: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [url]: !done }));
@@ -31,6 +33,12 @@ export default function EventDetails({ event }: EventDetailsProps) {
   useEffect(() => {
     setActiveIndex(0);
   }, [event.id]);
+
+  useEffect(() => {
+    if (activeIndex >= images.length && images.length > 0) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, images.length]);
 
   const goToIndex = (index: number) => {
     if (totalImages === 0) {
@@ -64,7 +72,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
 
   return (
     <div className="space-y-4">
-      {event.imagens && event.imagens.length > 0 && (
+      {images.length > 0 && (
         <div className="space-y-3">
           <div
             className="relative w-full overflow-hidden rounded-2xl border border-border/30 bg-background/50"
@@ -72,32 +80,29 @@ export default function EventDetails({ event }: EventDetailsProps) {
             onTouchEnd={handleTouchEnd}
           >
             <div className="relative h-[40vh] sm:h-[50vh] lg:h-[55vh]">
-              {loadingStates[event.imagens[activeIndex]] !== false && (
+              {activeImage &&
+                loadingStates[activeImage] !== false && (
                 <div className="absolute inset-0">
                   <Spinner />
                 </div>
               )}
-              <Image
-                src={event.imagens[activeIndex]}
-                alt={`${event.titulo} - Imagem ${activeIndex + 1}`}
-                fill
-                sizes="(min-width: 1024px) 70vw, (min-width: 640px) 85vw, 100vw"
-                className={`object-contain transition-opacity duration-500 ${
-                  loadingStates[event.imagens[activeIndex]] !== false
-                    ? "opacity-0"
-                    : "opacity-100"
-                }`}
-                onLoadingComplete={() =>
-                  handleImageLoading(event.imagens[activeIndex], true)
-                }
-                onLoad={() =>
-                  handleImageLoading(event.imagens[activeIndex], false)
-                }
-                onError={() =>
-                  handleImageLoading(event.imagens[activeIndex], true)
-                }
-                priority
-              />
+              {activeImage && (
+                <Image
+                  src={activeImage}
+                  alt={`${event.titulo} - Imagem ${activeIndex + 1}`}
+                  fill
+                  sizes="(min-width: 1024px) 70vw, (min-width: 640px) 85vw, 100vw"
+                  className={`object-contain transition-opacity duration-500 ${
+                    loadingStates[activeImage] !== false
+                      ? "opacity-0"
+                      : "opacity-100"
+                  }`}
+                  onLoadingComplete={() => handleImageLoading(activeImage, true)}
+                  onLoad={() => handleImageLoading(activeImage, false)}
+                  onError={() => handleImageLoading(activeImage, true)}
+                  priority
+                />
+              )}
             </div>
 
             {totalImages > 1 && (
@@ -124,7 +129,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
 
           {totalImages > 1 && (
             <div className="flex items-center justify-center gap-2">
-              {event.imagens.map((_, index) => (
+              {images.map((_, index) => (
                 <button
                   key={index}
                   type="button"
