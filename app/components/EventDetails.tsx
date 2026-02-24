@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
 import type { Evento } from "../eventos/data";
@@ -20,37 +20,123 @@ export default function EventDetails({ event }: EventDetailsProps) {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
     {},
   );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const totalImages = event.imagens?.length ?? 0;
 
   const handleImageLoading = (url: string, done: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [url]: !done }));
   };
 
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [event.id]);
+
+  const goToIndex = (index: number) => {
+    if (totalImages === 0) {
+      return;
+    }
+    const nextIndex = (index + totalImages) % totalImages;
+    setActiveIndex(nextIndex);
+  };
+
+  const handleTouchStart = (eventTouch: React.TouchEvent) => {
+    touchStartX.current = eventTouch.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (eventTouch: React.TouchEvent) => {
+    if (touchStartX.current === null) {
+      return;
+    }
+    const endX = eventTouch.changedTouches[0]?.clientX ?? touchStartX.current;
+    const delta = endX - touchStartX.current;
+    touchStartX.current = null;
+    const swipeThreshold = 40;
+    if (Math.abs(delta) < swipeThreshold) {
+      return;
+    }
+    if (delta < 0) {
+      goToIndex(activeIndex + 1);
+    } else {
+      goToIndex(activeIndex - 1);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {event.imagens && event.imagens.length > 0 && (
-        <div className="flex overflow-x-auto space-x-4 pb-4 -mx-6 px-6">
-          {event.imagens.map((imagem, index) => (
-            <div
-              key={index}
-              className="relative w-full flex-shrink-0 snap-center rounded-2xl overflow-hidden border border-border/30 max-w-[80vw] md:max-w-md"
-            >
-              <div className="w-full aspect-[3/2] bg-background/50 flex justify-center items-center">
-                {loadingStates[imagem] !== false && <Spinner />}
-              </div>
+        <div className="space-y-3">
+          <div
+            className="relative w-full overflow-hidden rounded-2xl border border-border/30 bg-background/50"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="relative h-[40vh] sm:h-[50vh] lg:h-[55vh]">
+              {loadingStates[event.imagens[activeIndex]] !== false && (
+                <div className="absolute inset-0">
+                  <Spinner />
+                </div>
+              )}
               <Image
-                src={imagem}
-                alt={`${event.titulo} - Imagem ${index + 1}`}
-                width={800}
-                height={533}
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${
-                  loadingStates[imagem] !== false ? "opacity-0" : "opacity-100"
+                src={event.imagens[activeIndex]}
+                alt={`${event.titulo} - Imagem ${activeIndex + 1}`}
+                fill
+                sizes="(min-width: 1024px) 70vw, (min-width: 640px) 85vw, 100vw"
+                className={`object-contain transition-opacity duration-500 ${
+                  loadingStates[event.imagens[activeIndex]] !== false
+                    ? "opacity-0"
+                    : "opacity-100"
                 }`}
-                onLoadingComplete={() => handleImageLoading(imagem, true)}
-                onLoad={() => handleImageLoading(imagem, false)}
-                onError={() => handleImageLoading(imagem, true)}
+                onLoadingComplete={() =>
+                  handleImageLoading(event.imagens[activeIndex], true)
+                }
+                onLoad={() =>
+                  handleImageLoading(event.imagens[activeIndex], false)
+                }
+                onError={() =>
+                  handleImageLoading(event.imagens[activeIndex], true)
+                }
+                priority
               />
             </div>
-          ))}
+
+            {totalImages > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => goToIndex(activeIndex - 1)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow-md backdrop-blur hover:bg-background"
+                  aria-label="Imagem anterior"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToIndex(activeIndex + 1)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 shadow-md backdrop-blur hover:bg-background"
+                  aria-label="Próxima imagem"
+                >
+                  ›
+                </button>
+              </>
+            )}
+          </div>
+
+          {totalImages > 1 && (
+            <div className="flex items-center justify-center gap-2">
+              {event.imagens.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => goToIndex(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === index ? "bg-primary w-6" : "bg-border w-2"
+                  }`}
+                  aria-label={`Ir para imagem ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
       <p className="text-2xl font-bold text-foreground mb-4 pt-2">
