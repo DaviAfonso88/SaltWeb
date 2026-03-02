@@ -33,21 +33,11 @@ export const eventos: Evento[] = [
     locationName:
       "Gomes de Rezende - R. Raimundo, R. Cel. Ovídio Guerra, 97, Lagoa Santa - MG, 33400-000",
     mapsUrl: " https://maps.app.goo.gl/jAwkbUvKQGb1GqfK7",
-    link: "https://xa3mbjun.forms.app/interesse-primeiro-lote-acampa-salt",
-    linkLabel: "Primeiro Lote",
+    /*     link: "/acampa-salt",
+     *//*     linkLabel: "Fazer inscricao",
+     */
   },
-  {
-    id: "culto-jubac-2026-02-28",
-    titulo: "Culto JUBAC",
-    description:
-      "Teremos um tempo especial de crescimento e também uma noite abençoada para toda a juventude!🕒 15h: Treinamento para Líderes Um momento de alinhamento, visão e capacitação. 🔥 19h: Culto JUBAC (para toda a juventude!) Louvor, palavra e uma noite que vai marcar sua vida!",
-    dateISO: "2026-02-28T19:00:00-03:00",
-    imagens: ["/images/1.png", "/images/2.png"],
-    tags: ["Culto", "Treinamento"],
-    locationName: "av. Alphonsus Guimarães, 415. (pompeia, belo horizonte)",
-    mapsUrl: "https://maps.app.goo.gl/3bSTwuhNfbiBxffZ6",
-  },
-  {
+  /*   {
     id: "oficinas-salt-2026-03-21",
     titulo: "Oficinas SALT",
     description:
@@ -58,5 +48,5 @@ export const eventos: Evento[] = [
     locationName: "Primeira Igreja Batista em Lagoa Santa",
     link: "/oficinas-salt",
     linkLabel: "Inscrever-se",
-  },
+  }, */
 ];

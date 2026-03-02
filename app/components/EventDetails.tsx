@@ -25,6 +25,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
   const images = event.imagens ?? [];
   const totalImages = images.length;
   const activeImage = images[activeIndex];
+  const isExternalEventLink = !!event.link && /^https?:\/\//.test(event.link);
 
   const handleImageLoading = (url: string, done: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [url]: !done }));
@@ -180,8 +181,8 @@ export default function EventDetails({ event }: EventDetailsProps) {
         {event.link && (
           <a
             href={event.link}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={isExternalEventLink ? "_blank" : undefined}
+            rel={isExternalEventLink ? "noopener noreferrer" : undefined}
             className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-xl bg-primary text-black hover:bg-primary-light hover:shadow-glow transition-all duration-300"
           >
             <ExternalLink className="h-4 w-4" />

@@ -5,9 +5,10 @@ import { Smartphone, QrCode, Copy, University, Building, User, ChevronDown } fro
 import PageHeader from "../components/PageHeader";
 import PageSection from "../components/PageSection";
 import Step from "../components/Step";
+import { JUVENTUDE_PIX_IMAGE, JUVENTUDE_PIX_KEY } from "@/lib/pix";
 
 export default function Contribua() {
-  const pixKey = "juventudepibls@gmail.com";
+  const pixKey = JUVENTUDE_PIX_KEY;
   const [copyFeedback, setCopyFeedback] = useState("");
   const [showBankDetails, setShowBankDetails] = useState(false);
 
@@ -46,7 +47,7 @@ export default function Contribua() {
             </h3>
             <div className="w-64 h-64 bg-white flex items-center justify-center p-2 mb-6 rounded-lg shadow-md">
               <Image
-                src="/images/pix.png"
+                src={JUVENTUDE_PIX_IMAGE}
                 alt="QR Code Pix"
                 width={240}
                 height={240}
