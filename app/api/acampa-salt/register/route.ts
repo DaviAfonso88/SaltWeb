@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       payload.paymentPlan === "credito"
         ? "cartao"
         : payload.paymentPlan === "avista"
-          ? payload.formaPagamento ?? null
+          ? (payload.formaPagamento ?? null)
           : null;
     const { month, monthLabel } = getCurrentMonthInfo();
     const base = resolveBasePrice({
@@ -52,7 +52,8 @@ export async function POST(request: Request) {
       valorOriginal: base.valorOriginal,
     });
 
-    const parcelas = payload.paymentPlan === "carne" ? createCarneInstallments() : [];
+    const parcelas =
+      payload.paymentPlan === "carne" ? createCarneInstallments() : [];
 
     const id = crypto.randomUUID();
     const nextNumber = await redis.incr("acampa:inscricao:contador");
@@ -88,7 +89,11 @@ export async function POST(request: Request) {
     let pixQrCode = "";
     const pixKey = process.env.ACAMPA_PIX_KEY ?? JUVENTUDE_PIX_KEY;
 
-    if (record.paymentPlan === "avista" && record.formaPagamento === "pix" && record.valorFinal > 0) {
+    if (
+      record.paymentPlan === "avista" &&
+      record.formaPagamento === "pix" &&
+      record.valorFinal > 0
+    ) {
       pixPayload = createPixPayload({
         pixKey,
         amount: record.valorFinal,
@@ -109,13 +114,13 @@ export async function POST(request: Request) {
           pixQrCode,
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Erro ao registrar inscricao:", error);
     return NextResponse.json(
       { message: "Nao foi possivel concluir a inscricao." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
