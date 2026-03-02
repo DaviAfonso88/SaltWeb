@@ -59,7 +59,7 @@ export function RegistrationForm() {
   const paymentPlan = useWatch({ control: form.control, name: "paymentPlan" });
   const paymentMethod = useWatch({ control: form.control, name: "formaPagamento" });
   const categoria = useWatch({ control: form.control, name: "categoria" });
-  const loteTravado = useWatch({ control: form.control, name: "loteTravado" });
+  const loteTravado = useWatch({ control: form.control, name: "loteTravado" }) ?? false;
   const dupla = useWatch({ control: form.control, name: "dupla" });
 
   const preview = useMemo(() => {

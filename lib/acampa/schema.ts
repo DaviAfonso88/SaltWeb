@@ -3,7 +3,7 @@ import { z } from "zod";
 export const registrationSchema = z
   .object({
     nome: z.string().trim().min(3, "Informe o nome completo."),
-    idade: z.coerce.number().int().min(10, "Idade invalida.").max(99, "Idade invalida."),
+    idade: z.number().int().min(10, "Idade invalida.").max(99, "Idade invalida."),
     telefone: z.string().trim().min(10, "Informe um WhatsApp valido."),
     email: z.string().trim().email("E-mail invalido."),
     igreja: z.string().trim().min(2, "Informe a igreja."),

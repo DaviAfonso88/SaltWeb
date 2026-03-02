@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { registrationSchema } from "./schema";
 
-export type RegistrationInput = z.infer<typeof registrationSchema>;
+export type RegistrationInput = z.input<typeof registrationSchema>;
 
 export type LoteId =
   | "primeiro"
