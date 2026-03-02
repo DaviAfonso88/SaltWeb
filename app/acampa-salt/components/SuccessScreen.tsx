@@ -77,14 +77,14 @@ export function SuccessScreen({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-2xl">
             <CheckCircle2 className="h-6 w-6 text-emerald-400" />
-            Inscricao confirmada
+            Inscrição confirmada
           </CardTitle>
           <Badge className="bg-emerald-500/15 text-emerald-300 border-emerald-500/30">
             Processo concluido
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground">
-          Confira os dados abaixo e siga as instrucoes de pagamento para
+          Confira os dados abaixo e siga as instruções de pagamento para
           concluir sua vaga.
         </p>
       </CardHeader>
@@ -92,7 +92,7 @@ export function SuccessScreen({
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-background/50 p-4">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              Inscricao
+              Número da Inscrição
             </p>
             <p className="mt-1 text-sm font-semibold">
               {registration.numeroInscricao}
