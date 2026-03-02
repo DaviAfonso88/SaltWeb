@@ -47,4 +47,16 @@ export const eventos: Evento[] = [
     locationName: "av. Alphonsus Guimarães, 415. (pompeia, belo horizonte)",
     mapsUrl: "https://maps.app.goo.gl/3bSTwuhNfbiBxffZ6",
   },
+  {
+    id: "oficinas-salt-2026-03-21",
+    titulo: "Oficinas SALT",
+    description:
+      "Venha aprender e se desenvolver com profissionais de diversas áreas em nossas oficinas exclusivas. Uma oportunidade única de mentoria e aprendizado prático em um ambiente cristão.",
+    dateISO: "2026-03-21T09:00:00-03:00",
+    imagens: ["/images/culto-salt.jpg"],
+    tags: ["Capacitação", "Carreira", "Vocação"],
+    locationName: "Primeira Igreja Batista em Lagoa Santa",
+    link: "/oficinas-salt",
+    linkLabel: "Inscrever-se",
+  },
 ];
