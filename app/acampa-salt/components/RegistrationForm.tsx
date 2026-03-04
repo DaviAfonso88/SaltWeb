@@ -328,7 +328,7 @@ export function RegistrationForm() {
             >
               {form.formState.isSubmitting
                 ? "Enviando..."
-                : "Finalizar inscricao"}
+                : "Finalizar inscrição"}
             </Button>
           </div>
         </form>
