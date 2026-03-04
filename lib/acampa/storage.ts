@@ -28,7 +28,11 @@ const parseRecord = (raw: unknown): RegistrationRecord | null => {
     return null;
   }
 
-  return record as RegistrationRecord;
+  return {
+    ...record,
+    categoria: "participante",
+    quantidadeConjuges: record.quantidadeConjuges ?? 0,
+  } as RegistrationRecord;
 };
 
 export async function saveRegistration(record: RegistrationRecord) {

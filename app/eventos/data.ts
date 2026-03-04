@@ -33,9 +33,8 @@ export const eventos: Evento[] = [
     locationName:
       "Gomes de Rezende - R. Raimundo, R. Cel. Ovídio Guerra, 97, Lagoa Santa - MG, 33400-000",
     mapsUrl: " https://maps.app.goo.gl/jAwkbUvKQGb1GqfK7",
-    /*     link: "/acampa-salt",
-     *//*     linkLabel: "Fazer inscricao",
-     */
+    link: "/acampa-salt",
+    linkLabel: "Fazer inscricao",
   },
   /*   {
     id: "oficinas-salt-2026-03-21",

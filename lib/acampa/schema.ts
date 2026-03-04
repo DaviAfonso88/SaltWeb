@@ -8,18 +8,30 @@ export const registrationSchema = z
     email: z.string().trim().email("E-mail invalido."),
     igreja: z.string().trim().min(2, "Informe a igreja."),
     cidade: z.string().trim().min(2, "Informe a cidade."),
-    categoria: z.enum([
-      "participante",
-      "lideranca",
-      "voluntario",
-      "pastor_lider_ecossistema",
-    ]),
+    categoria: z.literal("participante"),
     dupla: z.enum(["nao", "irmao", "conjuge"]),
+    quantidadeConjuges: z.number().int().min(0, "Quantidade invalida.").max(20, "Quantidade invalida."),
     paymentPlan: z.enum(["avista", "carne", "credito"]),
     formaPagamento: z.enum(["pix", "dinheiro", "cartao"]).optional(),
     loteTravado: z.boolean().default(false),
   })
   .superRefine((data, ctx) => {
+    if ((data.dupla === "conjuge" || data.dupla === "irmao") && data.quantidadeConjuges < 1) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["quantidadeConjuges"],
+        message: "Informe a quantidade de pessoas na dupla.",
+      });
+    }
+
+    if (data.dupla === "nao" && data.quantidadeConjuges !== 0) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["quantidadeConjuges"],
+        message: "Quantidade so pode ser informada quando houver dupla.",
+      });
+    }
+
     if (data.paymentPlan === "avista" && !data.formaPagamento) {
       ctx.addIssue({
         code: "custom",

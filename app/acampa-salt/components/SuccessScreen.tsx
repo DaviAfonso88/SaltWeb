@@ -92,7 +92,7 @@ export function SuccessScreen({
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-background/50 p-4">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              Número da Inscrição
+              Número de Inscrição
             </p>
             <p className="mt-1 text-sm font-semibold">
               {registration.numeroInscricao}
@@ -163,7 +163,7 @@ export function SuccessScreen({
 
         {isCard ? (
           <Alert>
-            <AlertTitle>Pagamento com cartao</AlertTitle>
+            <AlertTitle>Pagamento com cartão</AlertTitle>
             <AlertDescription>
               O pagamento será realizado na máquina de cartão da igreja. Favor
               enviar o comprovante de todas as parcelas pagas para o irmão
@@ -217,7 +217,7 @@ export function SuccessScreen({
 
         <div className="flex flex-wrap gap-3 pt-2">
           <Button variant="outline" onClick={onReset} type="button">
-            Fazer nova inscricao
+            Fazer nova inscrição
           </Button>
         </div>
       </CardContent>

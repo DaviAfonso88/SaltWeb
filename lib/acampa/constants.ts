@@ -1,10 +1,6 @@
 export const ACAMPA_YEAR = 2026;
 
-export const SPECIAL_PRICES = {
-  pastor_lider_ecossistema: 0,
-  lideranca: 70,
-  voluntario: 100,
-} as const;
+export const SPOUSE_DISCOUNT = 0.15;
 
 export const LOTS = [
   { id: "primeiro", month: 2, monthLabel: "fevereiro", lotLabel: "Primeiro Lote", price: 285 },
@@ -18,6 +14,4 @@ export const LOTS = [
 export const CASH_DISCOUNT = 0.1;
 export const PIX_DISCOUNT = 0.05;
 
-export const CARNE_TOTAL = 285;
-export const CARNE_INSTALLMENT_VALUE = 48;
 export const CARNE_MONTHS = ["fevereiro", "marco", "abril", "maio", "junho", "julho"] as const;

@@ -25,8 +25,8 @@ export function PaymentSelector({
   if (paymentPlan === "carne") {
     return (
       <div className="rounded-lg border border-border/70 bg-muted/30 p-4 text-sm text-muted-foreground">
-        Carne SALT: 6 parcelas fixas de R$ 48 (fevereiro a julho). Nao ha
-        desconto nesta modalidade.
+        Carnê SALT: parcelamento mensal disponível em todos os meses. Não há
+        acumulação de descontos nesta modalidade.
       </div>
     );
   }
@@ -34,14 +34,14 @@ export function PaymentSelector({
   if (paymentPlan === "credito") {
     return (
       <div className="rounded-lg border border-border/70 bg-muted/30 p-4 text-sm text-muted-foreground">
-        Plano de credito: pagamento somente por cartao de credito.
+        Plano de crédito: pagamento somente por cartão de crédito.
       </div>
     );
   }
 
   return (
     <div className="space-y-2">
-      <Label>Forma de pagamento a vista</Label>
+      <Label>Forma de pagamento á vista</Label>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger>
           <SelectValue placeholder="Selecione" />

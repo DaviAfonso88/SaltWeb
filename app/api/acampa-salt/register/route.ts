@@ -7,6 +7,7 @@ import {
   createCarneInstallments,
   getCurrentMonthInfo,
   resolveBasePrice,
+  resolveOriginalTotal,
 } from "@/lib/acampa/calc";
 import { registrationSchema } from "@/lib/acampa/schema";
 import { RegistrationRecord } from "@/lib/acampa/types";
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
         errors.nome?.[0] ||
         errors.telefone?.[0] ||
         errors.email?.[0] ||
+        errors.quantidadeConjuges?.[0] ||
         errors.formaPagamento?.[0] ||
         "Dados invalidos.";
 
@@ -40,20 +42,25 @@ export async function POST(request: Request) {
           : null;
     const { month, monthLabel } = getCurrentMonthInfo();
     const base = resolveBasePrice({
-      categoria: payload.categoria,
       loteTravado: payload.loteTravado,
       month,
-      paymentPlan: payload.paymentPlan,
+    });
+    const valorOriginalTotal = resolveOriginalTotal({
+      valorOriginal: base.valorOriginal,
+      dupla: payload.dupla,
+      quantidadeConjuges: payload.quantidadeConjuges,
     });
 
     const valorFinal = applyDiscount({
       paymentPlan: payload.paymentPlan,
       formaPagamento: resolvedFormaPagamento,
       valorOriginal: base.valorOriginal,
+      dupla: payload.dupla,
+      quantidadeConjuges: payload.quantidadeConjuges,
     });
 
     const parcelas =
-      payload.paymentPlan === "carne" ? createCarneInstallments() : [];
+      payload.paymentPlan === "carne" ? createCarneInstallments(valorFinal) : [];
 
     const id = crypto.randomUUID();
     const nextNumber = await redis.incr("acampa:inscricao:contador");
@@ -70,12 +77,13 @@ export async function POST(request: Request) {
       igreja: payload.igreja,
       categoria: payload.categoria,
       dupla: payload.dupla,
+      quantidadeConjuges: payload.quantidadeConjuges,
       paymentPlan: payload.paymentPlan,
       formaPagamento: resolvedFormaPagamento,
       lote: base.lote,
       loteLabel: base.loteLabel,
       loteTravado: payload.loteTravado,
-      valorOriginal: base.valorOriginal,
+      valorOriginal: valorOriginalTotal,
       valorFinal,
       parcelas,
       mesInscricao: monthLabel,

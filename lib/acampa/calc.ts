@@ -1,13 +1,11 @@
 import {
-  CARNE_INSTALLMENT_VALUE,
   CARNE_MONTHS,
-  CARNE_TOTAL,
   CASH_DISCOUNT,
   LOTS,
   PIX_DISCOUNT,
-  SPECIAL_PRICES,
+  SPOUSE_DISCOUNT,
 } from "./constants";
-import { Categoria, FormaPagamento, Parcela, PaymentPlan } from "./types";
+import { FormaPagamento, Parcela, PaymentPlan } from "./types";
 
 const round = (value: number) => Math.round(value * 100) / 100;
 
@@ -50,12 +48,17 @@ const resolveLotByMonth = (month: number) => {
   return LOTS[5];
 };
 
-export const createCarneInstallments = (): Parcela[] =>
-  CARNE_MONTHS.map((mes) => ({
+export const createCarneInstallments = (total: number): Parcela[] => {
+  const months = CARNE_MONTHS.length;
+  const installmentValue = round(total / months);
+  const lastValue = round(total - installmentValue * (months - 1));
+
+  return CARNE_MONTHS.map((mes, index) => ({
     mes,
-    valor: CARNE_INSTALLMENT_VALUE,
+    valor: index === months - 1 ? lastValue : installmentValue,
     pago: false,
   }));
+};
 
 export const getCurrentMonthInfo = (date = new Date()) => {
   const month = date.getMonth() + 1;
@@ -66,32 +69,12 @@ export const getCurrentMonthInfo = (date = new Date()) => {
 };
 
 export const resolveBasePrice = ({
-  categoria,
   loteTravado,
   month,
-  paymentPlan,
 }: {
-  categoria: Categoria;
   loteTravado: boolean;
   month: number;
-  paymentPlan: PaymentPlan;
 }) => {
-  if (paymentPlan === "carne") {
-    return {
-      lote: "primeiro" as const,
-      loteLabel: LOTS[0].lotLabel,
-      valorOriginal: CARNE_TOTAL,
-    };
-  }
-
-  if (categoria in SPECIAL_PRICES) {
-    return {
-      lote: "primeiro" as const,
-      loteLabel: "Valor especial",
-      valorOriginal: SPECIAL_PRICES[categoria as keyof typeof SPECIAL_PRICES],
-    };
-  }
-
   if (loteTravado) {
     return {
       lote: "primeiro" as const,
@@ -108,30 +91,56 @@ export const resolveBasePrice = ({
   };
 };
 
+export const resolveOriginalTotal = ({
+  valorOriginal,
+  dupla,
+  quantidadeConjuges,
+}: {
+  valorOriginal: number;
+  dupla: "nao" | "irmao" | "conjuge";
+  quantidadeConjuges: number;
+}) => {
+  if (dupla === "nao") {
+    return round(valorOriginal);
+  }
+
+  return round(valorOriginal * quantidadeConjuges);
+};
+
 export const applyDiscount = ({
   paymentPlan,
   formaPagamento,
   valorOriginal,
+  dupla,
+  quantidadeConjuges,
 }: {
   paymentPlan: PaymentPlan;
   formaPagamento: FormaPagamento | null;
   valorOriginal: number;
+  dupla: "nao" | "irmao" | "conjuge";
+  quantidadeConjuges: number;
 }) => {
+  const total = resolveOriginalTotal({ valorOriginal, dupla, quantidadeConjuges });
+
+  if ((dupla === "conjuge" || dupla === "irmao") && quantidadeConjuges > 0) {
+    return round(total * (1 - SPOUSE_DISCOUNT));
+  }
+
   if (paymentPlan === "carne") {
-    return CARNE_TOTAL;
+    return total;
   }
 
   if (paymentPlan === "credito") {
-    return round(valorOriginal);
+    return total;
   }
 
   if (formaPagamento === "dinheiro") {
-    return round(valorOriginal * (1 - CASH_DISCOUNT));
+    return round(total * (1 - CASH_DISCOUNT));
   }
 
   if (formaPagamento === "pix") {
-    return round(valorOriginal * (1 - PIX_DISCOUNT));
+    return round(total * (1 - PIX_DISCOUNT));
   }
 
-  return round(valorOriginal);
+  return total;
 };

@@ -14,11 +14,7 @@ export type LoteId =
 
 export type FormaPagamento = "pix" | "dinheiro" | "cartao";
 export type PaymentPlan = "avista" | "carne" | "credito";
-export type Categoria =
-  | "participante"
-  | "lideranca"
-  | "voluntario"
-  | "pastor_lider_ecossistema";
+export type Categoria = "participante";
 
 export type Parcela = {
   mes: string;
@@ -37,6 +33,7 @@ export type RegistrationRecord = {
   igreja: string;
   categoria: Categoria;
   dupla: "nao" | "irmao" | "conjuge";
+  quantidadeConjuges: number;
   paymentPlan: PaymentPlan;
   formaPagamento: FormaPagamento | null;
   lote: LoteId;

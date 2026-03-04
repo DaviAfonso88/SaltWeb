@@ -13,43 +13,30 @@ export function PriceTable() {
     <section className="grid gap-6 lg:grid-cols-2">
       <Card className="border-border/70 bg-card/70">
         <CardHeader>
-          <CardTitle>Valores especiais</CardTitle>
+          <CardTitle>Regras de desconto</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Categoria</TableHead>
-                <TableHead>Valor</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Pastores e lideres de Ecossistemas</TableCell>
-                <TableCell>Gratuito</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Lideranca</TableCell>
-                <TableCell>R$ 70</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Voluntarios</TableCell>
-                <TableCell>R$ 100</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              Dupla de cônjuges ou irmãos: 15% de desconto sobre o valor total
+              da quantidade informada.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Nenhum desconto é acumulativo.
+            </p>
+          </div>
         </CardContent>
       </Card>
 
       <Card className="border-border/70 bg-card/70">
         <CardHeader>
-          <CardTitle>Lotes por mes</CardTitle>
+          <CardTitle>Lotes por mês</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mes</TableHead>
+                <TableHead>Mês</TableHead>
                 <TableHead>Lote</TableHead>
                 <TableHead>Valor</TableHead>
               </TableRow>
@@ -61,7 +48,7 @@ export function PriceTable() {
                 <TableCell>R$ 285</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Marco</TableCell>
+                <TableCell>Março</TableCell>
                 <TableCell>Segundo Lote</TableCell>
                 <TableCell>R$ 295</TableCell>
               </TableRow>
@@ -96,22 +83,25 @@ export function PriceTable() {
         </CardHeader>
         <CardContent className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <h3 className="font-semibold">Pagamento a vista</h3>
+            <h3 className="font-semibold">Pagamento á vista</h3>
             <p className="text-sm text-muted-foreground">Pix: 5% de desconto</p>
-            <p className="text-sm text-muted-foreground">Dinheiro: 10% de desconto</p>
-            <p className="text-sm text-muted-foreground">Cartao de credito: sem desconto</p>
             <p className="text-sm text-muted-foreground">
-              Plano de credito: somente cartao de credito (sem desconto)
+              Dinheiro: 10% de desconto
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Cartão de crédito: sem desconto
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Plano de crédito: somente cartão de crédito (sem desconto)
             </p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-semibold">Carne SALT (parcelado)</h3>
+            <h3 className="font-semibold">Carnê SALT (parcelado)</h3>
             <p className="text-sm text-muted-foreground">
-              1o lote de fevereiro (referencia R$ 285), com parcelas fixas de R$ 48 de fevereiro a
-              julho.
+              Disponível em todos os meses, com base no lote vigente.
             </p>
             <p className="text-sm text-muted-foreground">
-              No Carne SALT nao ha desconto por forma de pagamento.
+              No Carnê SALT não há acumulação de descontos.
             </p>
           </div>
         </CardContent>

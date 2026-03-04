@@ -46,9 +46,6 @@ const lotLabel: Record<string, string> = {
 
 const categoriaLabel: Record<string, string> = {
   participante: "Participante",
-  lideranca: "Lideranca",
-  voluntario: "Voluntario",
-  pastor_lider_ecossistema: "Pastor / Lider de Ecossistema",
 };
 
 const statusLabel: Record<string, string> = {
@@ -223,9 +220,6 @@ export default function AdminAcampaSaltPage() {
             <SelectContent>
               <SelectItem value="todos">Todas as categorias</SelectItem>
               <SelectItem value="participante">Participante</SelectItem>
-              <SelectItem value="lideranca">Lideranca</SelectItem>
-              <SelectItem value="voluntario">Voluntario</SelectItem>
-              <SelectItem value="pastor_lider_ecossistema">Pastor / Lider de Ecossistema</SelectItem>
             </SelectContent>
           </Select>
 
@@ -260,6 +254,7 @@ export default function AdminAcampaSaltPage() {
                   <TableHead>Numero</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Categoria</TableHead>
+                  <TableHead>Qtd. conjuges</TableHead>
                   <TableHead>Pagamento</TableHead>
                   <TableHead>Parcelas</TableHead>
                   <TableHead>Lote</TableHead>
@@ -271,7 +266,7 @@ export default function AdminAcampaSaltPage() {
               <TableBody>
                 {!loading && items.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center text-muted-foreground">
+                    <TableCell colSpan={10} className="text-center text-muted-foreground">
                       Nenhuma inscricao encontrada para os filtros atuais.
                     </TableCell>
                   </TableRow>
@@ -281,6 +276,7 @@ export default function AdminAcampaSaltPage() {
                     <TableCell className="font-medium">{item.numeroInscricao}</TableCell>
                     <TableCell>{item.nome}</TableCell>
                     <TableCell>{categoriaLabel[item.categoria] ?? item.categoria}</TableCell>
+                    <TableCell>{(item.quantidadeConjuges ?? 0) > 0 ? item.quantidadeConjuges : "-"}</TableCell>
                     <TableCell>
                       {item.paymentPlan === "carne"
                         ? "Carne SALT (parcelado)"
