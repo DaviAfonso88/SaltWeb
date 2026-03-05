@@ -118,9 +118,9 @@ export function SuccessScreen({
           <div className="rounded-xl border border-border/70 bg-background/40 p-4 md:p-5 space-y-4">
             <p className="text-sm font-medium">Pagamento: {paymentLabel}</p>
             <p className="text-sm text-muted-foreground">
-              Escaneie o QR Code PIX da Juventude SALT ou copie a chave abaixo e
-              envie o comprovante para o irmão Thiago juntamente com o numero da
-              inscricao para identificar o pagamento.
+              Escaneie o QR Code PIX da PIBLS ou copie a chave pix abaixo e
+              envie o comprovante para o irmão Thiago juntamente com o número da
+              inscrição para identificar o pagamento.
             </p>
             <div className="grid gap-4 md:grid-cols-[auto_1fr] md:items-center">
               <Image
@@ -176,9 +176,9 @@ export function SuccessScreen({
           <div className="rounded-xl border border-border/70 bg-background/40 p-4 md:p-5 space-y-4">
             <p className="text-sm font-medium">Pagamento: Carnê SALT</p>
             <p className="text-sm text-muted-foreground">
-              Escaneie o QR Code PIX da Juventude SALT ou copie a chave abaixo e
-              envie o comprovante para o irmão Thiago juntamente com o numero da
-              inscricao para identificar o pagamento.
+              Escaneie o QR Code PIX da PIBLS ou copie a chave abaixo e envie o
+              comprovante de todos os pagamentos por mês para o irmão Thiago
+              juntamente com o numero da inscricao para identificar o pagamento.
             </p>
             <div className="grid gap-4 md:grid-cols-[auto_1fr] md:items-center">
               <Image
