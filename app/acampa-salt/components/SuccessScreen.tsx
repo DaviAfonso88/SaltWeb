@@ -155,7 +155,7 @@ export function SuccessScreen({
             <AlertTitle>Pagamento em dinheiro</AlertTitle>
             <AlertDescription>
               O pagamento deverá ser realizado diretamente na igreja com o irmão
-              Thiago. Favor salvar o numero da inscricao para identificar o
+              Thiago. Favor salvar o número da inscrição para identificar o
               pagamento.
             </AlertDescription>
           </Alert>
@@ -167,7 +167,7 @@ export function SuccessScreen({
             <AlertDescription>
               O pagamento será realizado na máquina de cartão da igreja. Favor
               enviar o comprovante de todas as parcelas pagas para o irmão
-              Thiago e o numero da inscricao para identificar o pagamento.
+              Thiago e o número da inscrição para identificar o pagamento.
             </AlertDescription>
           </Alert>
         ) : null}
@@ -178,7 +178,7 @@ export function SuccessScreen({
             <p className="text-sm text-muted-foreground">
               Escaneie o QR Code PIX da PIBLS ou copie a chave abaixo e envie o
               comprovante de todos os pagamentos por mês para o irmão Thiago
-              juntamente com o numero da inscricao para identificar o pagamento.
+              juntamente com o número da inscrição para identificar o pagamento.
             </p>
             <div className="grid gap-4 md:grid-cols-[auto_1fr] md:items-center">
               <Image
