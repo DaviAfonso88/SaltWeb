@@ -126,6 +126,11 @@ export function RegistrationForm() {
   useEffect(() => {
     if (dupla === "nao" && (quantidadeConjuges ?? 0) !== 0) {
       form.setValue("quantidadeConjuges", 0, { shouldValidate: true });
+      return;
+    }
+
+    if ((dupla === "conjuge" || dupla === "irmao") && (quantidadeConjuges ?? 0) < 2) {
+      form.setValue("quantidadeConjuges", 2, { shouldValidate: true });
     }
   }, [dupla, form, quantidadeConjuges]);
 
@@ -248,10 +253,15 @@ export function RegistrationForm() {
             <Input
               id="quantidadeConjuges"
               type="number"
-              min={0}
+              min={dupla === "nao" ? 0 : 2}
               disabled={dupla === "nao"}
               {...form.register("quantidadeConjuges", { valueAsNumber: true })}
             />
+            {dupla !== "nao" ? (
+              <p className="text-xs text-muted-foreground">
+                A inscrição em dupla é válida somente para 2 ou mais pessoas. Por isso, o mínimo permitido é 2.
+              </p>
+            ) : null}
             <p className="text-sm text-destructive">
               {form.formState.errors.quantidadeConjuges?.message}
             </p>
@@ -288,17 +298,22 @@ export function RegistrationForm() {
             />
           </div>
 
-          <div className="md:col-span-2 flex items-center gap-2 rounded-lg border border-border/70 p-3">
-            <Checkbox
-              id="loteTravado"
-              checked={loteTravado}
-              onCheckedChange={(checked) =>
-                form.setValue("loteTravado", checked === true)
-              }
-            />
-            <Label htmlFor="loteTravado" className="text-sm leading-none">
-              Manter inscricao no 1o lote de fevereiro (lote travado)
-            </Label>
+          <div className="md:col-span-2 rounded-lg border border-border/70 p-3">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="loteTravado"
+                checked={loteTravado}
+                onCheckedChange={(checked) =>
+                  form.setValue("loteTravado", checked === true)
+                }
+              />
+              <Label htmlFor="loteTravado" className="text-sm leading-none">
+                Manter inscrição no 1º lote de fevereiro (lote travado)
+              </Label>
+            </div>
+            <p className="mt-2 text-xs text-amber-700">
+              Opção válida somente para quem já preencheu o formulário do primeiro lote de fevereiro.
+            </p>
           </div>
 
           <div className="md:col-span-2 space-y-2 rounded-lg border border-border/70 bg-muted/20 p-4">

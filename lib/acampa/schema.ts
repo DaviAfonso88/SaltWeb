@@ -16,11 +16,11 @@ export const registrationSchema = z
     loteTravado: z.boolean().default(false),
   })
   .superRefine((data, ctx) => {
-    if ((data.dupla === "conjuge" || data.dupla === "irmao") && data.quantidadeConjuges < 1) {
+    if ((data.dupla === "conjuge" || data.dupla === "irmao") && data.quantidadeConjuges < 2) {
       ctx.addIssue({
         code: "custom",
         path: ["quantidadeConjuges"],
-        message: "Informe a quantidade de pessoas na dupla.",
+        message: "Inscrição em dupla exige no mínimo 2 pessoas.",
       });
     }
 
