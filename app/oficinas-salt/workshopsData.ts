@@ -1,38 +1,50 @@
 export type Workshop = {
   id: string;
   name: string;
-  instructor: string;
   category: "Saúde" | "Segurança" | "Mercado" | "Vocacional";
 };
 
 export const workshops: Workshop[] = [
   // Saúde
-  { id: "psique", name: "Psique", instructor: "Larissa", category: "Saúde" },
-  { id: "odontologia", name: "Odontologia", instructor: "Paola", category: "Saúde" },
-  { id: "enfermagem", name: "Enfermagem", instructor: "Osileia", category: "Saúde" },
-  { id: "medicina", name: "Medicina", instructor: "Paola", category: "Saúde" },
-  
+  { id: "psique", name: "Psique", category: "Saúde" },
+  { id: "odontologia", name: "Odontologia", category: "Saúde" },
+  { id: "enfermagem", name: "Enfermagem", category: "Saúde" },
+  { id: "medicina", name: "Medicina", category: "Saúde" },
+  { id: "fisioterapia", name: "Fisioterapia", category: "Saúde" },
+
   // Segurança
-  { id: "militar", name: "Militar", instructor: "Paulo", category: "Segurança" },
-  { id: "policial-militar", name: "Policial Militar", instructor: "Reynaldo", category: "Segurança" },
-  { id: "policial-civil", name: "Policial Civil", instructor: "Almir", category: "Segurança" },
-  { id: "bombeiros", name: "Bombeiros", instructor: "Pedro", category: "Segurança" },
-  
+  { id: "militar", name: "Militar", category: "Segurança" },
+  { id: "policial-militar", name: "Policial Militar", category: "Segurança" },
+  { id: "policial-civil", name: "Policial Civil", category: "Segurança" },
+  { id: "bombeiros", name: "Bombeiros", category: "Segurança" },
+
   // Mercado
-  { id: "exatas", name: "Exatas", instructor: "Lucas Samaniego", category: "Mercado" },
-  { id: "empreendedorismo", name: "Empreendedorismo", instructor: "Josué", category: "Mercado" },
-  { id: "direito", name: "Direito", instructor: "Ellen", category: "Mercado" },
-  { id: "concursos", name: "Concursos", instructor: "Simone", category: "Mercado" },
-  { id: "administracao", name: "Administração", instructor: "Luciana", category: "Mercado" },
-  { id: "marketing", name: "Social Media / Design Gráfico / Marketing", instructor: "Mateus e Carol", category: "Mercado" },
-  { id: "programacao", name: "Programação", instructor: "Davi Afonso", category: "Mercado" },
-  
+  { id: "exatas", name: "Exatas", category: "Mercado" },
+  { id: "empreendedorismo", name: "Empreendedorismo", category: "Mercado" },
+  { id: "direito", name: "Direito", category: "Mercado" },
+  { id: "concursos", name: "Concursos", category: "Mercado" },
+  { id: "administracao", name: "Administração", category: "Mercado" },
+  {
+    id: "marketing",
+    name: "Social Media / Design Gráfico / Marketing",
+    category: "Mercado",
+  },
+  {
+    id: "Tecnologia-da-informacao",
+    name: "Tecnologia da Informação",
+    category: "Mercado",
+  },
+
   // Vocacional
-  { id: "pedagogia", name: "Pedagogia", instructor: "Nilcimar ou Andréa", category: "Vocacional" },
-  { id: "missionaria", name: "Missionária", instructor: "Elen do Radical", category: "Vocacional" },
-  { id: "profissao-lar", name: "Profissão do Lar", instructor: "Eliane", category: "Vocacional" },
-  { id: "musico", name: "Músico", instructor: "Heber", category: "Vocacional" },
-  { id: "esporte", name: "Esporte", instructor: "André", category: "Vocacional" },
+  { id: "pedagogia", name: "Pedagogia", category: "Vocacional" },
+  { id: "missionaria", name: "Missionário", category: "Vocacional" },
+  { id: "profissao-lar", name: "Profissão do Lar", category: "Vocacional" },
+  { id: "musico", name: "Músico", category: "Vocacional" },
 ];
 
-export const categories = ["Saúde", "Segurança", "Mercado", "Vocacional"] as const;
+export const categories = [
+  "Saúde",
+  "Segurança",
+  "Mercado",
+  "Vocacional",
+] as const;

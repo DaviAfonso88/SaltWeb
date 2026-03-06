@@ -55,7 +55,7 @@ export default function OficinasSaltPage() {
           nome,
           oficinas: selectedWorkshops.map(id => {
             const w = workshops.find(workshop => workshop.id === id);
-            return `${w?.name} (${w?.instructor})`;
+            return `${w?.name}`;
           }),
         }),
       });
@@ -98,7 +98,7 @@ export default function OficinasSaltPage() {
                 <ul className="list-disc list-inside space-y-1">
                   {selectedWorkshops.map(id => {
                     const w = workshops.find(workshop => workshop.id === id);
-                    return <li key={id}>{w?.name} — {w?.instructor}</li>;
+                    return <li key={id}>{w?.name}</li>;
                   })}
                 </ul>
               </div>

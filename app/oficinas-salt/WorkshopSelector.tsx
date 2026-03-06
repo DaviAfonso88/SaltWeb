@@ -2,7 +2,7 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Workshop, workshops, categories } from "./workshopsData";
+import { workshops, categories } from "./workshopsData";
 
 interface WorkshopSelectorProps {
   selectedIds: string[];
@@ -38,9 +38,6 @@ export function WorkshopSelector({ selectedIds, onChange, disabled }: WorkshopSe
                       >
                         {workshop.name}
                       </Label>
-                      <p className="text-xs text-muted-foreground">
-                        {workshop.instructor}
-                      </p>
                     </div>
                   </div>
                 );

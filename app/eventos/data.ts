@@ -1,4 +1,4 @@
-export type Evento = {
+﻿export type Evento = {
   id: string;
   titulo: string;
   description: string;
@@ -36,16 +36,17 @@ export const eventos: Evento[] = [
     link: "/acampa-salt",
     linkLabel: "Fazer inscricao",
   },
-  /*   {
+  {
     id: "oficinas-salt-2026-03-21",
-    titulo: "Oficinas SALT",
+    titulo: "Amostra de Profissões",
     description:
-      "Venha aprender e se desenvolver com profissionais de diversas áreas em nossas oficinas exclusivas. Uma oportunidade única de mentoria e aprendizado prático em um ambiente cristão.",
-    dateISO: "2026-03-21T09:00:00-03:00",
+      "Escolha as áreas de interesse das quais você gostaria de participar. Essas escolhas vão nos ajudar a organizar e realizar o evento conforme a demanda.",
+    dateISO: "2026-03-21T14:30:00-03:00",
     imagens: ["/images/culto-salt.jpg"],
     tags: ["Capacitação", "Carreira", "Vocação"],
     locationName: "Primeira Igreja Batista em Lagoa Santa",
+    mapsUrl: " https://maps.app.goo.gl/QisTRYmCbFcCe5Zy5",
     link: "/oficinas-salt",
-    linkLabel: "Inscrever-se",
-  }, */
+    linkLabel: "Formulário",
+  },
 ];
