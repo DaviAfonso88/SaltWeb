@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import {
   Table,
@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Download, RefreshCw } from "lucide-react";
+import { workshops } from "../oficinas-salt/workshopsData";
 
 type Registration = {
   id: string;
@@ -25,6 +26,37 @@ type Registration = {
 export default function AdminOficinasPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const normalizeText = (value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
+  const workshopTotals = useMemo(() => {
+    const totals = workshops.map((workshop) => ({
+      id: workshop.id,
+      name: workshop.name,
+      category: workshop.category,
+      total: 0,
+    }));
+
+    const workshopIndexByName = new Map(
+      workshops.map((workshop, index) => [normalizeText(workshop.name), index]),
+    );
+
+    for (const registration of registrations) {
+      for (const oficina of registration.oficinas) {
+        const index = workshopIndexByName.get(normalizeText(oficina));
+        if (index !== undefined) totals[index].total += 1;
+      }
+    }
+
+    return totals
+      .filter((workshop) => workshop.total > 0)
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, "pt-BR"));
+  }, [registrations]);
 
   const fetchRegistrations = async () => {
     setLoading(true);
@@ -74,6 +106,20 @@ export default function AdminOficinasPage() {
             </div>
           </CardHeader>
           <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              {workshopTotals.map((workshop) => (
+                <Card key={workshop.id} className="border-primary/15 bg-background/70">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{workshop.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-3xl font-bold leading-none">{workshop.total}</p>
+                    <p className="text-xs text-muted-foreground mt-2">inscrições ({workshop.category})</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
             {loading ? (
               <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Loader2 className="h-10 w-10 animate-spin text-primary" />
