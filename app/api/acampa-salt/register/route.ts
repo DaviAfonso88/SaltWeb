@@ -11,7 +11,7 @@ import {
 } from "@/lib/acampa/calc";
 import { registrationSchema } from "@/lib/acampa/schema";
 import { RegistrationRecord } from "@/lib/acampa/types";
-import { createPixPayload, JUVENTUDE_PIX_KEY } from "@/lib/pix";
+import { createPixPayload, PIBLS_PIX_KEY } from "@/lib/pix";
 import { redis } from "@/lib/redis";
 import { saveRegistration } from "@/lib/acampa/storage";
 
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
 
     let pixPayload = "";
     let pixQrCode = "";
-    const pixKey = process.env.ACAMPA_PIX_KEY ?? JUVENTUDE_PIX_KEY;
+    const pixKey = process.env.ACAMPA_PIX_KEY ?? PIBLS_PIX_KEY;
 
     if (
       record.paymentPlan === "avista" &&

@@ -1,8 +1,10 @@
 const formatField = (id: string, value: string) =>
   `${id}${value.length.toString().padStart(2, "0")}${value}`;
 
-export const JUVENTUDE_PIX_KEY = "20969119000184";
-export const JUVENTUDE_PIX_IMAGE = "/images/pix-pibls.png";
+export const JUVENTUDE_PIX_KEY = "juventudepibls@gmail.com";
+export const JUVENTUDE_PIX_IMAGE = "/images/pix.png";
+export const PIBLS_PIX_KEY = "20969119000184";
+export const PIBLS_PIX_IMAGE = "/images/pix-pibls.png";
 
 const sanitize = (value: string) =>
   value

@@ -1,7 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Smartphone, QrCode, Copy, University, Building, User, ChevronDown } from "lucide-react";
+import {
+  Smartphone,
+  QrCode,
+  Copy,
+  University,
+  Building,
+  User,
+  ChevronDown,
+} from "lucide-react";
 import PageHeader from "../components/PageHeader";
 import PageSection from "../components/PageSection";
 import Step from "../components/Step";
@@ -74,7 +82,8 @@ export default function Contribua() {
             {copyFeedback && (
               <p
                 className={`mt-4 text-sm ${
-                  copyFeedback.includes("copiada") || copyFeedback.includes("copiados")
+                  copyFeedback.includes("copiada") ||
+                  copyFeedback.includes("copiados")
                     ? "text-green-500"
                     : "text-red-500"
                 }`}
@@ -128,19 +137,27 @@ export default function Contribua() {
         </div>
         {showBankDetails && (
           <div className="mt-8 max-w-md mx-auto bg-gradient-to-br from-background/50 to-background/20 p-8 rounded-2xl shadow-lg">
-            <h4 className="text-3xl font-bold text-center mb-8 text-white">Dados Bancários</h4>
+            <h4 className="text-3xl font-bold text-center mb-8 text-white">
+              Dados Bancários
+            </h4>
             <div className="space-y-4 text-lg">
               <div className="flex items-center gap-4">
                 <Building size={20} className="text-primary" />
-                <p><strong>Banco:</strong> {bankDetails.bankName}</p>
+                <p>
+                  <strong>Banco:</strong> {bankDetails.bankName}
+                </p>
               </div>
               <div className="flex items-center gap-4">
                 <User size={20} className="text-primary" />
-                <p><strong>CPF:</strong> {bankDetails.CPF}</p>
+                <p>
+                  <strong>CPF:</strong> {bankDetails.CPF}
+                </p>
               </div>
               <div className="flex items-center gap-4">
                 <User size={20} className="text-primary" />
-                <p><strong>Titular:</strong> {bankDetails.accountHolder}</p>
+                <p>
+                  <strong>Titular:</strong> {bankDetails.accountHolder}
+                </p>
               </div>
             </div>
           </div>

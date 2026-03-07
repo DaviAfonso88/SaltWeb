@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InstallmentTable } from "./InstallmentTable";
 import { RegistrationRecord } from "@/lib/acampa/types";
-import { JUVENTUDE_PIX_IMAGE } from "@/lib/pix";
+import { PIBLS_PIX_IMAGE } from "@/lib/pix";
 
 type SuccessScreenProps = {
   registration: RegistrationRecord;
@@ -124,7 +124,7 @@ export function SuccessScreen({
             </p>
             <div className="grid gap-4 md:grid-cols-[auto_1fr] md:items-center">
               <Image
-                src={JUVENTUDE_PIX_IMAGE}
+                src={PIBLS_PIX_IMAGE}
                 alt="QR Code PIX Juventude"
                 width={220}
                 height={220}
@@ -182,7 +182,7 @@ export function SuccessScreen({
             </p>
             <div className="grid gap-4 md:grid-cols-[auto_1fr] md:items-center">
               <Image
-                src={JUVENTUDE_PIX_IMAGE}
+                src={PIBLS_PIX_IMAGE}
                 alt="QR Code PIX Juventude"
                 width={220}
                 height={220}
