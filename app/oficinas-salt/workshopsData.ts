@@ -6,7 +6,7 @@ export type Workshop = {
 
 export const workshops: Workshop[] = [
   // Saúde
-  { id: "psique", name: "Psique", category: "Saúde" },
+  { id: "psique", name: "Psicologia", category: "Saúde" },
   { id: "odontologia", name: "Odontologia", category: "Saúde" },
   { id: "enfermagem", name: "Enfermagem", category: "Saúde" },
   { id: "medicina", name: "Medicina", category: "Saúde" },
