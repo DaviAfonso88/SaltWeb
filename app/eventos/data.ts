@@ -42,7 +42,7 @@ export const eventos: Evento[] = [
     description:
       "Escolha as áreas de interesse das quais você gostaria de participar. Essas escolhas vão nos ajudar a organizar e realizar o evento conforme a demanda.",
     dateISO: "2026-03-21T14:30:00-03:00",
-    imagens: ["/images/culto-salt.jpg"],
+    imagens: ["/images/oficinas.jpeg"],
     tags: ["Capacitação", "Carreira", "Vocação"],
     locationName: "Primeira Igreja Batista em Lagoa Santa",
     mapsUrl: " https://maps.app.goo.gl/QisTRYmCbFcCe5Zy5",
