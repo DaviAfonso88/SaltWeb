@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { Check, Copy, RefreshCw, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 import { Parcela, RegistrationRecord } from "@/lib/acampa/types";
 
 const currency = (value: number) =>
@@ -59,10 +60,36 @@ const paymentMethodLabel: Record<string, string> = {
   cartao: "Cartao",
 };
 
+const duplaLabel: Record<string, string> = {
+  nao: "Nao",
+  irmao: "Irmao",
+  conjuge: "Conjuge",
+};
+
+const normalizeSearch = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+const resolvePendingAmount = (item: RegistrationRecord) => {
+  if (item.status === "isento") {
+    return 0;
+  }
+
+  if (item.paymentPlan === "carne") {
+    return (item.parcelas ?? []).reduce((sum, parcela) => sum + (parcela.pago ? 0 : parcela.valor), 0);
+  }
+
+  return item.valorFinal ?? 0;
+};
+
 export default function AdminAcampaSaltPage() {
   const [lote, setLote] = useState("todos");
   const [categoria, setCategoria] = useState("todos");
   const [status, setStatus] = useState("todos");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [items, setItems] = useState<RegistrationRecord[]>([]);
@@ -70,6 +97,41 @@ export default function AdminAcampaSaltPage() {
   const [parcelasDraft, setParcelasDraft] = useState<Parcela[]>([]);
   const [savingInstallments, setSavingInstallments] = useState(false);
   const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const filteredItems = useMemo(() => {
+    const term = normalizeSearch(search);
+    if (!term) {
+      return items;
+    }
+
+    return items.filter((item) => {
+      const haystack = normalizeSearch(
+        [
+          item.numeroInscricao,
+          item.nome,
+          item.nomeDupla ?? "",
+          item.telefone,
+          item.email,
+          item.igreja,
+          item.cidade,
+          duplaLabel[item.dupla] ?? item.dupla,
+        ].join(" "),
+      );
+      return haystack.includes(term);
+    });
+  }, [items, search]);
+
+  const stats = useMemo(() => {
+    const total = filteredItems.length;
+    const pendentes = filteredItems.filter((item) => item.status === "pendente_pagamento").length;
+    const isentos = filteredItems.filter((item) => item.status === "isento").length;
+    const duplas = filteredItems.filter((item) => item.dupla !== "nao").length;
+    const valorTotal = filteredItems.reduce((sum, item) => sum + (item.valorFinal ?? 0), 0);
+    const valorPendente = filteredItems.reduce((sum, item) => sum + resolvePendingAmount(item), 0);
+
+    return { total, pendentes, isentos, duplas, valorTotal, valorPendente };
+  }, [filteredItems]);
 
   const query = useMemo(() => {
     const params = new URLSearchParams();
@@ -109,6 +171,15 @@ export default function AdminAcampaSaltPage() {
     fetchItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
+
+  useEffect(() => {
+    if (!copiedId) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setCopiedId(null), 1500);
+    return () => window.clearTimeout(timeout);
+  }, [copiedId]);
 
   const openInstallments = (item: RegistrationRecord) => {
     setSelectedCarne(item);
@@ -191,13 +262,37 @@ export default function AdminAcampaSaltPage() {
     }
   };
 
+  const clearFilters = () => {
+    setLote("todos");
+    setCategoria("todos");
+    setStatus("todos");
+    setSearch("");
+  };
+
+  const copyText = async (id: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+    } catch {
+      setError("Nao foi possivel copiar para a area de transferencia.");
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-7xl space-y-6 px-4 pb-12 pt-28 md:pb-16 md:pt-32">
       <Card className="border-border/70 bg-card/70">
         <CardHeader>
           <CardTitle>Painel Acampa SALT 2026</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-4">
+        <CardContent className="grid gap-3 md:grid-cols-5">
+          <div className="md:col-span-2">
+            <Input
+              placeholder="Buscar por nome, numero, WhatsApp, e-mail, igreja..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
           <Select value={lote} onValueChange={setLote}>
             <SelectTrigger>
               <SelectValue placeholder="Filtrar por lote" />
@@ -234,49 +329,115 @@ export default function AdminAcampaSaltPage() {
             </SelectContent>
           </Select>
 
-          <Button onClick={fetchItems} disabled={loading} variant="outline">
-            <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-            Atualizar
-          </Button>
+          <div className="flex gap-2 md:col-span-5 md:justify-end">
+            <Button onClick={clearFilters} variant="ghost" disabled={loading}>
+              <X className="h-4 w-4" />
+              Limpar
+            </Button>
+            <Button onClick={fetchItems} disabled={loading} variant="outline">
+              <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+              Atualizar
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
       <Card className="border-border/70 bg-card/70">
         <CardHeader>
-          <CardTitle>Inscricoes ({items.length})</CardTitle>
+          <CardTitle className="flex flex-wrap items-center justify-between gap-2">
+            <span>
+              Inscricoes{" "}
+              <span className="text-muted-foreground">
+                ({filteredItems.length}{filteredItems.length !== items.length ? ` de ${items.length}` : ""})
+              </span>
+            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary">Pendentes: {stats.pendentes}</Badge>
+              <Badge variant="secondary">Isentos: {stats.isentos}</Badge>
+              <Badge variant="secondary">Duplas: {stats.duplas}</Badge>
+              <Badge variant="secondary">Total: {currency(stats.valorTotal)}</Badge>
+              <Badge variant="secondary">Pendente: {currency(stats.valorPendente)}</Badge>
+            </div>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {error ? <p className="mb-3 text-sm text-destructive">{error}</p> : null}
           <div className="rounded-lg border border-border/70">
             <Table>
-              <TableHeader>
+              <TableHeader className="sticky top-0 z-10 bg-card/80 backdrop-blur">
                 <TableRow>
                   <TableHead>Numero</TableHead>
-                  <TableHead>Nome</TableHead>
-                  <TableHead>Categoria</TableHead>
-                  <TableHead>Qtd. conjuges</TableHead>
+                  <TableHead>Participante</TableHead>
+                  <TableHead>Dupla</TableHead>
                   <TableHead>Pagamento</TableHead>
                   <TableHead>Parcelas</TableHead>
                   <TableHead>Lote</TableHead>
-                  <TableHead>Valor final</TableHead>
+                  <TableHead>Valor</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Criado em</TableHead>
+                  <TableHead className="text-right">Acoes</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {!loading && items.length === 0 ? (
+                {loading ? (
                   <TableRow>
-                    <TableCell colSpan={10} className="text-center text-muted-foreground">
+                    <TableCell colSpan={10} className="py-10 text-center text-muted-foreground">
+                      <span className="inline-flex items-center gap-2">
+                        <RefreshCw className="h-4 w-4 animate-spin" /> Carregando inscricoes...
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ) : !loading && filteredItems.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={10} className="py-10 text-center text-muted-foreground">
                       Nenhuma inscricao encontrada para os filtros atuais.
                     </TableCell>
                   </TableRow>
                 ) : null}
-                {items.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-medium">{item.numeroInscricao}</TableCell>
-                    <TableCell>{item.nome}</TableCell>
-                    <TableCell>{categoriaLabel[item.categoria] ?? item.categoria}</TableCell>
-                    <TableCell>{(item.quantidadeConjuges ?? 0) > 0 ? item.quantidadeConjuges : "-"}</TableCell>
+                {filteredItems.map((item) => (
+                  <TableRow key={item.id} className="odd:bg-muted/20">
+                    <TableCell className="whitespace-nowrap font-medium">
+                      <div className="flex items-center gap-2">
+                        <span>{item.numeroInscricao}</span>
+                        <Button
+                          type="button"
+                          size="icon"
+                          variant="ghost"
+                          aria-label="Copiar numero da inscricao"
+                          onClick={() => copyText(item.id, item.numeroInscricao)}
+                        >
+                          {copiedId === item.id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        </Button>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <p className="font-medium">{item.nome}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {categoriaLabel[item.categoria] ?? item.categoria} • {item.telefone} • {item.email}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {item.igreja} • {item.cidade}
+                      </p>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {item.dupla === "nao" ? (
+                        <span className="text-xs text-muted-foreground">-</span>
+                      ) : (
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <Badge variant="secondary">
+                              {duplaLabel[item.dupla] ?? item.dupla}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              Qtd: {item.quantidadeConjuges}
+                            </span>
+                          </div>
+                          {(item.nomeDupla ?? "").trim() ? (
+                            <p className="text-xs text-muted-foreground">{item.nomeDupla}</p>
+                          ) : null}
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell>
                       {item.paymentPlan === "carne"
                         ? "Carne SALT (parcelado)"
@@ -309,7 +470,12 @@ export default function AdminAcampaSaltPage() {
                         {item.loteTravado ? <Badge variant="secondary">Travado</Badge> : null}
                       </div>
                     </TableCell>
-                    <TableCell>{currency(item.valorFinal)}</TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <p className="font-medium">{currency(item.valorFinal)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Pendente: {currency(resolvePendingAmount(item))}
+                      </p>
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Badge variant={item.status === "isento" ? "default" : "secondary"}>
@@ -331,6 +497,35 @@ export default function AdminAcampaSaltPage() {
                     <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                       {new Date(item.createdAt).toLocaleString("pt-BR")}
                     </TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() =>
+                          copyText(
+                            `${item.id}-full`,
+                            [
+                              item.numeroInscricao,
+                              item.nome,
+                              (item.nomeDupla ?? "").trim() ? `Dupla: ${item.nomeDupla}` : "",
+                              item.telefone,
+                              item.email,
+                              item.igreja,
+                              item.cidade,
+                              `Valor: ${currency(item.valorFinal)}`,
+                              `Pendente: ${currency(resolvePendingAmount(item))}`,
+                              `Status: ${statusLabel[item.status] ?? item.status}`,
+                            ]
+                              .filter(Boolean)
+                              .join(" | "),
+                          )
+                        }
+                      >
+                        {copiedId === `${item.id}-full` ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copiar
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -344,7 +539,9 @@ export default function AdminAcampaSaltPage() {
           <DialogHeader>
             <DialogTitle>Validar parcelas do Carne SALT</DialogTitle>
             <DialogDescription>
-              {selectedCarne ? `${selectedCarne.numeroInscricao} - ${selectedCarne.nome}` : ""}
+              {selectedCarne
+                ? `${selectedCarne.numeroInscricao} - ${selectedCarne.nome}${(selectedCarne.nomeDupla ?? "").trim() ? ` (${selectedCarne.nomeDupla})` : ""}`
+                : ""}
             </DialogDescription>
           </DialogHeader>
 

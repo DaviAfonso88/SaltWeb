@@ -24,6 +24,7 @@ export async function POST(request: Request) {
       const errors = parsed.error.flatten().fieldErrors;
       const firstError =
         errors.nome?.[0] ||
+        errors.nomeDupla?.[0] ||
         errors.telefone?.[0] ||
         errors.email?.[0] ||
         errors.quantidadeConjuges?.[0] ||
@@ -70,6 +71,7 @@ export async function POST(request: Request) {
       id,
       numeroInscricao,
       nome: payload.nome,
+      nomeDupla: payload.nomeDupla?.trim() ? payload.nomeDupla.trim() : null,
       idade: payload.idade,
       telefone: payload.telefone,
       email: payload.email,

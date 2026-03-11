@@ -3,6 +3,7 @@ import { z } from "zod";
 export const registrationSchema = z
   .object({
     nome: z.string().trim().min(3, "Informe o nome completo."),
+    nomeDupla: z.string().trim().optional(),
     idade: z.number().int().min(10, "Idade invalida.").max(99, "Idade invalida."),
     telefone: z.string().trim().min(10, "Informe um WhatsApp valido."),
     email: z.string().trim().email("E-mail invalido."),
@@ -29,6 +30,23 @@ export const registrationSchema = z
         code: "custom",
         path: ["quantidadeConjuges"],
         message: "Quantidade so pode ser informada quando houver dupla.",
+      });
+    }
+
+    if (data.dupla !== "nao") {
+      const nome = data.nomeDupla?.trim() ?? "";
+      if (nome.length < 3) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["nomeDupla"],
+          message: `Informe o nome do ${data.dupla === "irmao" ? "irmao" : "conjuge"}.`,
+        });
+      }
+    } else if ((data.nomeDupla?.trim() ?? "") !== "") {
+      ctx.addIssue({
+        code: "custom",
+        path: ["nomeDupla"],
+        message: "Nome da dupla so pode ser informado quando houver dupla.",
       });
     }
 

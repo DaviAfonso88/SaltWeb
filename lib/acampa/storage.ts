@@ -32,6 +32,7 @@ const parseRecord = (raw: unknown): RegistrationRecord | null => {
     ...record,
     categoria: "participante",
     quantidadeConjuges: record.quantidadeConjuges ?? 0,
+    nomeDupla: record.nomeDupla ?? null,
   } as RegistrationRecord;
 };
 

@@ -51,6 +51,7 @@ export function RegistrationForm() {
     resolver: zodResolver(registrationSchema),
     defaultValues: {
       nome: "",
+      nomeDupla: "",
       idade: 16,
       telefone: "",
       email: "",
@@ -126,11 +127,18 @@ export function RegistrationForm() {
   useEffect(() => {
     if (dupla === "nao" && (quantidadeConjuges ?? 0) !== 0) {
       form.setValue("quantidadeConjuges", 0, { shouldValidate: true });
-      return;
+    }
+
+    if (dupla === "nao" && (form.getValues("nomeDupla") ?? "").trim() !== "") {
+      form.setValue("nomeDupla", "", { shouldValidate: true });
     }
 
     if ((dupla === "conjuge" || dupla === "irmao") && (quantidadeConjuges ?? 0) < 2) {
       form.setValue("quantidadeConjuges", 2, { shouldValidate: true });
+    }
+
+    if (dupla !== "nao") {
+      form.setFocus("nomeDupla");
     }
   }, [dupla, form, quantidadeConjuges]);
 
@@ -247,6 +255,18 @@ export function RegistrationForm() {
               </SelectContent>
             </Select>
           </div>
+
+          {dupla !== "nao" ? (
+            <div className="space-y-2">
+              <Label htmlFor="nomeDupla">
+                {dupla === "irmao" ? "Nome do irmao" : "Nome do conjuge"}
+              </Label>
+              <Input id="nomeDupla" {...form.register("nomeDupla")} />
+              <p className="text-sm text-destructive">
+                {form.formState.errors.nomeDupla?.message}
+              </p>
+            </div>
+          ) : null}
 
           <div className="space-y-2">
             <Label htmlFor="quantidadeConjuges">Quantidade da dupla</Label>

@@ -26,6 +26,7 @@ export type RegistrationRecord = {
   id: string;
   numeroInscricao: string;
   nome: string;
+  nomeDupla?: string | null;
   idade: number;
   telefone: string;
   email: string;
