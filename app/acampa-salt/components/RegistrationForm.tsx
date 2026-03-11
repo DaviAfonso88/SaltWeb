@@ -52,7 +52,7 @@ export function RegistrationForm() {
     defaultValues: {
       nome: "",
       nomeDupla: "",
-      idade: 16,
+      idade: 0,
       telefone: "",
       email: "",
       igreja: "",
@@ -133,7 +133,10 @@ export function RegistrationForm() {
       form.setValue("nomeDupla", "", { shouldValidate: true });
     }
 
-    if ((dupla === "conjuge" || dupla === "irmao") && (quantidadeConjuges ?? 0) < 2) {
+    if (
+      (dupla === "conjuge" || dupla === "irmao") &&
+      (quantidadeConjuges ?? 0) < 2
+    ) {
       form.setValue("quantidadeConjuges", 2, { shouldValidate: true });
     }
 
@@ -279,7 +282,8 @@ export function RegistrationForm() {
             />
             {dupla !== "nao" ? (
               <p className="text-xs text-muted-foreground">
-                A inscrição em dupla é válida somente para 2 ou mais pessoas. Por isso, o mínimo permitido é 2.
+                A inscrição em dupla é válida somente para 2 ou mais pessoas.
+                Por isso, o mínimo permitido é 2.
               </p>
             ) : null}
             <p className="text-sm text-destructive">
@@ -332,7 +336,8 @@ export function RegistrationForm() {
               </Label>
             </div>
             <p className="mt-2 text-xs text-amber-700">
-              Opção válida somente para quem já preencheu o formulário do primeiro lote de fevereiro.
+              Opção válida somente para quem já preencheu o formulário do
+              primeiro lote de fevereiro.
             </p>
           </div>
 
