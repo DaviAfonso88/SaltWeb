@@ -10,6 +10,7 @@ export const workshops: Workshop[] = [
   { id: "odontologia", name: "Odontologia", category: "Saúde" },
   { id: "enfermagem", name: "Enfermagem", category: "Saúde" },
   { id: "medicina", name: "Medicina", category: "Saúde" },
+  { id: "veterinaria", name: "Medicina Veterinária", category: "Saúde" },
   { id: "fisioterapia", name: "Fisioterapia", category: "Saúde" },
 
   // Segurança
