@@ -46,7 +46,5 @@ export const eventos: Evento[] = [
     tags: ["Capacitação", "Carreira", "Vocação"],
     locationName: "Primeira Igreja Batista em Lagoa Santa",
     mapsUrl: " https://maps.app.goo.gl/QisTRYmCbFcCe5Zy5",
-    link: "/oficinas-salt",
-    linkLabel: "Formulário",
   },
 ];
