@@ -24,28 +24,30 @@ const MONTHS_BR = [
   "dezembro",
 ];
 
-const resolveLotByMonth = (month: number) => {
-  if (month <= 2) {
-    return LOTS[0];
+const getFirstSaturdayOfMonth = (year: number, month: number): Date => {
+  const firstDay = new Date(year, month - 1, 1);
+  const dayOfWeek = firstDay.getDay();
+  const daysUntilSaturday = (6 - dayOfWeek + 7) % 7;
+  const firstSaturday = new Date(year, month - 1, 1 + daysUntilSaturday);
+  firstSaturday.setHours(0, 0, 0, 0);
+  return firstSaturday;
+};
+
+const resolveLotByMonth = (date: Date = new Date()) => {
+  const year = date.getFullYear();
+  const currentMonth = date.getMonth() + 1;
+  const currentDate = new Date(year, date.getMonth(), date.getDate());
+  currentDate.setHours(0, 0, 0, 0);
+
+  const firstSaturday = getFirstSaturdayOfMonth(year, currentMonth);
+  
+  if (currentDate < firstSaturday) {
+    const lotIndex = Math.max(0, currentMonth - 3);
+    return LOTS[lotIndex];
   }
 
-  if (month === 3) {
-    return LOTS[1];
-  }
-
-  if (month === 4) {
-    return LOTS[2];
-  }
-
-  if (month === 5) {
-    return LOTS[3];
-  }
-
-  if (month === 6) {
-    return LOTS[4];
-  }
-
-  return LOTS[5];
+  const lotIndex = Math.min(currentMonth - 1, LOTS.length - 1);
+  return LOTS[lotIndex];
 };
 
 export const createCarneInstallments = (total: number): Parcela[] => {
@@ -70,10 +72,8 @@ export const getCurrentMonthInfo = (date = new Date()) => {
 
 export const resolveBasePrice = ({
   loteTravado,
-  month,
 }: {
   loteTravado: boolean;
-  month: number;
 }) => {
   if (loteTravado) {
     return {
@@ -83,7 +83,7 @@ export const resolveBasePrice = ({
     };
   }
 
-  const lot = resolveLotByMonth(month);
+  const lot = resolveLotByMonth();
   return {
     lote: lot.id,
     loteLabel: lot.lotLabel,

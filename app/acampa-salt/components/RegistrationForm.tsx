@@ -80,10 +80,8 @@ export function RegistrationForm() {
   });
 
   const preview = useMemo(() => {
-    const month = getCurrentMonthInfo().month;
     const base = resolveBasePrice({
       loteTravado,
-      month,
     });
     const valorOriginalTotal = resolveOriginalTotal({
       valorOriginal: base.valorOriginal,

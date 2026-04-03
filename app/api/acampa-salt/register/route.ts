@@ -41,10 +41,9 @@ export async function POST(request: Request) {
         : payload.paymentPlan === "avista"
           ? (payload.formaPagamento ?? null)
           : null;
-    const { month, monthLabel } = getCurrentMonthInfo();
+    const { monthLabel } = getCurrentMonthInfo();
     const base = resolveBasePrice({
       loteTravado: payload.loteTravado,
-      month,
     });
     const valorOriginalTotal = resolveOriginalTotal({
       valorOriginal: base.valorOriginal,
