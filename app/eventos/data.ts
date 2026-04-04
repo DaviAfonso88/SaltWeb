@@ -34,18 +34,7 @@ export const eventos: Evento[] = [
       "Gomes de Rezende - R. Raimundo, R. Cel. Ovídio Guerra, 97, Lagoa Santa - MG, 33400-000",
     mapsUrl: " https://maps.app.goo.gl/jAwkbUvKQGb1GqfK7",
     link: "/acampa-salt",
-    linkLabel: "Fazer inscricao",
-  },
-  {
-    id: "culto-salt-2026-04-03",
-    titulo: "Culto Salt",
-    description:
-      "Crises de fé fazem parte da caminhada, mas não definem o nosso fim. Neste culto, vamos entender como Deus usa até os momentos difíceis para fortalecer nossa fé.",
-    dateISO: "2026-04-03T19:30:00-03:00",
-    imagens: ["/images/culto-salt-abril.png"],
-    tags: ["Culto", "Juventude"],
-    locationName: "R. Jair Gonçalves Bastos, 64 - Jardim Ipê, Lagoa Santa",
-    mapsUrl: "https://maps.app.goo.gl/DDxiX65jtCC47ETF7",
+    linkLabel: "Fazer inscrição",
   },
   {
     id: "cantata-pascoa-2026-04-05",
@@ -57,5 +46,28 @@ export const eventos: Evento[] = [
     tags: ["Cantata", "Páscoa"],
     locationName: "R. Jair Gonçalves Bastos, 64 - Jardim Ipê, Lagoa Santa",
     mapsUrl: "https://maps.app.goo.gl/DDxiX65jtCC47ETF7",
+  },
+  {
+    id: "vertice-2026-05-01",
+    titulo: "Conjubam",
+    description:
+      "Estamos criando o grupo dos jovens interessados em ir no CONJUBAM. Lembrando que esse evento tem como público alvo, os jovens e adolescentes com mais de 16 anos. Será na cidade de Montes Claros, 1 à 3 de Maio. Inscrição com hospedagem e alimentação - 230 reais + Transporte (a parte).",
+    dateISO: "2026-05-01T10:00:00-03:00",
+    imagens: ["/images/vertice.jpeg"],
+    tags: ["Conjubam", "Vertice"],
+    locationName: "Cidade de Montes Claros",
+  },
+  {
+    id: "avalanche-2026-04-10",
+    titulo: "Projeto Avalanche",
+    description:
+      "As inscrições para o Projeto Avalanche estão abertas! Serão 3 dias levando a Palavra, servindo pessoas e impactando vidas com o amor de Deus, de forma intencional.",
+    dateISO: "2026-04-10T10:00:00-03:00",
+    imagens: ["/images/avalanche.jpeg"],
+    tags: ["Avalanche", "Projeto"],
+    locationName: "Igreja Batista Nova Jerusalém - Rua Jerusalém 247, Glória",
+    mapsUrl: "https://maps.app.goo.gl/zmsyv3AMrGQzvHQV9",
+    link: "https://www.e-inscricao.com/jubac-mg/projetoavalanche26",
+    linkLabel: "Fazer inscrição",
   },
 ];
