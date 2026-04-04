@@ -40,13 +40,13 @@ const resolveLotByMonth = (date: Date = new Date()) => {
   currentDate.setHours(0, 0, 0, 0);
 
   const firstSaturday = getFirstSaturdayOfMonth(year, currentMonth);
-  
+
   if (currentDate < firstSaturday) {
     const lotIndex = Math.max(0, currentMonth - 3);
     return LOTS[lotIndex];
   }
 
-  const lotIndex = Math.min(currentMonth - 1, LOTS.length - 1);
+  const lotIndex = Math.min(currentMonth - 2, LOTS.length - 1);
   return LOTS[lotIndex];
 };
 
