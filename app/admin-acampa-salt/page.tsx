@@ -50,7 +50,7 @@ const categoriaLabel: Record<string, string> = {
 };
 
 const statusLabel: Record<string, string> = {
-  isento: "Isento",
+  pagamento_completo: "Completo",
   pendente_pagamento: "Pendente",
 };
 
@@ -73,16 +73,21 @@ const normalizeSearch = (value: string) =>
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
 
-const resolvePendingAmount = (item: RegistrationRecord) => {
-  if (item.status === "isento") {
-    return 0;
+const resolveReceivedAmount = (item: RegistrationRecord) => {
+  if (item.status === "pagamento_completo") {
+    return item.valorFinal ?? 0;
   }
 
   if (item.paymentPlan === "carne") {
-    return (item.parcelas ?? []).reduce((sum, parcela) => sum + (parcela.pago ? 0 : parcela.valor), 0);
+    return (item.parcelas ?? []).reduce((sum, parcela) => sum + (parcela.pago ? parcela.valor : 0), 0);
   }
 
-  return item.valorFinal ?? 0;
+  return 0;
+};
+
+const resolvePendingAmount = (item: RegistrationRecord) => {
+  const pending = (item.valorFinal ?? 0) - resolveReceivedAmount(item);
+  return pending > 0 ? pending : 0;
 };
 
 export default function AdminAcampaSaltPage() {
@@ -125,12 +130,12 @@ export default function AdminAcampaSaltPage() {
   const stats = useMemo(() => {
     const total = filteredItems.length;
     const pendentes = filteredItems.filter((item) => item.status === "pendente_pagamento").length;
-    const isentos = filteredItems.filter((item) => item.status === "isento").length;
+    const completos = filteredItems.filter((item) => item.status === "pagamento_completo").length;
     const duplas = filteredItems.filter((item) => item.dupla !== "nao").length;
-    const valorTotal = filteredItems.reduce((sum, item) => sum + (item.valorFinal ?? 0), 0);
-    const valorPendente = filteredItems.reduce((sum, item) => sum + resolvePendingAmount(item), 0);
+    const valorRecebido = filteredItems.reduce((sum, item) => sum + resolveReceivedAmount(item), 0);
+    const valorRestante = filteredItems.reduce((sum, item) => sum + resolvePendingAmount(item), 0);
 
-    return { total, pendentes, isentos, duplas, valorTotal, valorPendente };
+    return { total, pendentes, completos, duplas, valorRecebido, valorRestante };
   }, [filteredItems]);
 
   const query = useMemo(() => {
@@ -234,7 +239,7 @@ export default function AdminAcampaSaltPage() {
     }
   };
 
-  const markAsIsento = async (id: string) => {
+  const markAsComplete = async (id: string) => {
     setUpdatingStatusId(id);
     setError("");
     try {
@@ -243,7 +248,7 @@ export default function AdminAcampaSaltPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id,
-          status: "isento",
+          status: "pagamento_completo",
         }),
       });
 
@@ -325,7 +330,7 @@ export default function AdminAcampaSaltPage() {
             <SelectContent>
               <SelectItem value="todos">Todos os status</SelectItem>
               <SelectItem value="pendente_pagamento">Pendente</SelectItem>
-              <SelectItem value="isento">Isento</SelectItem>
+              <SelectItem value="pagamento_completo">Completo</SelectItem>
             </SelectContent>
           </Select>
 
@@ -353,10 +358,10 @@ export default function AdminAcampaSaltPage() {
             </span>
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary">Pendentes: {stats.pendentes}</Badge>
-              <Badge variant="secondary">Isentos: {stats.isentos}</Badge>
+              <Badge variant="secondary">Completos: {stats.completos}</Badge>
               <Badge variant="secondary">Duplas: {stats.duplas}</Badge>
-              <Badge variant="secondary">Total: {currency(stats.valorTotal)}</Badge>
-              <Badge variant="secondary">Pendente: {currency(stats.valorPendente)}</Badge>
+              <Badge variant="secondary">Recebido: {currency(stats.valorRecebido)}</Badge>
+              <Badge variant="secondary">Restante: {currency(stats.valorRestante)}</Badge>
             </div>
           </CardTitle>
         </CardHeader>
@@ -478,7 +483,7 @@ export default function AdminAcampaSaltPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <Badge variant={item.status === "isento" ? "default" : "secondary"}>
+                        <Badge variant={item.status === "pagamento_completo" ? "default" : "secondary"}>
                           {statusLabel[item.status] ?? item.status}
                         </Badge>
                         {item.status === "pendente_pagamento" ? (
@@ -486,10 +491,10 @@ export default function AdminAcampaSaltPage() {
                             type="button"
                             variant="outline"
                             size="sm"
-                            onClick={() => markAsIsento(item.id)}
+                            onClick={() => markAsComplete(item.id)}
                             disabled={updatingStatusId === item.id}
                           >
-                            {updatingStatusId === item.id ? "Salvando..." : "Marcar isento"}
+                            {updatingStatusId === item.id ? "Salvando..." : "Marcar completo"}
                           </Button>
                         ) : null}
                       </div>

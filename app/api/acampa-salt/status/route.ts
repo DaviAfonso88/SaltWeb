@@ -5,7 +5,7 @@ import { getRegistrationById, updateRegistrationStatus } from "@/lib/acampa/stor
 
 const statusSchema = z.object({
   id: z.string().uuid("ID invalido."),
-  status: z.enum(["isento"]),
+  status: z.enum(["pagamento_completo"]),
 });
 
 export async function PATCH(request: Request) {
@@ -24,7 +24,7 @@ export async function PATCH(request: Request) {
 
     if (registration.status !== "pendente_pagamento") {
       return NextResponse.json(
-        { message: "Somente inscricoes pendentes podem ser marcadas como isentas." },
+        { message: "Somente inscricoes pendentes podem ser marcadas como completas." },
         { status: 400 }
       );
     }

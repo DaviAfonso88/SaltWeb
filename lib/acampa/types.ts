@@ -44,6 +44,6 @@ export type RegistrationRecord = {
   valorFinal: number;
   parcelas: Parcela[];
   mesInscricao: string;
-  status: "isento" | "pendente_pagamento";
+  status: "pagamento_completo" | "pendente_pagamento";
   createdAt: string;
 };

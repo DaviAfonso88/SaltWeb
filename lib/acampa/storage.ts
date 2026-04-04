@@ -5,6 +5,14 @@ import { Parcela, RegistrationRecord } from "./types";
 const REGISTRATION_KEY_PREFIX = "acampa:inscricao:";
 const IDS_LIST_KEY = "acampa:inscricoes:ids";
 
+const normalizeStatus = (status: unknown): RegistrationRecord["status"] => {
+  if (status === "pagamento_completo" || status === "isento") {
+    return "pagamento_completo";
+  }
+
+  return "pendente_pagamento";
+};
+
 const parseRecord = (raw: unknown): RegistrationRecord | null => {
   if (!raw) {
     return null;
@@ -33,6 +41,7 @@ const parseRecord = (raw: unknown): RegistrationRecord | null => {
     categoria: "participante",
     quantidadeConjuges: record.quantidadeConjuges ?? 0,
     nomeDupla: record.nomeDupla ?? null,
+    status: normalizeStatus(record.status),
   } as RegistrationRecord;
 };
 
@@ -52,9 +61,12 @@ export async function updateRegistrationInstallments(id: string, parcelas: Parce
     return null;
   }
 
+  const allPaid = parcelas.length > 0 && parcelas.every((parcela) => parcela.pago);
+
   const updated: RegistrationRecord = {
     ...record,
     parcelas,
+    status: allPaid ? "pagamento_completo" : "pendente_pagamento",
   };
 
   await redis.set(`${REGISTRATION_KEY_PREFIX}${id}`, updated);
@@ -73,6 +85,10 @@ export async function updateRegistrationStatus(
   const updated: RegistrationRecord = {
     ...record,
     status,
+    parcelas:
+      status === "pagamento_completo"
+        ? record.parcelas.map((parcela) => ({ ...parcela, pago: true }))
+        : record.parcelas,
   };
 
   await redis.set(`${REGISTRATION_KEY_PREFIX}${id}`, updated);

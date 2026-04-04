@@ -88,7 +88,7 @@ export async function POST(request: Request) {
       valorFinal,
       parcelas,
       mesInscricao: monthLabel,
-      status: valorFinal === 0 ? "isento" : "pendente_pagamento",
+      status: valorFinal === 0 ? "pagamento_completo" : "pendente_pagamento",
       createdAt: new Date().toISOString(),
     };
 
