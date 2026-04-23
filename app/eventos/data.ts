@@ -37,17 +37,6 @@ export const eventos: Evento[] = [
     linkLabel: "Fazer inscrição",
   },
   {
-    id: "cantata-pascoa-2026-04-05",
-    titulo: "Cantata de Páscoa",
-    description:
-      "Uma dia especial para celebrar a esperança e o amor revelados na cruz. Na cantata de Páscoa, vamos relembrar o sacrifício e a vitória de Jesus por nós.",
-    dateISO: "2026-04-05T10:00:00-03:00",
-    imagens: ["/images/cantata-de-pascoa.png"],
-    tags: ["Cantata", "Páscoa"],
-    locationName: "R. Jair Gonçalves Bastos, 64 - Jardim Ipê, Lagoa Santa",
-    mapsUrl: "https://maps.app.goo.gl/DDxiX65jtCC47ETF7",
-  },
-  {
     id: "vertice-2026-05-01",
     titulo: "Conjubam",
     description:
@@ -56,18 +45,5 @@ export const eventos: Evento[] = [
     imagens: ["/images/vertice.jpeg"],
     tags: ["Conjubam", "Vertice"],
     locationName: "Cidade de Montes Claros",
-  },
-  {
-    id: "avalanche-2026-04-10",
-    titulo: "Projeto Avalanche",
-    description:
-      "As inscrições para o Projeto Avalanche estão abertas! Serão 3 dias levando a Palavra, servindo pessoas e impactando vidas com o amor de Deus, de forma intencional.",
-    dateISO: "2026-04-10T10:00:00-03:00",
-    imagens: ["/images/avalanche.jpeg"],
-    tags: ["Avalanche", "Projeto"],
-    locationName: "Igreja Batista Nova Jerusalém - Rua Jerusalém 247, Glória",
-    mapsUrl: "https://maps.app.goo.gl/zmsyv3AMrGQzvHQV9",
-    link: "https://www.e-inscricao.com/jubac-mg/projetoavalanche26",
-    linkLabel: "Fazer inscrição",
   },
 ];
