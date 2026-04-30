@@ -6,8 +6,10 @@ import {
   MapPin, 
   CalendarDays, 
   MessageCircle,
-  ArrowRight
+  ArrowRight,
+  Copy
 } from "lucide-react";
+import { useState } from "react";
 import { PIBLS_PIX_KEY } from "@/lib/pix";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +27,13 @@ const currency = (value: number) =>
 
 export function RegistrationSuccess({ nome, valor, onReset }: SuccessScreenProps) {
   const showPix = valor && valor > 0;
+  const [copied, setCopied] = useState(false);
+
+  const copyPix = async () => {
+    await navigator.clipboard.writeText(PIBLS_PIX_KEY);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <Card className="overflow-hidden border-border/50 bg-card/50 shadow-xl max-w-2xl mx-auto">
@@ -64,7 +73,18 @@ export function RegistrationSuccess({ nome, valor, onReset }: SuccessScreenProps
             <div className="rounded-xl border border-amber-500/30 bg-background/80 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Chave PIX</span>
-                <span className="font-mono font-medium text-amber-700 dark:text-amber-400">{PIBLS_PIX_KEY}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono font-medium text-amber-700 dark:text-amber-400">{PIBLS_PIX_KEY}</span>
+                  <Button
+                    onClick={copyPix}
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                  >
+                    {copied ? <Copy className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                  </Button>
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Valor</span>
@@ -76,14 +96,20 @@ export function RegistrationSuccess({ nome, valor, onReset }: SuccessScreenProps
               </div>
             </div>
 
-            <div className="rounded-xl bg-amber-500/20 p-4 flex items-start gap-3">
-              <MessageCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
-              <div className="text-sm">
-                <p className="font-medium text-amber-800 dark:text-amber-300">Enviar comprovante</p>
-                <p className="text-amber-700 dark:text-amber-400">
-                  Mande o comprovante para o irmão Thiago no WhatsApp: (31) 9130-6879
-                </p>
-              </div>
+            <div className="rounded-xl bg-amber-600/80 backdrop-blur-sm p-4">
+              <p className="text-sm font-medium text-white mb-2">Enviar comprovante</p>
+              <p className="text-white/90 mb-3">
+                Mande o comprovante para o irmão Thiago no WhatsApp
+              </p>
+              <a 
+                href="https://wa.me/553191306879" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Falar com Thiago no WhatsApp
+              </a>
             </div>
           </div>
         )}
