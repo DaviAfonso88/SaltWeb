@@ -95,3 +95,17 @@ See `.env` — do not expose or commit real credentials.
 - `app/admin-festa-na-roca/` — Admin panel for Festa na Roça registrations
 - `app/api/festa-na-roca/register` — API route for registration
 - `app/api/festa-na-roca/list` — API route to list registrations
+
+## Skills
+
+**Sempre use a skill de design** (`/frontend-design`) quando:
+- Criar ou modificar páginas, componentes ou interfaces
+- Melhorar UX/UI de formulários, cards, tabelas, modais
+- Redesenhar telas de sucesso (SuccessScreen)
+- Ajustar layout visual de qualquer elemento
+
+**Sempre use as skills de React/Next** (`/vercel-react-best-practices`, `/next-best-practices`) quando:
+- Implementar lógica de estado ou fetch de dados
+- Otimizar performance de renderização
+- Trabalhar com Server Components vs Client Components
+- Tratar Typescript e tipagem

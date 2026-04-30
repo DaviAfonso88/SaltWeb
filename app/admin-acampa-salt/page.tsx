@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, RefreshCw, X } from "lucide-react";
+import { CalendarDays, Check, Copy, RefreshCw, TrendingUp, Users, Wallet, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -285,83 +285,153 @@ export default function AdminAcampaSaltPage() {
 
   return (
     <div className="container mx-auto max-w-7xl space-y-6 px-4 pb-12 pt-28 md:pb-16 md:pt-32">
+      <div className="mb-8">
+        <h1 className="mb-2 text-4xl font-bold tracking-tight">Acampa SALT 2026</h1>
+        <p className="text-muted-foreground text-lg">Gerencie as inscrições do acampamento</p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="border-border/50 bg-gradient-to-br from-primary/10 to-transparent">
+          <CardContent className="flex items-center gap-4 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20">
+              <Users className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">TotalInscricoes</p>
+              <p className="text-2xl font-bold">{stats.total}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/50 bg-gradient-to-br from-amber-500/10 to-transparent">
+          <CardContent className="flex items-center gap-4 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/20">
+              <TrendingUp className="h-6 w-6 text-amber-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Pendentes</p>
+              <p className="text-2xl font-bold text-amber-500">{stats.pendentes}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/50 bg-gradient-to-br from-green-500/10 to-transparent">
+          <CardContent className="flex items-center gap-4 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/20">
+              <Check className="h-6 w-6 text-green-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Completos</p>
+              <p className="text-2xl font-bold text-green-500">{stats.completos}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/50 bg-gradient-to-br from-emerald-500/10 to-transparent">
+          <CardContent className="flex items-center gap-4 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/20">
+              <Wallet className="h-6 w-6 text-emerald-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Recebido</p>
+              <p className="text-2xl font-bold text-emerald-500">{currency(stats.valorRecebido)}</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card className="border-border/70 bg-card/70">
-        <CardHeader>
-          <CardTitle>Painel Acampa SALT 2026</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-5">
-          <div className="md:col-span-2">
-            <Input
-              placeholder="Buscar por nome, numero, WhatsApp, e-mail, igreja..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+        <CardContent className="grid gap-3 p-6">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+            <div className="flex-1">
+              <Input
+                placeholder="Buscar por nome, numero, WhatsApp, e-mail, igreja..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="h-10"
+              />
+            </div>
 
-          <Select value={lote} onValueChange={setLote}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filtrar por lote" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos os lotes</SelectItem>
-              <SelectItem value="primeiro">Primeiro lote</SelectItem>
-              <SelectItem value="segundo">Segundo lote</SelectItem>
-              <SelectItem value="terceiro">Terceiro lote</SelectItem>
-              <SelectItem value="quarto">Quarto lote</SelectItem>
-              <SelectItem value="quinto">Quinto lote</SelectItem>
-              <SelectItem value="ultimo">Ultimo lote</SelectItem>
-            </SelectContent>
-          </Select>
+            <div className="flex flex-wrap gap-2">
+              <Select value={lote} onValueChange={setLote}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Lote" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos os lotes</SelectItem>
+                  <SelectItem value="primeiro">Primeiro</SelectItem>
+                  <SelectItem value="segundo">Segundo</SelectItem>
+                  <SelectItem value="terceiro">Terceiro</SelectItem>
+                  <SelectItem value="quarto">Quarto</SelectItem>
+                  <SelectItem value="quinto">Quinto</SelectItem>
+                  <SelectItem value="ultimo">Ultimo</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <Select value={categoria} onValueChange={setCategoria}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filtrar por categoria" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todas as categorias</SelectItem>
-              <SelectItem value="participante">Participante</SelectItem>
-            </SelectContent>
-          </Select>
+              <Select value={categoria} onValueChange={setCategoria}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todas</SelectItem>
+                  <SelectItem value="participante">Participante</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filtrar por status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos os status</SelectItem>
-              <SelectItem value="pendente_pagamento">Pendente</SelectItem>
-              <SelectItem value="pagamento_completo">Completo</SelectItem>
-            </SelectContent>
-          </Select>
+              <Select value={status} onValueChange={setStatus}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="pendente_pagamento">Pendente</SelectItem>
+                  <SelectItem value="pagamento_completo">Completo</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <div className="flex gap-2 md:col-span-5 md:justify-end">
-            <Button onClick={clearFilters} variant="ghost" disabled={loading}>
-              <X className="h-4 w-4" />
-              Limpar
-            </Button>
-            <Button onClick={fetchItems} disabled={loading} variant="outline">
-              <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-              Atualizar
-            </Button>
+              <div className="flex gap-2">
+                <Button onClick={clearFilters} variant="ghost" size="sm" disabled={loading}>
+                  <X className="h-4 w-4 mr-1" />
+                  Limpar
+                </Button>
+                <Button onClick={fetchItems} disabled={loading} size="sm">
+                  <RefreshCw className={`h-4 w-4 mr-1 ${loading ? "animate-spin" : ""}`} />
+                  Atualizar
+                </Button>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       <Card className="border-border/70 bg-card/70">
-        <CardHeader>
+        <CardHeader className="pb-4">
           <CardTitle className="flex flex-wrap items-center justify-between gap-2">
-            <span>
-              Inscricoes{" "}
-              <span className="text-muted-foreground">
-                ({filteredItems.length}{filteredItems.length !== items.length ? ` de ${items.length}` : ""})
+            <div className="flex items-center gap-2">
+              <CalendarDays className="h-5 w-5 text-primary" />
+              <span>
+                Inscricoes{" "}
+                <span className="text-muted-foreground">
+                  ({filteredItems.length}{filteredItems.length !== items.length ? ` / ${items.length}` : ""})
+                </span>
               </span>
-            </span>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="secondary">Pendentes: {stats.pendentes}</Badge>
-              <Badge variant="secondary">Completos: {stats.completos}</Badge>
-              <Badge variant="secondary">Duplas: {stats.duplas}</Badge>
-              <Badge variant="secondary">Recebido: {currency(stats.valorRecebido)}</Badge>
-              <Badge variant="secondary">Restante: {currency(stats.valorRestante)}</Badge>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="flex items-center gap-1 rounded-full bg-amber-500/20 px-3 py-1 text-amber-600 dark:text-amber-400">
+                <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+                {stats.pendentes} pendentes
+              </span>
+              <span className="flex items-center gap-1 rounded-full bg-green-500/20 px-3 py-1 text-green-600 dark:text-green-400">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                {stats.completos} completos
+              </span>
+              <span className="flex items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-primary">
+                <span className="h-2 w-2 rounded-full bg-primary"></span>
+                {stats.duplas} duplas
+              </span>
+              <span className="text-muted-foreground">
+                Restante: <span className="font-medium text-amber-500">{currency(stats.valorRestante)}</span>
+              </span>
             </div>
           </CardTitle>
         </CardHeader>
@@ -400,7 +470,10 @@ export default function AdminAcampaSaltPage() {
                   </TableRow>
                 ) : null}
                 {filteredItems.map((item) => (
-                  <TableRow key={item.id} className="odd:bg-muted/20">
+                  <TableRow 
+                    key={item.id} 
+                    className={item.status === "pagamento_completo" ? "bg-green-500/5" : "bg-amber-500/5"}
+                  >
                     <TableCell className="whitespace-nowrap font-medium">
                       <div className="flex items-center gap-2">
                         <span>{item.numeroInscricao}</span>
@@ -475,15 +548,22 @@ export default function AdminAcampaSaltPage() {
                         {item.loteTravado ? <Badge variant="secondary">Travado</Badge> : null}
                       </div>
                     </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      <p className="font-medium">{currency(item.valorFinal)}</p>
-                      <p className="text-xs text-muted-foreground">
-                        Pendente: {currency(resolvePendingAmount(item))}
-                      </p>
+<TableCell className="whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <Badge variant={item.loteTravado ? "outline" : "secondary"} className="font-normal">
+                          {lotLabel[item.lote] ?? item.lote}
+                        </Badge>
+                        {item.loteTravado ? (
+                          <span className="text-xs text-muted-foreground" title="Lote travado">🔒</span>
+                        ) : null}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <Badge variant={item.status === "pagamento_completo" ? "default" : "secondary"}>
+                        <Badge 
+                          variant={item.status === "pagamento_completo" ? "default" : "outline"}
+                          className={item.status === "pagamento_completo" ? "bg-green-500 hover:bg-green-600" : "border-amber-500 text-amber-600 dark:text-amber-400"}
+                        >
                           {statusLabel[item.status] ?? item.status}
                         </Badge>
                         {item.status === "pendente_pagamento" ? (
