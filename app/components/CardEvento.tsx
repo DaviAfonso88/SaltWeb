@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin, Sparkles } from "lucide-react";
 import type { Evento } from "../eventos/data";
 import {
   Card,
@@ -31,7 +31,7 @@ export default function CardEvento({
   const eventDate = new Date(dateISO);
   const dateText = new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
-    month: "short",
+    month: "long",
     year: "numeric",
   }).format(eventDate);
 
@@ -40,10 +40,12 @@ export default function CardEvento({
     minute: "2-digit",
   }).format(eventDate);
 
+  const isUpcoming = eventDate > new Date();
+
   return (
     <Card className="group relative overflow-hidden rounded-2xl bg-card/60 border border-border/30 transition-all duration-500 hover:border-primary/40 hover:shadow-glow hover:shadow-primary/10 flex flex-col">
       {imagens && imagens.length > 0 && (
-        <div className="relative h-52 w-full overflow-hidden flex-shrink-0">
+        <div className="relative h-56 w-full overflow-hidden flex-shrink-0">
           <Image
             src={imagens[0]}
             alt={titulo}
@@ -52,7 +54,15 @@ export default function CardEvento({
             className="object-cover transition-transform duration-700 group-hover:scale-110"
             priority={false}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
+          {isUpcoming && (
+            <div className="absolute top-3 right-3">
+              <Badge className="bg-green-500/90 text-white hover:bg-green-500/80 backdrop-blur-sm flex items-center gap-1">
+                <Sparkles className="h-3 w-3" />
+                Em breve
+              </Badge>
+            </div>
+          )}
         </div>
       )}
       <CardHeader>
@@ -109,9 +119,10 @@ export default function CardEvento({
               linkLabel,
             })
           }
-          className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-light hover:cursor-pointer transition-colors duration-300"
+          className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-light hover:cursor-pointer transition-colors duration-300 group/btn"
         >
-          Ver detalhes <ArrowRight className="h-4 w-4" />
+          Ver detalhes 
+          <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
         </button>
       </CardFooter>
     </Card>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   PlusCircle,
   MinusCircle,
@@ -8,6 +8,7 @@ import {
   Heart,
   Handshake,
 } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 type ValueCardProps = {
   icon: string;
@@ -37,33 +38,52 @@ export default function ValueCard({
       ? `${description.substring(0, initialChars)}...`
       : description;
 
+  const { ref: cardRef, isVisible } = useScrollReveal({ threshold: 0.1 });
+
   return (
-    <div className="p-8 rounded-lg bg-gradient-to-br from-[#27272a] via-[#2e2e32] to-[#18181b] border border-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 relative">
-      <div className="absolute top-4 left-4 text-primary">
-        <IconComponent size={28} className="text-[#92348c]" />
+    <div 
+      ref={cardRef}
+      className={`p-8 rounded-2xl bg-card/50 border border-border/50 shadow-lg transition-all duration-700 hover:border-primary/30 hover:shadow-glow hover:shadow-primary/10 hover:-translate-y-2 hover-glow group relative overflow-hidden ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      }`}
+    >
+      {/* Background gradient on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Corner decorations */}
+      <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-primary/0 group-hover:border-primary/30 transition-colors duration-500" />
+      <div className="absolute bottom-0 right-0 w-12 h-12 border-r-2 border-b-2 border-primary/0 group-hover:border-primary/30 transition-colors duration-500" />
+
+      <div className="relative z-10">
+        <div className="inline-flex p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 mb-4">
+          <IconComponent size={28} className="text-primary" />
+        </div>
+        
+        <h3 className="text-xl font-semibold font-heading mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
+          {title}
+        </h3>
+        
+        <p className="text-muted-foreground leading-relaxed">
+          {displayDescription}
+        </p>
+        
+        {needsTruncation && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-4 flex items-center text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-300 hover-lift"
+          >
+            {isExpanded ? (
+              <>
+                <MinusCircle className="h-4 w-4 mr-1" /> Ler Menos
+              </>
+            ) : (
+              <>
+                <PlusCircle className="h-4 w-4 mr-1" /> Ler Mais
+              </>
+            )}
+          </button>
+        )}
       </div>
-      <h3 className="text-xl font-semibold font-heading mb-2 text-foreground pt-8">
-        {title}
-      </h3>
-      <p className="text-muted-foreground leading-relaxed">
-        {displayDescription}
-      </p>
-      {needsTruncation && (
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-4 flex items-center text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-300"
-        >
-          {isExpanded ? (
-            <>
-              <MinusCircle className="h-4 w-4 mr-1" /> Ler Menos
-            </>
-          ) : (
-            <>
-              <PlusCircle className="h-4 w-4 mr-1" /> Ler Mais
-            </>
-          )}
-        </button>
-      )}
     </div>
   );
 }
