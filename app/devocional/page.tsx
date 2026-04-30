@@ -123,16 +123,19 @@ function DevocionalCard({ devocional, index }: { devocional: Devocional; index: 
   const { ref: cardRef, isVisible } = useScrollReveal({ threshold: 0.1 });
 
   return (
-    <Link
-      href={devocional.link}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       ref={cardRef}
       className={`group relative flex flex-col justify-between p-6 rounded-2xl bg-card/50 border border-border/50 shadow-lg transition-all duration-500 hover:border-primary/50 hover:shadow-glow hover:shadow-primary/10 hover:-translate-y-2 hover-glow ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
       }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
+      <Link
+        href={devocional.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute inset-0 z-10"
+      />
       {/* Background gradient on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -161,6 +164,6 @@ function DevocionalCard({ devocional, index }: { devocional: Devocional; index: 
       <span className="flex items-center text-sm font-semibold text-primary/70 group-hover:text-primary transition-all duration-300 group-hover:translate-x-1 mt-auto">
         Ler agora <ArrowRight className="ml-2 h-4 w-4" />
       </span>
-    </Link>
+    </div>
   );
 }
