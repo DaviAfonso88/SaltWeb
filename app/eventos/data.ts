@@ -36,7 +36,7 @@ export const eventos: Evento[] = [
     link: "/acampa-salt",
     linkLabel: "Fazer inscrição",
   },
-{
+  /* {
     id: "festa-na-roca-2026",
     titulo: "Festa na Roça",
     description:
@@ -46,7 +46,7 @@ export const eventos: Evento[] = [
     locationName: "Sítio em Lagoa Santa",
     link: "/festa-na-roca",
     linkLabel: "Quero participar",
-  },
+  }, */
   {
     id: "vertice-2026-05-01",
     titulo: "Conjubam",
