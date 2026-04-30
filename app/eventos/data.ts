@@ -36,6 +36,17 @@ export const eventos: Evento[] = [
     link: "/acampa-salt",
     linkLabel: "Fazer inscrição",
   },
+{
+    id: "festa-na-roca-2026",
+    titulo: "Festa na Roça",
+    description:
+      "Venha aproveitar um dia de muita curtição no sítio com muito forró, quadrilha, comida boa e a melhor companyia! Traga sua família e amigos. Cada participante contribui com um alimento ou valor simbólico de R$ 30.",
+    dateISO: "2026-06-13T10:00:00-03:00",
+    tags: ["Festa", "Sítio", "Forró"],
+    locationName: "Sítio em Lagoa Santa",
+    link: "/festa-na-roca",
+    linkLabel: "Quero participar",
+  },
   {
     id: "vertice-2026-05-01",
     titulo: "Conjubam",
