@@ -13,7 +13,7 @@ export default function FestaNaRocaPage() {
     <main>
       <PageHeader
         title="Festa na Roça"
-        subtitle="Um dia de muita curtição no sítio com forró, quadrilha e comida boa!"
+        subtitle="Um dia de muita adoração e comida boa!"
       />
 
       <PageSection>

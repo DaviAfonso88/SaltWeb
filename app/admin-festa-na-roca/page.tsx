@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, RefreshCw, Users, Wallet, Utensils, Banknote, DollarSign } from "lucide-react";
+import { Check, Copy, RefreshCw, Users, Wallet, Utensils, Banknote, DollarSign, Trash2, Package } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -89,6 +89,8 @@ export default function AdminFestaNaRocaPage() {
   const [items, setItems] = useState<RegistrationRecord[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [stock, setStock] = useState<{ items: { name: string; stock: number }[]; moneyVagas: number } | null>(null);
 
   const filteredItems = useMemo(() => {
     const term = normalizeSearch(search);
@@ -195,6 +197,22 @@ export default function AdminFestaNaRocaPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
+  const fetchStock = async () => {
+    try {
+      const response = await fetch("/api/festa-na-roca/estoque");
+      if (response.ok) {
+        const data = (await response.json()) as { items: { name: string; stock: number }[]; moneyVagas: number };
+        setStock(data);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar estoque:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStock();
+  }, []);
+
   useEffect(() => {
     if (!copiedId) {
       return;
@@ -243,6 +261,31 @@ export default function AdminFestaNaRocaPage() {
       setError("Falha de conexão.");
     } finally {
       setUpdatingId(null);
+    }
+  };
+
+  const deleteRegistration = async (id: string) => {
+    if (!confirm("Tem certeza que deseja excluir esta inscrição? O estoque será devolvido.")) {
+      return;
+    }
+    setDeletingId(id);
+    setError("");
+    try {
+      const response = await fetch(`/api/festa-na-roca/delete?id=${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { message: string };
+        setError("message" in data ? data.message : "Erro ao excluir inscrição.");
+        return;
+      }
+
+      setItems((current) => current.filter((item) => item.id !== id));
+    } catch {
+      setError("Falha de conexão.");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -312,6 +355,52 @@ export default function AdminFestaNaRocaPage() {
             color="#ef4444"
           />
         </div>
+
+        {/* Stock Info */}
+        {stock && (
+          <Card className="border-border/50 bg-card/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Package className="h-5 w-5" />
+                Estoque disponível
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {stock.items
+                  .filter((item) => item.stock > 0)
+                  .slice(0, 8)
+                  .map((item) => (
+                    <div
+                      key={item.name}
+                      className="flex items-center justify-between rounded-lg border border-border/50 bg-background/50 px-3 py-2"
+                    >
+                      <span className="text-sm truncate">{item.name}</span>
+                      <span className="font-bold text-primary">{item.stock}</span>
+                    </div>
+                  ))}
+              </div>
+              {stock.items.filter((item) => item.stock > 0).length > 8 && (
+                <div className="text-sm text-muted-foreground">
+                  +{stock.items.filter((item) => item.stock > 0).length - 8} outros itens disponíveis
+                </div>
+              )}
+              <div className="flex items-center justify-between rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2">
+                <span className="text-sm font-medium">Vagas dinheiro (R$ 40)</span>
+                <span className="font-bold text-amber-600">{stock.moneyVagas}</span>
+              </div>
+              <Button
+                onClick={fetchStock}
+                variant="outline"
+                size="sm"
+                className="w-full"
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Atualizar estoque
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Filters */}
         <Card className="border-border/50 bg-card/50">
@@ -413,7 +502,7 @@ export default function AdminFestaNaRocaPage() {
                       <TableHead>Convidado por</TableHead>
                       <TableHead className="w-[90px]">Status</TableHead>
                       <TableHead className="w-[130px]">Data</TableHead>
-                      <TableHead className="w-[80px] text-right">
+                      <TableHead className="w-[100px] text-right">
                         Ações
                       </TableHead>
                     </TableRow>
@@ -567,45 +656,61 @@ export default function AdminFestaNaRocaPage() {
                           })}
                         </TableCell>
                         <TableCell className="text-right">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 text-xs"
-                            onClick={() =>
-                              copyText(
-                                `${item.id}-full`,
-                                [
-                                  item.numeroInscricao,
-                                  item.nome,
-                                  `Faixa: ${item.faixaEtaria}`,
-                                  item.telefone,
-                                  `Obs: ${observacaoLabel[item.observacao ?? "normal"]}`,
-                                  item.observacao === "nao_consigo"
-                                    ? ""
-                                    : `Ingredientes: ${(item.ingredientes ?? []).join(", ")}`,
-                                  item.observacao === "nao_consigo"
-                                    ? ""
-                                    : `Contribuição: ${item.tipoContribuicao}${
-                                        item.valor ? ` (${currency(item.valor)})` : ""
-                                      }`,
-                                  `Tipo: ${item.tipoParticipante}`,
-                                  item.nomeConvidadoPor
-                                    ? `Convidado por: ${item.nomeConvidadoPor}`
-                                    : "",
-                                  `Status: ${statusLabel[item.status]}`,
-                                ]
-                                  .filter(Boolean)
-                                  .join(" | "),
-                              )
-                            }
-                          >
-                            {copiedId === `${item.id}-full` ? (
-                              <Check className="h-3 w-3 text-green-500" />
-                            ) : (
-                              <Copy className="h-3 w-3" />
-                            )}
-                          </Button>
+                          <div className="flex items-center justify-end gap-1">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 text-xs"
+                              onClick={() =>
+                                copyText(
+                                  `${item.id}-full`,
+                                  [
+                                    item.numeroInscricao,
+                                    item.nome,
+                                    `Faixa: ${item.faixaEtaria}`,
+                                    item.telefone,
+                                    `Obs: ${observacaoLabel[item.observacao ?? "normal"]}`,
+                                    item.observacao === "nao_consigo"
+                                      ? ""
+                                      : `Ingredientes: ${(item.ingredientes ?? []).join(", ")}`,
+                                    item.observacao === "nao_consigo"
+                                      ? ""
+                                      : `Contribuição: ${item.tipoContribuicao}${
+                                          item.valor ? ` (${currency(item.valor)})` : ""
+                                        }`,
+                                    `Tipo: ${item.tipoParticipante}`,
+                                    item.nomeConvidadoPor
+                                      ? `Convidado por: ${item.nomeConvidadoPor}`
+                                      : "",
+                                    `Status: ${statusLabel[item.status]}`,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(" | "),
+                                )
+                              }
+                            >
+                              {copiedId === `${item.id}-full` ? (
+                                <Check className="h-3 w-3 text-green-500" />
+                              ) : (
+                                <Copy className="h-3 w-3" />
+                              )}
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 text-xs text-destructive hover:text-destructive"
+                              onClick={() => deleteRegistration(item.id)}
+                              disabled={deletingId === item.id}
+                            >
+                              {deletingId === item.id ? (
+                                <RefreshCw className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Trash2 className="h-3 w-3" />
+                              )}
+                            </Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}

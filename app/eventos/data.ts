@@ -36,25 +36,17 @@ export const eventos: Evento[] = [
     link: "/acampa-salt",
     linkLabel: "Fazer inscrição",
   },
-  /* {
+  {
     id: "festa-na-roca-2026",
     titulo: "Festa na Roça",
     description:
-      "Venha aproveitar um dia de muita curtição no sítio com muito forró, quadrilha, comida boa e a melhor companyia! Traga sua família e amigos. Cada participante contribui com um alimento ou valor simbólico de R$ 30.",
-    dateISO: "2026-06-13T10:00:00-03:00",
-    tags: ["Festa", "Sítio", "Forró"],
-    locationName: "Sítio em Lagoa Santa",
+      "Vem aí a Festa na Roça da SALT! Um momento especial com muito louvor, alegria e deliciosos quitutes típicos! Capriche no traje caipira e venha viver essa festa com a gente!",
+    dateISO: "2026-05-16T17:00:00-03:00",
+    imagens: ["/images/roça.png"],
+    tags: ["Festa", "Sítio", "Roça"],
+    locationName: "Rua Condessa Hermany, 116. (Condados da Lagoa)",
+    mapsUrl: "https://maps.app.goo.gl/W6XNBTcZj6bLFEXC6",
     link: "/festa-na-roca",
-    linkLabel: "Quero participar",
-  }, */
-  {
-    id: "vertice-2026-05-01",
-    titulo: "Conjubam",
-    description:
-      "Estamos criando o grupo dos jovens interessados em ir no CONJUBAM. Lembrando que esse evento tem como público alvo, os jovens e adolescentes com mais de 16 anos. Será na cidade de Montes Claros, 1 à 3 de Maio. Inscrição com hospedagem e alimentação - 230 reais + Transporte (a parte).",
-    dateISO: "2026-05-01T10:00:00-03:00",
-    imagens: ["/images/vertice.jpeg"],
-    tags: ["Conjubam", "Vertice"],
-    locationName: "Cidade de Montes Claros",
+    linkLabel: "Fazer Inscrição",
   },
 ];
