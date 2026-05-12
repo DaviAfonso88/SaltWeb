@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, Check, Copy, RefreshCw, TrendingUp, Users, Wallet, X } from "lucide-react";
+import { CalendarDays, Check, Copy, FileDown, RefreshCw, TrendingUp, Users, Wallet, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Parcela, RegistrationRecord } from "@/lib/acampa/types";
+import { generateInscriptionsPDF } from "@/lib/pdf/generator";
 
 const currency = (value: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
@@ -103,6 +104,7 @@ export default function AdminAcampaSaltPage() {
   const [savingInstallments, setSavingInstallments] = useState(false);
   const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   const filteredItems = useMemo(() => {
     const term = normalizeSearch(search);
@@ -274,6 +276,27 @@ export default function AdminAcampaSaltPage() {
     setSearch("");
   };
 
+  const exportPDF = async () => {
+    setExporting(true);
+    try {
+      const params = new URLSearchParams();
+      if (lote !== "todos") params.set("lote", lote);
+      if (categoria !== "todos") params.set("categoria", categoria);
+      if (status !== "todos") params.set("status", status);
+
+      const response = await fetch(`/api/acampa-salt/list${params.toString() ? `?${params.toString()}` : ""}`);
+      const data = (await response.json()) as RegistrationRecord[] | { message: string };
+
+      if (!response.ok || "message" in data) {
+        return;
+      }
+
+      generateInscriptionsPDF(data as RegistrationRecord[]);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const copyText = async (id: string, text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -393,6 +416,10 @@ export default function AdminAcampaSaltPage() {
                 <Button onClick={clearFilters} variant="ghost" size="sm" disabled={loading}>
                   <X className="h-4 w-4 mr-1" />
                   Limpar
+                </Button>
+                <Button onClick={exportPDF} disabled={exporting || loading} size="sm" variant="outline">
+                  <FileDown className={`h-4 w-4 mr-1 ${exporting ? "animate-spin" : ""}`} />
+                  {exporting ? "Gerando..." : "Exportar PDF"}
                 </Button>
                 <Button onClick={fetchItems} disabled={loading} size="sm">
                   <RefreshCw className={`h-4 w-4 mr-1 ${loading ? "animate-spin" : ""}`} />

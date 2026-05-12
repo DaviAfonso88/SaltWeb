@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, RefreshCw, Users, Wallet, Utensils, Banknote, DollarSign, Trash2, Package } from "lucide-react";
+import { Check, Copy, FileDown, RefreshCw, Users, Wallet, Utensils, Banknote, DollarSign, Trash2, Package } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { RegistrationRecord } from "@/lib/festa-roca/types";
+import { generateFestaNaRocaPDF } from "@/lib/pdf/festa-na-roca";
 
 const currency = (value: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
@@ -91,6 +92,7 @@ export default function AdminFestaNaRocaPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [stock, setStock] = useState<{ items: { name: string; stock: number }[]; moneyVagas: number } | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   const filteredItems = useMemo(() => {
     const term = normalizeSearch(search);
@@ -227,6 +229,27 @@ export default function AdminFestaNaRocaPage() {
     setTipoParticipante("todos");
     setStatus("todos");
     setSearch("");
+  };
+
+  const exportPDF = async () => {
+    setExporting(true);
+    try {
+      const params = new URLSearchParams();
+      if (tipoContribuicao !== "todos") params.set("tipoContribuicao", tipoContribuicao);
+      if (tipoParticipante !== "todos") params.set("tipoParticipante", tipoParticipante);
+      if (status !== "todos") params.set("status", status);
+
+      const response = await fetch(`/api/festa-na-roca/list${params.toString() ? `?${params.toString()}` : ""}`);
+      const data = (await response.json()) as RegistrationRecord[] | { message: string };
+
+      if (!response.ok || "message" in data) {
+        return;
+      }
+
+      generateFestaNaRocaPDF(data as RegistrationRecord[]);
+    } finally {
+      setExporting(false);
+    }
   };
 
   const copyText = async (id: string, text: string) => {
@@ -453,6 +476,13 @@ export default function AdminFestaNaRocaPage() {
                 <SelectItem value="pendente">Pendente</SelectItem>
               </SelectContent>
             </Select>
+
+            <div className="ml-auto">
+              <Button onClick={exportPDF} disabled={exporting || loading} size="sm" variant="outline">
+                <FileDown className={`mr-2 h-4 w-4 ${exporting ? "animate-spin" : ""}`} />
+                {exporting ? "Gerando..." : "Exportar PDF"}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
