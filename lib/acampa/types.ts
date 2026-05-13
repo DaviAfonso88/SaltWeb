@@ -42,6 +42,7 @@ export type RegistrationRecord = {
   loteTravado: boolean;
   valorOriginal: number;
   valorFinal: number;
+  valorPagoCredito?: number;
   parcelas: Parcela[];
   mesInscricao: string;
   status: "pagamento_completo" | "pendente_pagamento";

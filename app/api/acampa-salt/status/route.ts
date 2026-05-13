@@ -5,7 +5,7 @@ import { getRegistrationById, updateRegistrationStatus } from "@/lib/acampa/stor
 
 const statusSchema = z.object({
   id: z.string().uuid("ID invalido."),
-  status: z.enum(["pagamento_completo"]),
+  status: z.enum(["pagamento_completo", "pendente_pagamento"]),
 });
 
 export async function PATCH(request: Request) {
@@ -22,9 +22,16 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ message: "Inscricao nao encontrada." }, { status: 404 });
     }
 
-    if (registration.status !== "pendente_pagamento") {
+    if (parsed.data.status === "pagamento_completo" && registration.status !== "pendente_pagamento") {
       return NextResponse.json(
         { message: "Somente inscricoes pendentes podem ser marcadas como completas." },
+        { status: 400 }
+      );
+    }
+
+    if (parsed.data.status === "pendente_pagamento" && registration.status !== "pagamento_completo") {
+      return NextResponse.json(
+        { message: "Somente inscricoes completas podem ter o pagamento cancelado." },
         { status: 400 }
       );
     }

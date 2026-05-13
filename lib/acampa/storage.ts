@@ -95,6 +95,24 @@ export async function updateRegistrationStatus(
   return updated;
 }
 
+export async function updateRegistrationCredito(id: string, valorPagoCredito: number) {
+  const record = await getRegistrationById(id);
+  if (!record) {
+    return null;
+  }
+
+  const isComplete = valorPagoCredito >= (record.valorFinal ?? 0);
+
+  const updated: RegistrationRecord = {
+    ...record,
+    valorPagoCredito,
+    status: isComplete ? "pagamento_completo" : "pendente_pagamento",
+  };
+
+  await redis.set(`${REGISTRATION_KEY_PREFIX}${id}`, updated);
+  return updated;
+}
+
 export async function listRegistrations() {
   const ids = await redis.lrange<string>(IDS_LIST_KEY, 0, -1);
 

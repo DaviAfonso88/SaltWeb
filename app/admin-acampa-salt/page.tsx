@@ -83,6 +83,10 @@ const resolveReceivedAmount = (item: RegistrationRecord) => {
     return (item.parcelas ?? []).reduce((sum, parcela) => sum + (parcela.pago ? parcela.valor : 0), 0);
   }
 
+  if (item.paymentPlan === "credito") {
+    return (item as Record<string, unknown>).valorPagoCredito as number ?? 0;
+  }
+
   return 0;
 };
 
@@ -105,6 +109,12 @@ export default function AdminAcampaSaltPage() {
   const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [selectedCredito, setSelectedCredito] = useState<RegistrationRecord | null>(null);
+  const [valorPagoCredito, setValorPagoCredito] = useState("");
+  const [savingCredito, setSavingCredito] = useState(false);
+  const [selectedDetails, setSelectedDetails] = useState<RegistrationRecord | null>(null);
+  const [detailsParcelasDraft, setDetailsParcelasDraft] = useState<Parcela[]>([]);
+  const [savingDetailsInstallments, setSavingDetailsInstallments] = useState(false);
 
   const filteredItems = useMemo(() => {
     const term = normalizeSearch(search);
@@ -130,14 +140,15 @@ export default function AdminAcampaSaltPage() {
   }, [items, search]);
 
   const stats = useMemo(() => {
-    const total = filteredItems.length;
+    const participantes = filteredItems.filter((item) => item.dupla === "nao").length;
+    const duplas = filteredItems.filter((item) => item.dupla !== "nao").length;
+    const total = participantes + duplas;
     const pendentes = filteredItems.filter((item) => item.status === "pendente_pagamento").length;
     const completos = filteredItems.filter((item) => item.status === "pagamento_completo").length;
-    const duplas = filteredItems.filter((item) => item.dupla !== "nao").length;
     const valorRecebido = filteredItems.reduce((sum, item) => sum + resolveReceivedAmount(item), 0);
     const valorRestante = filteredItems.reduce((sum, item) => sum + resolvePendingAmount(item), 0);
 
-    return { total, pendentes, completos, duplas, valorRecebido, valorRestante };
+    return { total, pendentes, completos, duplas, valorRecebido, valorRestante, participantes };
   }, [filteredItems]);
 
   const query = useMemo(() => {
@@ -241,6 +252,110 @@ export default function AdminAcampaSaltPage() {
     }
   };
 
+  const openCredito = (item: RegistrationRecord) => {
+    setSelectedCredito(item);
+    const valorPago = resolveReceivedAmount(item);
+    setValorPagoCredito(valorPago > 0 ? valorPago.toString() : "");
+  };
+
+  const closeCredito = () => {
+    if (savingCredito) {
+      return;
+    }
+    setSelectedCredito(null);
+    setValorPagoCredito("");
+  };
+
+  const saveCredito = async () => {
+    if (!selectedCredito) {
+      return;
+    }
+
+    const valor = parseFloat(valorPagoCredito.replace(",", "."));
+    if (isNaN(valor) || valor < 0) {
+      setError("Valor inválido.");
+      return;
+    }
+
+    setSavingCredito(true);
+    setError("");
+    try {
+      const response = await fetch("/api/acampa-salt/installments", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selectedCredito.id,
+          valorPagoCredito: valor,
+        }),
+      });
+
+      const data = (await response.json()) as RegistrationRecord | { message: string };
+      if (!response.ok) {
+        setError("message" in data ? data.message : "Falha ao salvar pagamento.");
+        return;
+      }
+
+      const updated = data as RegistrationRecord;
+      setItems((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+      setSelectedCredito(null);
+      setValorPagoCredito("");
+    } catch {
+      setError("Falha de conexao ao salvar pagamento.");
+    } finally {
+      setSavingCredito(false);
+    }
+  };
+
+  const openDetails = (item: RegistrationRecord) => {
+    setSelectedDetails(item);
+    setDetailsParcelasDraft(item.parcelas);
+  };
+
+  const closeDetails = () => {
+    setSelectedDetails(null);
+    setDetailsParcelasDraft([]);
+  };
+
+  const toggleDetailsParcela = (index: number) => {
+    setDetailsParcelasDraft((current) =>
+      current.map((item, idx) => (idx === index ? { ...item, pago: !item.pago } : item))
+    );
+  };
+
+  const saveDetailsParcelas = async () => {
+    if (!selectedDetails) {
+      return;
+    }
+
+    setSavingDetailsInstallments(true);
+    setError("");
+    try {
+      const response = await fetch("/api/acampa-salt/installments", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selectedDetails.id,
+          parcelas: detailsParcelasDraft.map((item) => ({ mes: item.mes, pago: item.pago })),
+        }),
+      });
+
+      const data = (await response.json()) as RegistrationRecord | { message: string };
+      if (!response.ok) {
+        setError("message" in data ? data.message : "Falha ao validar parcelas.");
+        return;
+      }
+
+      const updated = data as RegistrationRecord;
+      setItems((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+      setSelectedDetails(updated);
+      setDetailsParcelasDraft(updated.parcelas);
+    } catch {
+      setError("Falha de conexao ao atualizar parcelas.");
+    } finally {
+      setSavingDetailsInstallments(false);
+    }
+  };
+
   const markAsComplete = async (id: string) => {
     setUpdatingStatusId(id);
     setError("");
@@ -320,8 +435,10 @@ export default function AdminAcampaSaltPage() {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">TotalInscricoes</p>
-              <p className="text-2xl font-bold">{stats.total}</p>
+              <p className="text-sm text-muted-foreground">Total Inscricoes</p>
+              <p className="text-2xl font-bold">
+                {stats.total} <span className="text-sm font-normal text-muted-foreground">({stats.participantes} + {stats.duplas} duplas)</span>
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -472,9 +589,10 @@ export default function AdminAcampaSaltPage() {
                   <TableHead>Participante</TableHead>
                   <TableHead>Dupla</TableHead>
                   <TableHead>Pagamento</TableHead>
-                  <TableHead>Parcelas</TableHead>
                   <TableHead>Lote</TableHead>
-                  <TableHead>Valor</TableHead>
+                  <TableHead className="text-right">Valor</TableHead>
+                  <TableHead className="text-right">Pago</TableHead>
+                  <TableHead className="text-right">Restante</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Criado em</TableHead>
                   <TableHead className="text-right">Acoes</TableHead>
@@ -499,7 +617,8 @@ export default function AdminAcampaSaltPage() {
                 {filteredItems.map((item) => (
                   <TableRow 
                     key={item.id} 
-                    className={item.status === "pagamento_completo" ? "bg-green-500/5" : "bg-amber-500/5"}
+                    className={`cursor-pointer transition-colors hover:bg-muted/50 ${item.status === "pagamento_completo" ? "bg-green-500/5" : "bg-amber-500/5"}`}
+                    onClick={() => openDetails(item)}
                   >
                     <TableCell className="whitespace-nowrap font-medium">
                       <div className="flex items-center gap-2">
@@ -509,7 +628,10 @@ export default function AdminAcampaSaltPage() {
                           size="icon"
                           variant="ghost"
                           aria-label="Copiar numero da inscricao"
-                          onClick={() => copyText(item.id, item.numeroInscricao)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            copyText(item.id, item.numeroInscricao);
+                          }}
                         >
                           {copiedId === item.id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                         </Button>
@@ -551,39 +673,25 @@ export default function AdminAcampaSaltPage() {
                           : `A vista - ${paymentMethodLabel[item.formaPagamento ?? ""] ?? "Nao informado"}`}
                     </TableCell>
                     <TableCell>
-                      {item.paymentPlan === "carne" ? (
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary">
-                            {item.parcelas.filter((parcela) => parcela.pago).length}/{item.parcelas.length}
-                          </Badge>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => openInstallments(item)}
-                          >
-                            Validar
-                          </Button>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-muted-foreground">-</span>
-                      )}
-                    </TableCell>
-                    <TableCell>
                       <div className="flex items-center gap-2">
                         {lotLabel[item.lote] ?? item.lote}
                         {item.loteTravado ? <Badge variant="secondary">Travado</Badge> : null}
                       </div>
                     </TableCell>
-<TableCell className="whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <Badge variant={item.loteTravado ? "outline" : "secondary"} className="font-normal">
-                          {lotLabel[item.lote] ?? item.lote}
-                        </Badge>
-                        {item.loteTravado ? (
-                          <span className="text-xs text-muted-foreground" title="Lote travado">🔒</span>
-                        ) : null}
-                      </div>
+<TableCell className="whitespace-nowrap text-right font-medium">
+                      {currency(item.valorFinal)}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-right">
+                      <span className={resolveReceivedAmount(item) > 0 ? "text-green-500 font-medium" : "text-muted-foreground"}>
+                        {currency(resolveReceivedAmount(item))}
+                      </span>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-right">
+                      {resolvePendingAmount(item) > 0 ? (
+                        <span className="text-amber-500 font-medium">{currency(resolvePendingAmount(item))}</span>
+                      ) : (
+                        <span className="text-muted-foreground">-</span>
+                      )}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
@@ -593,17 +701,6 @@ export default function AdminAcampaSaltPage() {
                         >
                           {statusLabel[item.status] ?? item.status}
                         </Badge>
-                        {item.status === "pendente_pagamento" ? (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => markAsComplete(item.id)}
-                            disabled={updatingStatusId === item.id}
-                          >
-                            {updatingStatusId === item.id ? "Salvando..." : "Marcar completo"}
-                          </Button>
-                        ) : null}
                       </div>
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
@@ -614,7 +711,8 @@ export default function AdminAcampaSaltPage() {
                         type="button"
                         variant="ghost"
                         size="sm"
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation();
                           copyText(
                             `${item.id}-full`,
                             [
@@ -631,8 +729,8 @@ export default function AdminAcampaSaltPage() {
                             ]
                               .filter(Boolean)
                               .join(" | "),
-                          )
-                        }
+                          );
+                        }}
                       >
                         {copiedId === `${item.id}-full` ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                         Copiar
@@ -687,6 +785,296 @@ export default function AdminAcampaSaltPage() {
             </Button>
             <Button type="button" onClick={saveInstallments} disabled={savingInstallments}>
               {savingInstallments ? "Salvando..." : "Salvar validacoes"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!selectedCredito} onOpenChange={(open) => (!open ? closeCredito() : null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Registrar pagamento - Cartao de Credito</DialogTitle>
+            <DialogDescription>
+              {selectedCredito
+                ? `${selectedCredito.numeroInscricao} - ${selectedCredito.nome}${(selectedCredito.nomeDupla ?? "").trim() ? ` (${selectedCredito.nomeDupla})` : ""}`
+                : ""}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div className="rounded-md bg-muted/50 p-4">
+              <p className="text-sm text-muted-foreground">Valor total da inscricao</p>
+              <p className="text-xl font-bold">{currency(selectedCredito?.valorFinal ?? 0)}</p>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="valorPago" className="text-sm font-medium">
+                Valor pago
+              </label>
+              <Input
+                id="valorPago"
+                type="text"
+                placeholder="0,00"
+                value={valorPagoCredito}
+                onChange={(e) => setValorPagoCredito(e.target.value)}
+                className="text-lg"
+              />
+              <p className="text-xs text-muted-foreground">
+                Digite o valor que foi pago pelo participante
+              </p>
+            </div>
+
+            {selectedCredito && resolvePendingAmount(selectedCredito) > 0 && (
+              <div className="rounded-md bg-amber-500/10 p-3">
+                <p className="text-sm text-amber-600 dark:text-amber-400">
+                  Restante a pagar: <span className="font-bold">{currency(resolvePendingAmount(selectedCredito))}</span>
+                </p>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={closeCredito} disabled={savingCredito}>
+              Fechar
+            </Button>
+            <Button type="button" onClick={saveCredito} disabled={savingCredito}>
+              {savingCredito ? "Salvando..." : "Salvar"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!selectedDetails} onOpenChange={(open) => (!open ? setSelectedDetails(null) : null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
+                <Users className="h-5 w-5 text-primary" />
+              </div>
+              Detalhes da Inscricao
+            </DialogTitle>
+            <DialogDescription className="text-base font-medium text-foreground">
+              {selectedDetails?.numeroInscricao} - {selectedDetails?.nome}
+            </DialogDescription>
+          </DialogHeader>
+
+          {selectedDetails && (
+            <div className="space-y-6 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Participante</p>
+                  <p className="text-sm font-semibold">{selectedDetails.nome}</p>
+                  <p className="text-xs text-muted-foreground">{selectedDetails.email}</p>
+                  <p className="text-xs text-muted-foreground">{selectedDetails.telefone}</p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Igreja</p>
+                  <p className="text-sm font-semibold">{selectedDetails.igreja}</p>
+                  <p className="text-xs text-muted-foreground">{selectedDetails.cidade}</p>
+                  <p className="text-xs text-muted-foreground">Idade: {selectedDetails.idade} anos</p>
+                </div>
+              </div>
+
+              {selectedDetails.dupla !== "nao" && (
+                <div className="rounded-lg bg-muted/50 p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Dupla</p>
+                    <Badge variant="secondary">{duplaLabel[selectedDetails.dupla]}</Badge>
+                    {selectedDetails.quantidadeConjuges > 0 && (
+                      <span className="text-xs text-muted-foreground">({selectedDetails.quantidadeConjuges} conjuges)</span>
+                    )}
+                  </div>
+                  {selectedDetails.nomeDupla && (
+                    <p className="text-sm font-medium">{selectedDetails.nomeDupla}</p>
+                  )}
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="rounded-lg border border-border/70 p-3 space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Lote</p>
+                  <p className="text-sm font-semibold">{lotLabel[selectedDetails.lote]}</p>
+                  {selectedDetails.loteTravado && <Badge variant="outline" className="text-xs">Travado</Badge>}
+                </div>
+
+                <div className="rounded-lg border border-border/70 p-3 space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Pagamento</p>
+                  <p className="text-sm font-semibold">
+                    {selectedDetails.paymentPlan === "carne"
+                      ? "Carne SALT"
+                      : selectedDetails.paymentPlan === "credito"
+                        ? "Cartao"
+                        : "A vista"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {selectedDetails.formaPagamento ? paymentMethodLabel[selectedDetails.formaPagamento] : "-"}
+                  </p>
+                </div>
+
+                <div className="rounded-lg border border-border/70 p-3 space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Valor Total</p>
+                  <p className="text-sm font-bold text-primary">{currency(selectedDetails.valorFinal)}</p>
+                  {selectedDetails.valorOriginal !== selectedDetails.valorFinal && (
+                    <p className="text-xs text-muted-foreground line-through">De: {currency(selectedDetails.valorOriginal)}</p>
+                  )}
+                </div>
+
+                <div className="rounded-lg border border-border/70 p-3 space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</p>
+                  <Badge
+                    variant={selectedDetails.status === "pagamento_completo" ? "default" : "outline"}
+                    className={selectedDetails.status === "pagamento_completo" ? "bg-green-500" : "border-amber-500 text-amber-600"}
+                  >
+                    {statusLabel[selectedDetails.status]}
+                  </Badge>
+                </div>
+              </div>
+
+              {selectedDetails.paymentPlan !== "carne" && selectedDetails.paymentPlan !== "credito" && (
+                selectedDetails.status === "pendente_pagamento" ? (
+                  <Button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch("/api/acampa-salt/status", {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            id: selectedDetails.id,
+                            status: "pagamento_completo",
+                          }),
+                        });
+
+                        if (response.ok) {
+                          const updated = await response.json() as RegistrationRecord;
+                          setItems((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+                          setSelectedDetails(updated);
+                        }
+                      } catch {
+                        setError("Falha ao confirmar pagamento.");
+                      }
+                    }}
+                    className="w-full bg-green-500 hover:bg-green-600"
+                  >
+                    <Check className="h-4 w-4 mr-2" />
+                    Confirmar Pagamento
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch("/api/acampa-salt/status", {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            id: selectedDetails.id,
+                            status: "pendente_pagamento",
+                          }),
+                        });
+
+                        if (response.ok) {
+                          const updated = await response.json() as RegistrationRecord;
+                          setItems((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+                          setSelectedDetails(updated);
+                        }
+                      } catch {
+                        setError("Falha ao cancelar pagamento.");
+                      }
+                    }}
+                    className="w-full"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancelar Pagamento
+                  </Button>
+                )
+              )}
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-green-500/10 p-4 text-center">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Pago</p>
+                  <p className="text-xl font-bold text-green-500">{currency(resolveReceivedAmount(selectedDetails))}</p>
+                </div>
+                <div className="rounded-lg bg-amber-500/10 p-4 text-center">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Restante</p>
+                  <p className="text-xl font-bold text-amber-500">{currency(resolvePendingAmount(selectedDetails))}</p>
+                </div>
+              </div>
+
+              {selectedDetails.paymentPlan === "carne" && detailsParcelasDraft.length > 0 && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Parcelas do Carne SALT</p>
+                    <p className="text-xs text-muted-foreground">Clique para marcar/desmarcar</p>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {detailsParcelasDraft.map((parcela, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => toggleDetailsParcela(idx)}
+                        className={`rounded-md border p-2 flex items-center justify-between transition-all cursor-pointer hover:scale-[1.02] ${
+                          parcela.pago 
+                            ? "border-green-500 bg-green-500/20" 
+                            : "border-border/70 hover:border-amber-500/50"
+                        }`}
+                      >
+                        <div className="text-left">
+                          <p className="text-xs font-medium capitalize">{parcela.mes}</p>
+                          <p className="text-xs text-muted-foreground">{currency(parcela.valor)}</p>
+                        </div>
+                        {parcela.pago && <Check className="h-4 w-4 text-green-500" />}
+                      </button>
+                    ))}
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={saveDetailsParcelas}
+                    disabled={savingDetailsInstallments}
+                    className="w-full"
+                  >
+                    {savingDetailsInstallments ? "Salvando..." : "Salvar Parcelas"}
+                  </Button>
+                </div>
+              )}
+
+              {selectedDetails.paymentPlan === "credito" && (
+                <div className="rounded-lg border border-border/70 p-4 space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cartao de Credito</p>
+                  <p className="text-sm">
+                    Valor pago: <span className="font-medium text-green-500">{currency(selectedDetails.valorPagoCredito ?? 0)}</span>
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDetails(null);
+                      openCredito(selectedDetails);
+                    }}
+                  >
+                    Atualizar pagamento
+                  </Button>
+                </div>
+              )}
+
+              <div className="pt-2 border-t border-border/70">
+                <p className="text-xs text-muted-foreground">
+                  Inscricao realizada em: {new Date(selectedDetails.createdAt).toLocaleString("pt-BR")}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Mes de inscricao: {selectedDetails.mesInscricao}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setSelectedDetails(null)}>
+              Fechar
             </Button>
           </DialogFooter>
         </DialogContent>
