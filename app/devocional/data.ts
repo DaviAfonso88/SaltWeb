@@ -7,7 +7,7 @@ export type Devocional = {
 export async function getDevocionais(): Promise<Devocional[]> {
   try {
     const response = await fetch(
-      "https://daviafonso88.github.io/juventudesalt-dados/devocional.json",
+      "https://raw.githubusercontent.com/daviafonso88/juventudesalt-dados/main/devocional.json",
       { cache: "no-store" }
     );
     if (!response.ok) {
