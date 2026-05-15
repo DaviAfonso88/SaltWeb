@@ -34,8 +34,6 @@ export const foodItemsConfig: FoodItem[] = [
   { name: "Pé de moça", category: "comida", unit: "porção" },
   { name: "Doce de leite", category: "comida", unit: "porção" },
   { name: "Marshmallow para fogueira", category: "comida", unit: "porção" },
-  { name: "Refrigerante", category: "bebida", unit: "unidade" },
-  { name: "Suco", category: "bebida", unit: "unidade" },
 ];
 
 export const initialStock: Record<string, number> = {
@@ -60,8 +58,6 @@ export const initialStock: Record<string, number> = {
   "Pé de moça": 1,
   "Doce de leite": 1,
   "Marshmallow para fogueira": 1,
-  "Refrigerante": 7,
-  "Suco": 4,
 };
 
 export type FoodItemWithStock = FoodItem & { stock: number };
