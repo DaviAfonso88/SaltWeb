@@ -95,6 +95,15 @@ See `.env` — do not expose or commit real credentials.
 - `app/admin-festa-na-roca/` — Admin panel for Festa na Roça registrations
 - `app/api/festa-na-roca/register` — API route for registration
 - `app/api/festa-na-roca/list` — API route to list registrations
+- `app/projeto-missionario/` — Projeto Missionário SALT (12-14 jun) page
+- `app/admin-projeto-missionario/` — Admin panel for Projeto Missionário
+- `app/api/projeto-missionario/register` — API route for registration
+- `app/api/projeto-missionario/list` — API route to list registrations
+- `app/api/projeto-missionario/delete` — API route to delete registration
+- `app/api/projeto-missionario/status` — API route to update status
+- `lib/projeto-missionario/types.ts` — Zod schema, types, constants
+- `lib/projeto-missionario/storage.ts` — Redis CRUD operations
+- `lib/pdf/projeto-missionario.ts` — PDF export
 
 ## Skills
 
