@@ -14,7 +14,8 @@ import {
   Loader2,
   Clock,
   ZoomIn,
-  X,
+  CreditCard,
+  QrCode,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,7 @@ import {
   parcialOptions,
   SHIRT_PRICE,
   SHIRT_IMAGE_PATH,
+  SHIRT_SIZES,
 } from "@/lib/projeto-missionario/types";
 import { RegistrationSuccess } from "./SuccessScreen";
 
@@ -105,6 +107,8 @@ export function RegistrationForm() {
       <RegistrationSuccess
         nome={success.registration.nome}
         interesseCamisa={success.registration.interesseCamisa}
+        tamanhoCamisa={success.registration.tamanhoCamisa}
+        formaPagamentoCamisa={success.registration.formaPagamentoCamisa}
       />
     );
   }
@@ -431,6 +435,153 @@ export function RegistrationForm() {
                 </p>
               )}
             </div>
+
+            {form.watch("interesseCamisa") === true && (
+              <div className="mt-5 space-y-5 border-t border-amber-500/20 pt-5">
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">
+                    Tamanho da camisa *
+                  </Label>
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    {SHIRT_SIZES.map((size) => {
+                      const selected = form.watch("tamanhoCamisa") === size;
+                      return (
+                        <Label
+                          key={size}
+                          className={`flex cursor-pointer items-center justify-center rounded-lg border-2 py-3 font-semibold text-sm transition-all ${
+                            selected
+                              ? "border-amber-500 bg-amber-500/10 text-amber-600 dark:text-amber-400 shadow-[0_0_12px_-4px_rgba(245,158,11,0.4)]"
+                              : "border-border/40 bg-background/50 text-muted-foreground hover:border-amber-500/30 hover:bg-amber-500/5"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            className="sr-only"
+                            value={size}
+                            checked={selected}
+                            onChange={() =>
+                              form.setValue("tamanhoCamisa", size)
+                            }
+                          />
+                          {size}
+                        </Label>
+                      );
+                    })}
+                  </div>
+                  {form.formState.errors.tamanhoCamisa && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.tamanhoCamisa.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">
+                    Forma de pagamento *
+                  </Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Label
+                      className={`flex cursor-pointer items-center gap-4 rounded-xl border-2 p-4 transition-all ${
+                        form.watch("formaPagamentoCamisa") === "pix"
+                          ? "border-emerald-500 bg-emerald-500/10 shadow-[0_0_12px_-4px_rgba(16,185,129,0.4)]"
+                          : "border-border/40 bg-background/50 hover:border-emerald-500/30 hover:bg-emerald-500/5"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        value="pix"
+                        checked={form.watch("formaPagamentoCamisa") === "pix"}
+                        onChange={() =>
+                          form.setValue("formaPagamentoCamisa", "pix")
+                        }
+                      />
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
+                          form.watch("formaPagamentoCamisa") === "pix"
+                            ? "bg-emerald-500 text-white"
+                            : "bg-muted/50 text-muted-foreground"
+                        }`}
+                      >
+                        <QrCode className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm">
+                          Pix da Igreja
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Copie a chave PIX e envie o comprovante
+                        </p>
+                      </div>
+                      <div
+                        className={`ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                          form.watch("formaPagamentoCamisa") === "pix"
+                            ? "border-emerald-500 bg-emerald-500"
+                            : "border-muted-foreground/30"
+                        }`}
+                      >
+                        {form.watch("formaPagamentoCamisa") === "pix" && (
+                          <CheckCircle2 className="h-4 w-4 text-white" />
+                        )}
+                      </div>
+                    </Label>
+
+                    <Label
+                      className={`flex cursor-pointer items-center gap-4 rounded-xl border-2 p-4 transition-all ${
+                        form.watch("formaPagamentoCamisa") === "credito"
+                          ? "border-violet-500 bg-violet-500/10 shadow-[0_0_12px_-4px_rgba(139,92,246,0.4)]"
+                          : "border-border/40 bg-background/50 hover:border-violet-500/30 hover:bg-violet-500/5"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        value="credito"
+                        checked={
+                          form.watch("formaPagamentoCamisa") === "credito"
+                        }
+                        onChange={() =>
+                          form.setValue("formaPagamentoCamisa", "credito")
+                        }
+                      />
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
+                          form.watch("formaPagamentoCamisa") === "credito"
+                            ? "bg-violet-500 text-white"
+                            : "bg-muted/50 text-muted-foreground"
+                        }`}
+                      >
+                        <CreditCard className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm">
+                          Cartão de Crédito
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Pagamento na maquininha da igreja
+                        </p>
+                      </div>
+                      <div
+                        className={`ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                          form.watch("formaPagamentoCamisa") === "credito"
+                            ? "border-violet-500 bg-violet-500"
+                            : "border-muted-foreground/30"
+                        }`}
+                      >
+                        {form.watch("formaPagamentoCamisa") === "credito" && (
+                          <CheckCircle2 className="h-4 w-4 text-white" />
+                        )}
+                      </div>
+                    </Label>
+                  </div>
+                  {form.formState.errors.formaPagamentoCamisa && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.formaPagamentoCamisa.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {apiError && (

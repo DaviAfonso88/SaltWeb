@@ -10,6 +10,8 @@ import {
   Shirt,
   Clock,
   Trash2,
+  CreditCard,
+  QrCode,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +46,11 @@ const parcialLabel: Record<string, string> = {
 const statusLabel: Record<string, string> = {
   confirmado: "Confirmado",
   pendente: "Pendente",
+};
+
+const pagamentoLabel: Record<string, string> = {
+  pix: "Pix",
+  credito: "Cartão",
 };
 
 const normalizeSearch = (value: string) =>
@@ -99,6 +106,7 @@ function getParticipacaoLabel(record: ParticipationRecord): string {
 export default function AdminProjetoMissionarioPage() {
   const [filtroParticipacao, setFiltroParticipacao] = useState("todos");
   const [filtroCamisa, setFiltroCamisa] = useState("todos");
+  const [filtroPagamento, setFiltroPagamento] = useState("todos");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -128,6 +136,12 @@ export default function AdminProjetoMissionarioPage() {
       );
     }
 
+    if (filtroPagamento !== "todos") {
+      result = result.filter(
+        (item) => item.formaPagamentoCamisa === filtroPagamento
+      );
+    }
+
     if (term) {
       result = result.filter((item) => {
         const haystack = normalizeSearch(
@@ -138,7 +152,7 @@ export default function AdminProjetoMissionarioPage() {
     }
 
     return result;
-  }, [items, search, filtroParticipacao, filtroCamisa]);
+  }, [items, search, filtroParticipacao, filtroCamisa, filtroPagamento]);
 
   const stats = useMemo(() => {
     const total = filteredItems.length;
@@ -148,8 +162,10 @@ export default function AdminProjetoMissionarioPage() {
     ).length;
     const camisaSim = filteredItems.filter((item) => item.interesseCamisa).length;
     const camisaNao = filteredItems.filter((item) => !item.interesseCamisa).length;
+    const camisaPix = filteredItems.filter((item) => item.formaPagamentoCamisa === "pix").length;
+    const camisaCredito = filteredItems.filter((item) => item.formaPagamentoCamisa === "credito").length;
 
-    return { total, integrais, parciais, camisaSim, camisaNao };
+    return { total, integrais, parciais, camisaSim, camisaNao, camisaPix, camisaCredito };
   }, [filteredItems]);
 
   const fetchItems = async () => {
@@ -185,6 +201,7 @@ export default function AdminProjetoMissionarioPage() {
   const clearFilters = () => {
     setFiltroParticipacao("todos");
     setFiltroCamisa("todos");
+    setFiltroPagamento("todos");
     setSearch("");
   };
 
@@ -281,6 +298,10 @@ export default function AdminProjetoMissionarioPage() {
           <StatCard icon={Shirt} label="Querem camisa" value={stats.camisaSim} color="#f59e0b" />
           <StatCard icon={Shirt} label="Sem camisa" value={stats.camisaNao} color="#6b7280" />
         </div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+          <StatCard icon={QrCode} label="Pix" value={stats.camisaPix} color="#10b981" />
+          <StatCard icon={CreditCard} label="Cartão" value={stats.camisaCredito} color="#8b5cf6" />
+        </div>
 
         {/* Filters */}
         <Card className="border-border/50 bg-card/50">
@@ -315,6 +336,17 @@ export default function AdminProjetoMissionarioPage() {
                 <SelectItem value="nao">Não quer</SelectItem>
               </SelectContent>
             </Select>
+
+            <Select value={filtroPagamento} onValueChange={setFiltroPagamento}>
+              <SelectTrigger className="w-[150px] border-border/50 bg-background/50">
+                <SelectValue placeholder="Pagamento" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos</SelectItem>
+                <SelectItem value="pix">Pix</SelectItem>
+                <SelectItem value="credito">Cartão</SelectItem>
+              </SelectContent>
+            </Select>
           </CardContent>
         </Card>
 
@@ -341,7 +373,7 @@ export default function AdminProjetoMissionarioPage() {
                 </div>
                 <p className="text-lg font-medium">Nenhuma inscrição encontrada</p>
                 <p className="text-sm text-muted-foreground">
-                  {search || filtroParticipacao !== "todos" || filtroCamisa !== "todos"
+                  {search || filtroParticipacao !== "todos" || filtroCamisa !== "todos" || filtroPagamento !== "todos"
                     ? "Tente ajustar os filtros de busca."
                     : "Aguarde novas inscrições."}
                 </p>
@@ -356,8 +388,10 @@ export default function AdminProjetoMissionarioPage() {
                       <TableHead className="w-[120px]">WhatsApp</TableHead>
                       <TableHead>Participação</TableHead>
                       <TableHead className="w-[90px]">Camisa</TableHead>
+                      <TableHead className="w-[80px]">Tam.</TableHead>
+                      <TableHead className="w-[100px]">Pagamento</TableHead>
                       <TableHead className="w-[90px]">Status</TableHead>
-                      <TableHead className="w-[130px]">Data</TableHead>
+                      <TableHead className="w-[110px]">Data</TableHead>
                       <TableHead className="w-[100px] text-right">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -410,6 +444,33 @@ export default function AdminProjetoMissionarioPage() {
                               <Badge variant="secondary" className="text-xs">Não</Badge>
                             )}
                           </TableCell>
+                          <TableCell className="text-sm font-medium text-center">
+                            {item.interesseCamisa && item.tamanhoCamisa ? (
+                              <span className="text-foreground">{item.tamanhoCamisa}</span>
+                            ) : (
+                              <span className="text-muted-foreground/50">—</span>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {item.interesseCamisa && item.formaPagamentoCamisa ? (
+                              <Badge
+                                className={`text-xs border-0 ${
+                                  item.formaPagamentoCamisa === "pix"
+                                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-400"
+                                    : "bg-violet-500/20 text-violet-700 dark:text-violet-400"
+                                }`}
+                              >
+                                {item.formaPagamentoCamisa === "pix" ? (
+                                  <QrCode className="mr-1 h-3 w-3" />
+                                ) : (
+                                  <CreditCard className="mr-1 h-3 w-3" />
+                                )}
+                                {pagamentoLabel[item.formaPagamentoCamisa] ?? item.formaPagamentoCamisa}
+                              </Badge>
+                            ) : (
+                              <Badge variant="secondary" className="text-xs">—</Badge>
+                            )}
+                          </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
                               <Badge
@@ -460,6 +521,8 @@ export default function AdminProjetoMissionarioPage() {
                                       item.telefone,
                                       `Participação: ${getParticipacaoLabel(item)}`,
                                       `Camisa: ${item.interesseCamisa ? "Sim" : "Não"}`,
+                                      ...(item.interesseCamisa && item.tamanhoCamisa ? [`Tamanho: ${item.tamanhoCamisa}`] : []),
+                                      ...(item.interesseCamisa && item.formaPagamentoCamisa ? [`Pagamento: ${pagamentoLabel[item.formaPagamentoCamisa]}`] : []),
                                       `Status: ${statusLabel[item.status]}`,
                                     ].filter(Boolean).join(" | ")
                                   )

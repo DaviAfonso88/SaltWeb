@@ -56,6 +56,8 @@ export async function POST(req: NextRequest) {
       tempoIntegral: payload.tempoIntegral,
       parcial: { ...payload.parcial },
       interesseCamisa: payload.interesseCamisa,
+      tamanhoCamisa: payload.interesseCamisa ? payload.tamanhoCamisa : undefined,
+      formaPagamentoCamisa: payload.interesseCamisa ? payload.formaPagamentoCamisa : undefined,
       status: "confirmado",
       createdAt: new Date().toISOString(),
     };

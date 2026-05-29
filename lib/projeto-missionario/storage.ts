@@ -37,6 +37,8 @@ const parseRecord = (raw: unknown): ParticipationRecord | null => {
       domingoTarde: false,
     },
     interesseCamisa: record.interesseCamisa ?? false,
+    tamanhoCamisa: record.tamanhoCamisa ?? undefined,
+    formaPagamentoCamisa: record.formaPagamentoCamisa ?? undefined,
     status: normalizeStatus(record.status),
   } as ParticipationRecord;
 };
