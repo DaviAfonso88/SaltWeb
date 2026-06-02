@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { 
-  PartyPopper, 
-  CheckCircle2, 
-  Copy, 
-  QrCode, 
-  Wallet, 
-  CalendarCheck, 
+import {
+  PartyPopper,
+  CheckCircle2,
+  Copy,
+  QrCode,
+  Wallet,
+  CalendarCheck,
   MessageCircle,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -80,24 +80,31 @@ export function SuccessScreen({
           Inscrição Confirmada!
         </CardTitle>
         <p className="text-muted-foreground">
-          Você está oficialmente inscrito no Acampa SALT 2026. Prepare-se para uma experiência incrível!
+          Você está oficialmente inscrito no Acampa SALT 2026. Prepare-se para
+          uma experiência incrível!
         </p>
       </CardHeader>
 
       <CardContent className="px-6 pb-8 space-y-6">
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-border/50 bg-muted/30 p-4 text-center">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Inscrição</p>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+              Inscrição
+            </p>
             <p className="text-lg font-bold text-primary">
               {registration.numeroInscricao}
             </p>
           </div>
           <div className="rounded-xl border border-border/50 bg-muted/30 p-4 text-center">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Participante</p>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+              Participante
+            </p>
             <p className="text-lg font-semibold">{registration.nome}</p>
           </div>
           <div className="rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-center">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Valor Total</p>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+              Valor Total
+            </p>
             <p className="text-xl font-bold text-green-500">
               {formatCurrency(registration.valorFinal)}
             </p>
@@ -112,10 +119,12 @@ export function SuccessScreen({
               </div>
               <div>
                 <h3 className="font-semibold">Pagamento via PIX</h3>
-                <p className="text-xs text-muted-foreground">Escaneie ou copie a chave abaixo</p>
+                <p className="text-xs text-muted-foreground">
+                  Escaneie ou copie a chave abaixo
+                </p>
               </div>
             </div>
-            
+
             <div className="grid gap-5 md:grid-cols-[auto_1fr] md:items-start">
               <Image
                 src={PIBLS_PIX_IMAGE}
@@ -126,7 +135,9 @@ export function SuccessScreen({
               />
               <div className="space-y-3">
                 <div className="rounded-lg border border-amber-500/30 bg-background/80 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Chave PIX</p>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    Chave PIX
+                  </p>
                   <p className="text-sm font-mono font-medium break-all text-amber-700 dark:text-amber-400">
                     {payment.pixKey}
                   </p>
@@ -143,19 +154,37 @@ export function SuccessScreen({
             </div>
 
             <div className="rounded-xl bg-amber-500/30 border border-amber-400/50 p-4">
-              <p className="text-sm font-medium text-white mb-2">Próximo passo</p>
-              <p className="text-white/90 mb-3">
-                Envie o comprovante para o irmão Thiago junto com seu número de inscrição <strong className="text-amber-200">{registration.numeroInscricao}</strong>
+              <p className="text-sm font-medium text-white mb-2">
+                Próximo passo
               </p>
-              <a 
-                href="https://wa.me/553191306879" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Falar com Thiago no WhatsApp
-              </a>
+              <p className="text-white/90 mb-3">
+                Envie o comprovante para o <strong>Gazofilásio Digital</strong>{" "}
+                e para o irmão <strong>Davi Afonso</strong> no WhatsApp junto
+                com seu número de inscrição{" "}
+                <strong className="text-amber-200">
+                  {registration.numeroInscricao}
+                </strong>
+              </p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
             </div>
           </div>
         )}
@@ -168,26 +197,45 @@ export function SuccessScreen({
               </div>
               <div>
                 <h3 className="font-semibold">Pagamento em Dinheiro</h3>
-                <p className="text-xs text-muted-foreground">Realize o pagamento na igreja</p>
+                <p className="text-xs text-muted-foreground">
+                  Realize o pagamento na igreja
+                </p>
               </div>
             </div>
             <div className="space-y-3">
-            <Alert>
-              <AlertDescription className="text-sm">
-                O pagamento deve ser feito diretamente na PIBLS com o irmão Thiago. 
-                Guarde seu número de inscrição <strong className="text-amber-600 dark:text-amber-400">({registration.numeroInscricao})</strong> para identificação.
-              </AlertDescription>
-            </Alert>
-            <a 
-              href="https://wa.me/553191306879" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Falar com Thiago no WhatsApp
-            </a>
-          </div>
+              <Alert>
+                <AlertDescription className="text-sm">
+                  O pagamento deve ser feito diretamente na PIBLS. Guarde seu
+                  número de inscrição{" "}
+                  <strong className="text-amber-600 dark:text-amber-400">
+                    ({registration.numeroInscricao})
+                  </strong>{" "}
+                  para identificação. Para confirmar, envie o comprovante para o{" "}
+                  <strong>Gazofilásio Digital</strong> e para o irmão{" "}
+                  <strong>Davi Afonso</strong> no WhatsApp.
+                </AlertDescription>
+              </Alert>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
+            </div>
           </div>
         )}
 
@@ -199,26 +247,46 @@ export function SuccessScreen({
               </div>
               <div>
                 <h3 className="font-semibold">Pagamento com Cartão</h3>
-                <p className="text-xs text-muted-foreground">Máquina disponível na igreja</p>
+                <p className="text-xs text-muted-foreground">
+                  Máquina disponível na igreja
+                </p>
               </div>
             </div>
             <div className="space-y-3">
-            <Alert>
-              <AlertDescription className="text-sm">
-                O pagamento será processado na máquina de cartão da igreja. 
-                Para confirmações, envie o comprovante para o irmão Thiago junto com seu número de inscrição <strong className="text-amber-600 dark:text-amber-400">({registration.numeroInscricao})</strong>.
-              </AlertDescription>
-            </Alert>
-            <a 
-              href="https://wa.me/553191306879" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Falar com Thiago no WhatsApp
-            </a>
-          </div>
+              <Alert>
+                <AlertDescription className="text-sm">
+                  O pagamento será processado na máquina de cartão da igreja.
+                  Para confirmações, envie o comprovante para o{" "}
+                  <strong>Gazofilásio Digital</strong> e para o irmão{" "}
+                  <strong>Davi Afonso</strong> no WhatsApp junto com seu número
+                  de inscrição{" "}
+                  <strong className="text-amber-600 dark:text-amber-400">
+                    ({registration.numeroInscricao})
+                  </strong>
+                  .
+                </AlertDescription>
+              </Alert>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
+            </div>
           </div>
         )}
 
@@ -230,10 +298,12 @@ export function SuccessScreen({
               </div>
               <div>
                 <h3 className="font-semibold">Carnê SALT - Parcelado</h3>
-                <p className="text-xs text-muted-foreground">6 parcelas de {formatCurrency(registration.valorFinal / 6)}</p>
+                <p className="text-xs text-muted-foreground">
+                  6 parcelas de {formatCurrency(registration.valorFinal / 6)}
+                </p>
               </div>
             </div>
-            
+
             <div className="grid gap-5 md:grid-cols-[auto_1fr] md:items-start">
               <Image
                 src={PIBLS_PIX_IMAGE}
@@ -244,7 +314,9 @@ export function SuccessScreen({
               />
               <div className="space-y-3">
                 <div className="rounded-lg border border-purple-500/30 bg-background/80 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Chave PIX</p>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    Chave PIX
+                  </p>
                   <p className="text-sm font-mono font-medium break-all text-purple-700 dark:text-purple-400">
                     {payment.pixKey}
                   </p>
@@ -261,26 +333,54 @@ export function SuccessScreen({
             </div>
 
             <Alert className="bg-purple-600 border-purple-400">
-              <AlertTitle className="text-white text-sm font-semibold">Parcelas ({formatCurrency(registration.valorFinal / 6)}/mês)</AlertTitle>
+              <AlertTitle className="text-white text-sm font-semibold">
+                Parcelas ({formatCurrency(registration.valorFinal / 6)}/mês)
+              </AlertTitle>
               <AlertDescription className="text-white/90 text-sm">
-                São 6 parcelas de <strong className="text-amber-300">{formatCurrency(registration.valorFinal / 6)}</strong> cada (fevereiro a julho). Pague por mês e 
-                envie o comprovante para o irmão Thiago com seu número de inscrição <strong className="text-amber-300">{registration.numeroInscricao}</strong>.
+                São 6 parcelas de{" "}
+                <strong className="text-amber-300">
+                  {formatCurrency(registration.valorFinal / 6)}
+                </strong>{" "}
+                cada (fevereiro a julho). Pague por mês e envie o comprovante
+                para o <strong>Gazofilásio Digital</strong> e para o irmão{" "}
+                <strong>Davi Afonso</strong> no WhatsApp com seu número de
+                inscrição{" "}
+                <strong className="text-amber-300">
+                  {registration.numeroInscricao}
+                </strong>
+                .
               </AlertDescription>
             </Alert>
-            <a 
-              href="https://wa.me/553191306879" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Falar com Thiago no WhatsApp
-            </a>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://wa.me/553197018582"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Gazofilásio Digital
+              </a>
+              <a
+                href="https://wa.me/5531987139735"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Irmão Davi Afonso
+              </a>
+            </div>
           </div>
         )}
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          <Button variant="outline" onClick={onReset} type="button" className="flex-1">
+          <Button
+            variant="outline"
+            onClick={onReset}
+            type="button"
+            className="flex-1"
+          >
             <ArrowRight className="mr-2 h-4 w-4" />
             Fazer nova inscrição
           </Button>

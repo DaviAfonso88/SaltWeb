@@ -2,7 +2,16 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { CheckCircle2, Globe, MapPin, CalendarDays, Copy, QrCode, CreditCard, MessageCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Globe,
+  MapPin,
+  CalendarDays,
+  Copy,
+  QrCode,
+  CreditCard,
+  MessageCircle,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,7 +99,9 @@ export function RegistrationSuccess({
               />
               <div className="space-y-3">
                 <div className="rounded-lg border border-emerald-500/30 bg-background/80 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Chave PIX (CNPJ)</p>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    Chave PIX (CNPJ)
+                  </p>
                   <p className="text-sm font-mono font-medium break-all text-emerald-700 dark:text-emerald-400">
                     {PIBLS_PIX_KEY}
                   </p>
@@ -107,20 +118,34 @@ export function RegistrationSuccess({
             </div>
 
             <div className="rounded-xl bg-emerald-600/80 border border-emerald-400/50 p-4">
-              <p className="text-sm font-medium text-white mb-2">Próximo passo</p>
-              <p className="text-white/90 text-sm mb-3">
-                Envie o comprovante para o irmão <strong>Thiago</strong> no WhatsApp
-                para confirmar seu pedido.
+              <p className="text-sm font-medium text-white mb-2">
+                Próximo passo
               </p>
-              <a
-                href="https://wa.me/553191306879"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Falar com Thiago no WhatsApp
-              </a>
+              <p className="text-white/90 text-sm mb-3">
+                Envie o comprovante para o <strong>Gazofilásio Digital</strong>{" "}
+                e para o irmão <strong>Davi Afonso</strong> no WhatsApp para
+                confirmar seu pedido.
+              </p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
             </div>
           </div>
         )}
@@ -132,7 +157,9 @@ export function RegistrationSuccess({
                 <CreditCard className="h-5 w-5 text-violet-500" />
               </div>
               <div>
-                <h3 className="font-semibold">Pagamento com Cartão de Crédito</h3>
+                <h3 className="font-semibold">
+                  Pagamento com Cartão de Crédito
+                </h3>
                 <p className="text-xs text-muted-foreground">
                   Camisa tamanho <strong>{tamanhoCamisa}</strong> &mdash; R$ 30
                 </p>
@@ -141,19 +168,32 @@ export function RegistrationSuccess({
             <div className="space-y-3">
               <div className="rounded-lg border border-violet-500/30 bg-background/80 p-4">
                 <p className="text-sm text-muted-foreground">
-                  O pagamento será processado na <strong>maquininha da igreja</strong>.
-                  Para confirmar, envie o comprovante para o irmão <strong>Thiago</strong> no WhatsApp.
+                  O pagamento será processado na{" "}
+                  <strong>maquininha da igreja</strong>. Para confirmar, envie o
+                  comprovante para o <strong>Gazofilásio Digital</strong> ou
+                  para o irmão <strong>Davi Afonso</strong> no WhatsApp.
                 </p>
               </div>
-              <a
-                href="https://wa.me/553191306879"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Falar com Thiago no WhatsApp
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
             </div>
           </div>
         )}

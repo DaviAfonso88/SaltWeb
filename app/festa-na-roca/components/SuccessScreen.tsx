@@ -133,17 +133,29 @@ export function RegistrationSuccess({
                 Enviar comprovante
               </p>
               <p className="text-white/90 mb-3">
-                Mande o comprovante para o irmão Thiago no WhatsApp
+                Mande o comprovante para o Gazofilásio Digital e para o irmão
+                Davi Afonso no WhatsApp
               </p>
-              <a
-                href="https://wa.me/553191306879"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Falar com Thiago no WhatsApp
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/553197018582"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Gazofilásio Digital
+                </a>
+                <a
+                  href="https://wa.me/5531987139735"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Irmão Davi Afonso
+                </a>
+              </div>
             </div>
           </div>
         )}

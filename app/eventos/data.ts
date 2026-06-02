@@ -50,16 +50,4 @@ export const eventos: Evento[] = [
     link: "/projeto-missionario",
     linkLabel: "Fazer inscrição",
   },
-  {
-    id: "debate-namoro-2026-05-299",
-    titulo: "1 pastor x 30 ovelhas",
-    description:
-      "No dia 29/05 às 19h30, teremos o evento “1 Pastor X 30 Ovelhas”, um bate-papo aberto e sincero sobre o que Deus diz sobre namoro e noivado. Será um momento para tirar dúvidas, ouvir conselhos bílicos, aprender sobre relacionamentos saudáveis e entender como viver um namoro alinhado aos princípios de Deus. Tudo isso em um ambiente leve, descontraído e cheio de aprendizado.",
-    dateISO: "2026-05-29T19:30:00-03:00",
-    imagens: ["/images/ovelhas.png"],
-    tags: ["Debate", "Namoro", "Noivado"],
-    locationName: "PIBLS - Lagoa Santa",
-    address: "R. Jair Gonçalves Bastos, 64 - Jardim Ipê, Lagoa Santa",
-    mapsUrl: "https://maps.app.goo.gl/SpDiWpb2GXunqsKj9",
-  },
 ];
