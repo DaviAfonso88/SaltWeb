@@ -1,19 +1,6 @@
 import { z } from "zod";
 
-export const SHIRT_PRICE = 30;
-export const SHIRT_IMAGE_PATH = "/images/camisa.jpeg";
 export const EVENT_FULL_DATE = "12 a 14 de Junho de 2026";
-
-export const SHIRT_SIZES = ["PP", "P", "M", "G", "GG", "XG"] as const;
-export type ShirtSize = (typeof SHIRT_SIZES)[number];
-
-export const FORMA_PAGAMENTO_CAMISA = ["pix", "credito"] as const;
-export type FormaPagamentoCamisa = (typeof FORMA_PAGAMENTO_CAMISA)[number];
-
-export const PAGAMENTO_LABELS: Record<FormaPagamentoCamisa, string> = {
-  pix: "Pix",
-  credito: "Cartão de Crédito",
-};
 
 export const parcialOptions = [
   { value: "sextaNoite", label: "Sexta à noite (12/06)" },
@@ -46,11 +33,6 @@ export const participationSchema = z
       sabadoNoite: z.boolean().default(false),
       domingoTarde: z.boolean().default(false),
     }),
-    interesseCamisa: z.boolean({
-      message: "Selecione se tem interesse na camisa.",
-    }),
-    tamanhoCamisa: z.enum(SHIRT_SIZES).optional(),
-    formaPagamentoCamisa: z.enum(FORMA_PAGAMENTO_CAMISA).optional(),
   })
   .refine(
     (data) => {
@@ -61,25 +43,7 @@ export const participationSchema = z
       message: "Selecione pelo menos um período de participação.",
       path: ["tempoIntegral"],
     },
-  )
-  .superRefine((data, ctx) => {
-    if (data.interesseCamisa) {
-      if (!data.tamanhoCamisa) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Selecione o tamanho da camisa.",
-          path: ["tamanhoCamisa"],
-        });
-      }
-      if (!data.formaPagamentoCamisa) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Selecione a forma de pagamento.",
-          path: ["formaPagamentoCamisa"],
-        });
-      }
-    }
-  });
+  );
 
 export type ParticipationInput = z.input<typeof participationSchema>;
 export type ParticipationOutput = z.output<typeof participationSchema>;

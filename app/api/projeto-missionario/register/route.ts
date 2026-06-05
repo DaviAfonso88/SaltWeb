@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
       const firstError =
         errors.nome?.[0] ||
         errors.telefone?.[0] ||
-        errors.interesseCamisa?.[0] ||
         errors.tempoIntegral?.[0] ||
         "Dados inválidos.";
 
@@ -55,9 +54,9 @@ export async function POST(req: NextRequest) {
       telefone: payload.telefone,
       tempoIntegral: payload.tempoIntegral,
       parcial: { ...payload.parcial },
-      interesseCamisa: payload.interesseCamisa,
-      tamanhoCamisa: payload.interesseCamisa ? payload.tamanhoCamisa : undefined,
-      formaPagamentoCamisa: payload.interesseCamisa ? payload.formaPagamentoCamisa : undefined,
+      interesseCamisa: false,
+      tamanhoCamisa: undefined,
+      formaPagamentoCamisa: undefined,
       status: "confirmado",
       createdAt: new Date().toISOString(),
     };
