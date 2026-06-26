@@ -36,18 +36,4 @@ export const eventos: Evento[] = [
     link: "/acampa-salt",
     linkLabel: "Fazer inscrição",
   },
-  {
-    id: "projeto-missionario-2026-06-12",
-    titulo: "Projeto Missionário SALT",
-    description:
-      "Três dias de imersão missionária! Participe do Projeto Missionário SALT de 12 a 14 de junho. Inscreva-se para tempo integral (dormindo na igreja) ou em períodos avulsos. Haverá camisa oficial do evento por R$ 30.",
-    dateISO: "2026-06-12T19:00:00-03:00",
-    imagens: ["/images/orla.jpeg"],
-    tags: ["Missão", "Juventude", "Evangelismo"],
-    locationName: "PIBLS - Lagoa Santa",
-    address: "R. Jair Gonçalves Bastos, 64 - Jardim Ipê, Lagoa Santa",
-    mapsUrl: "https://maps.app.goo.gl/SpDiWpb2GXunqsKj9",
-    link: "/projeto-missionario",
-    linkLabel: "Fazer inscrição",
-  },
 ];
