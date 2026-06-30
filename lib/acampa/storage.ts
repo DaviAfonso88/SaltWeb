@@ -46,8 +46,10 @@ const parseRecord = (raw: unknown): RegistrationRecord | null => {
 };
 
 export async function saveRegistration(record: RegistrationRecord) {
-  await redis.set(`${REGISTRATION_KEY_PREFIX}${record.id}`, record);
-  await redis.lpush(IDS_LIST_KEY, record.id);
+  const tx = redis.multi();
+  tx.set(`${REGISTRATION_KEY_PREFIX}${record.id}`, record);
+  tx.lpush(IDS_LIST_KEY, record.id);
+  await tx.exec();
 }
 
 export async function getRegistrationById(id: string) {
@@ -114,22 +116,15 @@ export async function updateRegistrationCredito(id: string, valorPagoCredito: nu
 }
 
 export async function listRegistrations() {
-  const ids = await redis.lrange<string>(IDS_LIST_KEY, 0, -1);
+  // Usa KEYS como fonte primaria para evitar IDs fantasmas na lista de indice
+  const allKeys = await redis.keys(`${REGISTRATION_KEY_PREFIX}*`);
+  const recordKeys = allKeys.filter((key) => key !== `${REGISTRATION_KEY_PREFIX}contador`);
 
   let records: RegistrationRecord[] = [];
 
-  if (ids.length > 0) {
-    const keys = ids.map((id) => `${REGISTRATION_KEY_PREFIX}${id}`);
-    const values = await redis.mget<unknown[]>(...keys);
+  if (recordKeys.length > 0) {
+    const values = await redis.mget<unknown[]>(...recordKeys);
     records = values.map(parseRecord).filter((item): item is RegistrationRecord => item !== null);
-  } else {
-    // Fallback para dados antigos sem indice.
-    const legacyKeys = await redis.keys(`${REGISTRATION_KEY_PREFIX}*`);
-    const filteredKeys = legacyKeys.filter((key) => key !== `${REGISTRATION_KEY_PREFIX}contador`);
-    if (filteredKeys.length > 0) {
-      const values = await redis.mget<unknown[]>(...filteredKeys);
-      records = values.map(parseRecord).filter((item): item is RegistrationRecord => item !== null);
-    }
   }
 
   return records.sort(

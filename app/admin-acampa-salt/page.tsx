@@ -140,15 +140,18 @@ export default function AdminAcampaSaltPage() {
   }, [items, search]);
 
   const stats = useMemo(() => {
-    const participantes = filteredItems.filter((item) => item.dupla === "nao").length;
-    const duplas = filteredItems.filter((item) => item.dupla !== "nao").length;
-    const total = participantes + duplas;
+    const individuais = filteredItems.filter((item) => item.dupla === "nao").length;
+    const registrosDupla = filteredItems.filter((item) => item.dupla !== "nao").length;
+    const pessoasDupla = filteredItems
+      .filter((item) => item.dupla !== "nao")
+      .reduce((sum, item) => sum + item.quantidadeConjuges, 0);
+    const total = individuais + pessoasDupla;
     const pendentes = filteredItems.filter((item) => item.status === "pendente_pagamento").length;
     const completos = filteredItems.filter((item) => item.status === "pagamento_completo").length;
     const valorRecebido = filteredItems.reduce((sum, item) => sum + resolveReceivedAmount(item), 0);
     const valorRestante = filteredItems.reduce((sum, item) => sum + resolvePendingAmount(item), 0);
 
-    return { total, pendentes, completos, duplas, valorRecebido, valorRestante, participantes };
+    return { total, pendentes, completos, duplas: registrosDupla, participantes: individuais, valorRecebido, valorRestante };
   }, [filteredItems]);
 
   const query = useMemo(() => {
@@ -437,7 +440,7 @@ export default function AdminAcampaSaltPage() {
             <div>
               <p className="text-sm text-muted-foreground">Total Inscricoes</p>
               <p className="text-2xl font-bold">
-                {stats.total} <span className="text-sm font-normal text-muted-foreground">({stats.participantes} + {stats.duplas} duplas)</span>
+                {stats.total} <span className="text-sm font-normal text-muted-foreground">({stats.participantes} individuais + {stats.duplas} em dupla)</span>
               </p>
             </div>
           </CardContent>
@@ -571,7 +574,7 @@ export default function AdminAcampaSaltPage() {
               </span>
               <span className="flex items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-primary">
                 <span className="h-2 w-2 rounded-full bg-primary"></span>
-                {stats.duplas} duplas
+                {stats.duplas} em dupla
               </span>
               <span className="text-muted-foreground">
                 Restante: <span className="font-medium text-amber-500">{currency(stats.valorRestante)}</span>
