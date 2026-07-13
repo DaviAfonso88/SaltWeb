@@ -154,7 +154,6 @@ export default function ParticipantesPage() {
       if (res.ok) {
         toast.success(`${data.deleted} participante(s) excluído(s)`);
         setParticipants([]);
-        setTotalPages(1);
         setDeleteAllOpen(false);
       } else {
         toast.error(data.error || "Erro ao excluir participantes");
