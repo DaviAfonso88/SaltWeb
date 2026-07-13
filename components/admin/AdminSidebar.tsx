@@ -18,7 +18,12 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const NAV_ITEMS = [
   { href: "/admin-camp", label: "Dashboard", icon: LayoutDashboard },
@@ -47,7 +52,7 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
           </div>
           <div>
             <h2 className="font-[family-name:var(--font-poppins)] text-sm font-semibold tracking-tight text-foreground">
-              SALT Camp
+              SALT Acampamento
             </h2>
             <p className="text-[11px] font-medium uppercase tracking-widest text-amber-400/60">
               Administração
@@ -79,7 +84,9 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
                 {isActive && (
                   <div className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-gradient-to-b from-amber-400 to-orange-400" />
                 )}
-                <item.icon className={`size-4 transition-colors ${isActive ? "text-amber-400" : "text-muted-foreground group-hover:text-foreground"}`} />
+                <item.icon
+                  className={`size-4 transition-colors ${isActive ? "text-amber-400" : "text-muted-foreground group-hover:text-foreground"}`}
+                />
                 {item.label}
               </Link>
             );
@@ -153,7 +160,10 @@ export function AdminSidebar() {
                         <item.icon className="size-4" />
                       </Link>
                     </TooltipTrigger>
-                    <TooltipContent side="right" className="border-amber-500/10 bg-[oklch(0.22_0.01_60)]">
+                    <TooltipContent
+                      side="right"
+                      className="border-amber-500/10 bg-[oklch(0.22_0.01_60)]"
+                    >
                       {item.label}
                     </TooltipContent>
                   </Tooltip>
