@@ -37,11 +37,9 @@ export function generateInscriptionsPDF(records: RegistrationRecord[]): void {
   y = 28;
 
   const sorted = [...records].sort((a, b) => {
-    const loteOrder = ["primeiro", "segundo", "terceiro", "quarto", "quinto", "ultimo"];
-    const ai = loteOrder.indexOf(a.lote);
-    const bi = loteOrder.indexOf(b.lote);
-    if (ai !== bi) return ai - bi;
-    return a.numeroInscricao.localeCompare(b.numeroInscricao);
+    const nameA = (a.nome || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const nameB = (b.nome || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    return nameA.localeCompare(nameB, "pt-BR");
   });
 
   const body = sorted.map((item, index) => {
