@@ -1,6 +1,6 @@
 import React from 'react';
 import { Podcast as PodcastIcon } from 'lucide-react';
-import { PodcastEpisode } from '../podcast/data';
+import { PodcastEpisode } from '@/app/(site)/podcast/data';
 import {
   Card,
   CardContent,

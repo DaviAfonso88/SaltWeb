@@ -2,13 +2,13 @@
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Smartphone, Quote, Play } from "lucide-react";
-import ServirForm from "../components/ServirForm";
-import SectionLabel from "../components/SectionLabel";
-import PageHeader from "../components/PageHeader";
+import ServirForm from "@/app/components/ServirForm";
+import SectionLabel from "@/app/components/SectionLabel";
+import PageHeader from "@/app/components/PageHeader";
 import { programacoes } from "./programacoesData";
-import ProgramacaoCard from "../components/ProgramacaoCard";
-import ValueCard from "../components/ValueCard";
-import BotaoPrimario from "../components/BotaoPrimario";
+import ProgramacaoCard from "@/app/components/ProgramacaoCard";
+import ValueCard from "@/app/components/ValueCard";
+import BotaoPrimario from "@/app/components/BotaoPrimario";
 import Image from "next/image";
 
 function HistoriaSection() {

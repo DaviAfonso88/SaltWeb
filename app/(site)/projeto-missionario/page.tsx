@@ -1,6 +1,6 @@
 import { RegistrationForm } from "./components/RegistrationForm";
-import PageHeader from "../components/PageHeader";
-import PageSection from "../components/PageSection";
+import PageHeader from "@/app/components/PageHeader";
+import PageSection from "@/app/components/PageSection";
 
 export const metadata = {
   title: "Projeto Missionário SALT — inscrição",

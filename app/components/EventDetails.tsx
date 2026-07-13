@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { CalendarDays, ExternalLink, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react";
-import type { Evento } from "../eventos/data";
+import type { Evento } from "@/app/(site)/eventos/data";
 import { Badge } from "@/components/ui/badge";
 
 type EventDetailsProps = {

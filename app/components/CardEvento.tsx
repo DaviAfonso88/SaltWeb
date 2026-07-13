@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, CalendarDays, MapPin, Sparkles } from "lucide-react";
-import type { Evento } from "../eventos/data";
+import type { Evento } from "@/app/(site)/eventos/data";
 import {
   Card,
   CardContent,

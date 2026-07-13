@@ -25,6 +25,12 @@ npm start      # start production server
 | `/devocional` | Devotional |
 | `/acampa-salt` | Camp registration |
 | `/contribua` | Donations |
+| `/login` | Admin login |
+| `/admin-camp` | Camp admin dashboard |
+| `/admin-camp/participantes` | Participant list |
+| `/admin-camp/participantes/[id]` | Participant profile |
+| `/admin-camp/importar` | Import spreadsheets |
+| `/admin-camp/usuarios` | User management |
 | `/api/*` | API routes |
 
 ## Architecture
@@ -33,8 +39,46 @@ npm start      # start production server
 - Components: `app/components/` and `components/ui/`
 - API: `app/api/[route]/route.ts`
 
+## Camp Admin System (`/admin-camp`)
+
+Full participant management system with Excel/CSV import, fuzzy matching, and role-based auth.
+
+### Data Layer
+- `lib/participant/types.ts` — Zod schemas, Participant type
+- `lib/participant/storage.ts` — Redis CRUD, search, stats
+- `lib/participant/constants.ts` — Column aliases, health conditions, permissions
+
+### Smart Import
+- `lib/import/mapper.ts` — Auto-maps spreadsheet columns to fields
+- `lib/import/matcher.ts` — Fuzzy matching (Levenshtein) for deduplication
+- Client-side Excel parsing with `xlsx` library
+
+### Auth
+- `lib/auth/config.ts` — Roles: admin, saude, lider, recepcao
+- `lib/auth/session.ts` — Cookie-based sessions, bcrypt passwords
+- `middleware.ts` — Protects `/admin-camp*` and `/api/camp-admin*`
+
+### API Routes
+- `POST /api/camp-admin/auth` — Login/logout
+- `GET /api/camp-admin/stats` — Dashboard statistics
+- `GET/POST /api/camp-admin/participants` — List/create participants
+- `GET/PATCH/DELETE /api/camp-admin/participants/[id]` — CRUD
+- `PATCH /api/camp-admin/participants/[id]/health` — Health info
+- `POST /api/camp-admin/participants/[id]/notes` — Add observations
+- `POST /api/camp-admin/participants/[id]/merge` — Merge participants
+- `POST /api/camp-admin/import` — Import spreadsheet data
+- `GET/POST/DELETE /api/camp-admin/users` — User management (admin only)
+
+### First Run
+After deployment, create an admin user via the API or Redis directly:
+```bash
+# Example: Create first admin user
+curl -X POST http://localhost:3000/api/camp-admin/auth -H 'Content-Type: application/json' -d '{"username":"admin","password":"admin123"}'
+```
+
 ## Testing
 No test framework configured. Do not add tests without discussing with the user.
+```
 ```
 
 ## Project Stack
@@ -50,6 +94,11 @@ No test framework configured. Do not add tests without discussing with the user.
 - Swiper (carousels)
 - QRCode (QR generation)
 - CVA (variant utilities)
+- xlsx (Excel/CSV parsing)
+- fuse.js (fuzzy search)
+- bcryptjs (password hashing)
+- recharts (dashboard charts)
+- date-fns (date utilities)
 
 ## Path Aliases
 

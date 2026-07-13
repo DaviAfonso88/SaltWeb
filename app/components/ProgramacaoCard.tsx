@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import BotaoPrimario from "./BotaoPrimario";
-import { Programacao } from "../sobre/programacoesData";
+import { Programacao } from "@/app/(site)/sobre/programacoesData";
 import { Calendar, Clock } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 

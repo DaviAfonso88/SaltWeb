@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getDevocionais, type Devocional } from "./data";
 import { ArrowRight, Search, BookOpen, Calendar, Sparkles } from "lucide-react";
 import Link from "next/link";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "@/app/components/PageHeader";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function DevocionalPage() {

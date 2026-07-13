@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import CardEvento from "../components/CardEvento";
-import Modal from "../components/Modal";
+import CardEvento from "@/app/components/CardEvento";
+import Modal from "@/app/components/Modal";
 import { eventos, Evento } from "./data";
-import PageHeader from "../components/PageHeader";
-import PageSection from "../components/PageSection";
-import EventDetails from "../components/EventDetails";
+import PageHeader from "@/app/components/PageHeader";
+import PageSection from "@/app/components/PageSection";
+import EventDetails from "@/app/components/EventDetails";
 
 export default function Eventos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
