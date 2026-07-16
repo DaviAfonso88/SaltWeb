@@ -32,6 +32,7 @@ const healthInfoSchema = z.object({
   observacoesMedicas: z.array(z.string()),
   outraInfoSaude: z.string().nullable().optional(),
   necessidadesEspeciais: z.boolean(),
+  necessidadesEspeciaisDescricao: z.string().nullable().optional(),
 });
 
 const observationSchema = z.object({

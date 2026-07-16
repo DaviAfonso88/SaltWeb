@@ -96,6 +96,8 @@ export async function POST(
         ],
         necessidadesEspeciais:
           target.saude.necessidadesEspeciais || source.saude.necessidadesEspeciais,
+        necessidadesEspeciaisDescricao:
+          target.saude.necessidadesEspeciaisDescricao || source.saude.necessidadesEspeciaisDescricao,
       },
 
       observacoes: [

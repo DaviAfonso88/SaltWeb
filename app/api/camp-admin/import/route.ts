@@ -233,6 +233,7 @@ async function createParticipantFromImport(
       observacoesMedicas: [],
       outraInfoSaude: data.outraInfoSaude || null,
       necessidadesEspeciais: isSim(data.deficiencia),
+      necessidadesEspeciaisDescricao: data.necessidadesEspeciaisDescricao || null,
     },
 
     declaracao: isSim(data.declaracao),

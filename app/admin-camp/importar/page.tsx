@@ -64,6 +64,7 @@ const TARGET_FIELDS = [
   "condicaoEspecificacao",
   "deficiencia",
   "deficienciaEspecificacao",
+  "necessidadesEspeciaisDescricao",
   "possuiAlergias",
   "alergias",
   "alergiaReacao",

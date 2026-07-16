@@ -214,6 +214,14 @@ export const COLUMN_ALIASES: Record<string, string[]> = {
     "especificação deficiência",
     "especificacao deficiencia",
   ],
+  necessidadesEspeciaisDescricao: [
+    "descrição necessidades especiais",
+    "descricao necessidades especiais",
+    "quais necessidades especiais",
+    "detalhes necessidades especiais",
+    "especificação necessidades especiais",
+    "especificacao necessidades especiais",
+  ],
   possuiAlergias: [
     "possui alergias?",
     "possui alergias",

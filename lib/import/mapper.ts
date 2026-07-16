@@ -96,6 +96,7 @@ export function getFieldLabel(field: string): string {
     condicaoEspecificacao: "Especificação da Condição",
     deficiencia: "Deficiência/Necessidade Específica?",
     deficienciaEspecificacao: "Especificação da Deficiência",
+    necessidadesEspeciaisDescricao: "Descrição das Necessidades Especiais",
     possuiAlergias: "Possui Alergias?",
     alergias: "Quais Alergias",
     alergiaReacao: "Reação das Alergias",

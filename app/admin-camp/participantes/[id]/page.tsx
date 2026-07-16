@@ -26,6 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -727,6 +728,74 @@ function HealthPanel({
               <FieldDisplay label="Restrições Físicas" value={healthData.restricoesFisicas || "-"} />
               {healthData.outraInfoSaude && (
                 <FieldDisplay label="Outra Informação sobre Saúde" value={healthData.outraInfoSaude} className="sm:col-span-2" />
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Necessidades Especiais */}
+      <Card className="border-violet-500/10 bg-gradient-to-br from-card to-card/50">
+        <CardHeader>
+          <CardTitle className="text-sm font-medium">Necessidades Especiais</CardTitle>
+          <CardDescription>
+            Marque se o participante é portador de necessidades pessoais
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {editing ? (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="necessidadesEspeciais"
+                  checked={healthData.necessidadesEspeciais}
+                  onCheckedChange={(checked) =>
+                    setHealthData((d) => ({
+                      ...d,
+                      necessidadesEspeciais: checked === true,
+                      necessidadesEspeciaisDescricao: checked === true ? d.necessidadesEspeciaisDescricao : undefined,
+                    }))
+                  }
+                />
+                <Label
+                  htmlFor="necessidadesEspeciais"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Portador de Necessidades Pessoais
+                </Label>
+              </div>
+              {healthData.necessidadesEspeciais && (
+                <div className="space-y-2">
+                  <Label htmlFor="necessidadesEspeciaisDescricao" className="text-sm text-muted-foreground">
+                    Descreva as necessidades (opcional)
+                  </Label>
+                  <Textarea
+                    id="necessidadesEspeciaisDescricao"
+                    placeholder="Ex: Cadeirante, necessita de intérprete de Libras, deficiência visual..."
+                    value={healthData.necessidadesEspeciaisDescricao || ""}
+                    onChange={(e) =>
+                      setHealthData((d) => ({
+                        ...d,
+                        necessidadesEspeciaisDescricao: e.target.value || undefined,
+                      }))
+                    }
+                    rows={3}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <div className={`h-2.5 w-2.5 rounded-full ${healthData.necessidadesEspeciais ? "bg-violet-500" : "bg-muted"}`} />
+                <span className="text-sm">
+                  {healthData.necessidadesEspeciais ? "Sim" : "Não"}
+                </span>
+              </div>
+              {healthData.necessidadesEspeciais && healthData.necessidadesEspeciaisDescricao && (
+                <p className="text-sm text-muted-foreground mt-2 pl-4.5">
+                  {healthData.necessidadesEspeciaisDescricao}
+                </p>
               )}
             </div>
           )}
