@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
 
-import { ACAMPA_YEAR } from "@/lib/acampa/constants";
+import { ACAMPA_YEAR, REGISTRATION_OPEN } from "@/lib/acampa/constants";
 import {
   applyDiscount,
   createCarneInstallments,
@@ -16,6 +16,13 @@ import { redis } from "@/lib/redis";
 import { saveRegistration } from "@/lib/acampa/storage";
 
 export async function POST(request: Request) {
+  if (!REGISTRATION_OPEN) {
+    return NextResponse.json(
+      { message: "Inscricoes encerradas." },
+      { status: 403 },
+    );
+  }
+
   try {
     const json = await request.json();
     const parsed = registrationSchema.safeParse(json);

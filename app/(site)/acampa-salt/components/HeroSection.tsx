@@ -1,10 +1,18 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 
-export function HeroSection() {
+export function HeroSection({ registrationOpen }: { registrationOpen: boolean }) {
   return (
     <section className="rounded-2xl border border-border/60 bg-card/40 p-6 md:p-10">
-      <Badge className="mb-4">Inscricoes abertas</Badge>
+      <Badge
+        className={
+          registrationOpen
+            ? ""
+            : "border-red-500/20 bg-red-500/10 text-red-400"
+        }
+      >
+        {registrationOpen ? "Inscricoes abertas" : "Inscricoes encerradas"}
+      </Badge>
       <h1 className="text-3xl font-extrabold tracking-tight md:text-5xl">
         Acampa SALT 2026
       </h1>

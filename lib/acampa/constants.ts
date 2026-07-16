@@ -1,5 +1,7 @@
 export const ACAMPA_YEAR = 2026;
 
+export const REGISTRATION_OPEN = false;
+
 export const SPOUSE_DISCOUNT = 0.15;
 
 export const LOTS = [
