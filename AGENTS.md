@@ -1,158 +1,140 @@
 # AGENTS.md — Saltweb
 
+Site público e painel administrativo da Juventude SALT (Primeira Igreja Batista em Lagoa Santa). O painel guarda dados pessoais de inscritos, inclusive menores de idade, e dados de saúde: trate qualquer mudança em acesso, exportação ou exclusão como sensível.
+
 ## Dev Commands
 
 ```bash
-npm run dev      # dev server (http://localhost:3000)
-npm run build   # production build
-npm run lint   # ESLint (flat config)
-npm start      # start production server
+npm run dev            # servidor de desenvolvimento (http://localhost:3000)
+npm run build          # build de produção
+npm run lint           # ESLint (flat config)
+npm start              # servidor de produção
+
+npm run db:generate    # gera migração a partir de lib/db/schema.ts (drizzle-kit)
+npm run db:migrate     # aplica migrações no banco de DATABASE_URL
+npm run db:seed        # papéis padrão, evento Acampa SALT 2026 e devocionais (idempotente)
+npm run db:studio      # Drizzle Studio
+npm run cutover:redis  # virada do Redis (simulação por padrão; veja "Virada" abaixo)
+```
 
 ## Environment
-`.env` contains sensitive credentials:
-- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
-- `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS`
 
-**Never commit `.env`** - it's already gitignored.
+Variáveis ficam em `.env` / `.env.local` (ambos ignorados pelo git). **Nunca commite `.env*`** nem o arquivo exportado pela virada (`cutover-*.json`).
+
+| Variável | Uso |
+|----------|-----|
+| `DATABASE_URL` | Postgres no Neon (fonte de verdade) |
+| `SETUP_TOKEN` | Autoriza criar o primeiro administrador em `/painel/setup` |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Redis **só** para rate limit (`lib/auth/rate-limit.ts`) e para o script de virada |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS` | SMTP (aviso de mensagens do site) |
+
+Os scripts `db:*` leem `.env.local` (`--env-file-if-exists`).
 
 ## Key Routes
-| Route | Description |
-|-------|-------------|
+
+Site público (`app/(site)/`):
+
+| Rota | Descrição |
+|------|-----------|
 | `/` | Home |
-| `/sobre` | About |
-| `/eventos` | Events |
-| `/podcast` | Podcast |
-| `/devocional` | Devotional |
-| `/acampa-salt` | Camp registration |
-| `/contribua` | Donations |
-| `/login` | Admin login |
-| `/admin-camp` | Camp admin dashboard |
-| `/admin-camp/participantes` | Participant list |
-| `/admin-camp/participantes/[id]` | Participant profile |
-| `/admin-camp/importar` | Import spreadsheets |
-| `/admin-camp/usuarios` | User management |
-| `/api/*` | API routes |
+| `/sobre` | Sobre + formulário "quero servir" |
+| `/eventos`, `/eventos/[slug]` | Lista de eventos; página do evento com inscrição (formulário conforme o modelo) |
+| `/podcast` | Salt Talks (`app/(site)/podcast/data.ts`) |
+| `/devocional` | Devocionais publicados (banco) |
+| `/contribua` | Pix e dados bancários |
+| `/acampa-salt`, `/festa-na-roca`, `/projeto-missionario` | Redirecionam (`next.config.ts`) para `/eventos/...` |
+
+Painel (`app/painel/`, protegido por `proxy.ts` + checagem em cada página/ação/rota):
+
+| Rota | Permissão principal |
+|------|---------------------|
+| `/painel/login`, `/painel/setup`, `/painel/conta/senha` | públicas / sessão |
+| `/painel` | qualquer usuário autenticado (resumo + aviso de retenção) |
+| `/painel/eventos`, `/novo`, `/[id]` | `eventos.gerenciar` |
+| `/painel/inscricoes`, `/[id]` | `inscricoes.ver` (+ editar/exportar) |
+| `/painel/participantes`, `/novo`, `/[id]`, `/importar` | `participantes.*` (saúde: `participantes.saude.ver/editar`) |
+| `/painel/devocionais` | `devocionais.gerenciar` |
+| `/painel/mensagens`, `/[id]` | `mensagens.ver` / `mensagens.gerenciar` |
+| `/painel/usuarios`, `/painel/papeis`, `/painel/auditoria` | permissões de acesso e auditoria |
+
+APIs: `POST /api/inscricoes/[slug]` (inscrição pública), `POST /api/contact`, `POST /api/servir`, `GET /api/painel/inscricoes/export`, `GET /api/painel/participantes/export`, `GET /imagens/eventos/[id]` (imagens de eventos).
 
 ## Architecture
-- Pages: `app/[page]/page.tsx`
-- Data: `app/[page]/data.ts`
-- Components: `app/components/` and `components/ui/`
-- API: `app/api/[route]/route.ts`
 
-## Camp Admin System (`/admin-camp`)
+- Páginas: `app/(site)/<rota>/page.tsx` (público) e `app/painel/(app)/<rota>/page.tsx` (painel).
+- Regra de negócio por domínio em `lib/<domínio>/` — `queries.ts` (leitura), `actions.ts` (Server Actions `"use server"`: só exportam funções assíncronas), módulos puros sem diretiva:
+  - `lib/db` (Drizzle + Neon; `schema.ts`), `lib/auth` (sessão, permissões, `guard.ts`, rate limit), `lib/audit.ts`, `lib/history.ts`
+  - `lib/events`, `lib/forms` (modelos de formulário: acampamento, festa, missão, simples), `lib/registrations`, `lib/participants` (+ `import/`), `lib/devotionals`, `lib/messages`, `lib/users`, `lib/export` (CSV/PDF)
+- Componentes: `components/site/` (público), `components/painel/<área>/`, `components/forms/` (inscrição pública), `components/ui/` (shadcn).
+- Migrações em `drizzle/` (geradas por `db:generate`); nunca edite uma migração já aplicada.
 
-Full participant management system with Excel/CSV import, fuzzy matching, and role-based auth.
+### Acesso e permissões
 
-### Data Layer
-- `lib/participant/types.ts` — Zod schemas, Participant type
-- `lib/participant/storage.ts` — Redis CRUD, search, stats
-- `lib/participant/constants.ts` — Column aliases, health conditions, permissions
+- Papéis e permissões são dados do banco; permissões possíveis em `lib/auth/permissions.ts` (papéis padrão criados pelo `db:seed`: Administrador, Editor de conteúdo, Equipe de inscrições, Atendimento, Equipe de saúde, Liderança, Recepção).
+- `proxy.ts` só confere se existe o cookie de sessão. **A autorização real** é feita com `requirePermission` (páginas), `authorizeAction` (Server Actions) e `authorizeRoute` (Route Handlers), de `lib/auth/guard.ts`. Toda ação nova deve usar uma delas.
+- Ações sensíveis (login, exclusões, exportações, consulta a saúde, importação, mescla) gravam em `audit_log` via `logAudit`. Alterações de cadastro gravam `entity_history` via `recordHistory`.
 
-### Smart Import
-- `lib/import/mapper.ts` — Auto-maps spreadsheet columns to fields
-- `lib/import/matcher.ts` — Fuzzy matching (Levenshtein) for deduplication
-- Client-side Excel parsing with `xlsx` library
+### Dados de saúde (regras fixas)
 
-### Auth
-- `lib/auth/config.ts` — Roles: admin, saude, lider, recepcao
-- `lib/auth/session.ts` — Cookie-based sessions, bcrypt passwords
-- `middleware.ts` — Protects `/admin-camp*` and `/api/camp-admin*`
+- Só `lib/participants/health.ts` lê `participant_health`; cada função exige `participantes.saude.ver` e audita a consulta. `lib/participants/queries.ts` **nunca** lê saúde.
+- O histórico (`entity_history`) visível a quem só tem `participantes.ver` registra **os nomes dos campos de saúde alterados, nunca os valores**.
+- Exportação com saúde exige pedido explícito (`saude=1`) e `participantes.saude.ver`.
+- Retenção: fichas de acampamentos encerrados há mais de 60 dias aparecem como aviso no `/painel` (exclusão manual, `participantes.excluir`).
 
-### API Routes
-- `POST /api/camp-admin/auth` — Login/logout
-- `GET /api/camp-admin/stats` — Dashboard statistics
-- `GET/POST /api/camp-admin/participants` — List/create participants
-- `GET/PATCH/DELETE /api/camp-admin/participants/[id]` — CRUD
-- `PATCH /api/camp-admin/participants/[id]/health` — Health info
-- `POST /api/camp-admin/participants/[id]/notes` — Add observations
-- `POST /api/camp-admin/participants/[id]/merge` — Merge participants
-- `POST /api/camp-admin/import` — Import spreadsheet data
-- `GET/POST/DELETE /api/camp-admin/users` — User management (admin only)
+### Primeiro acesso
 
-### First Run
-After deployment, create an admin user via the API or Redis directly:
+Com o banco migrado e semeado, abra `/painel/setup`, informe o `SETUP_TOKEN` e crie o administrador. A página deixa de funcionar depois que existe um usuário.
+
+### Virada (sistema antigo → novo)
+
+O Redis antigo (inscrições, participantes, usuários e sessões do `/admin-camp`) não é migrado; é excluído na virada:
+
 ```bash
-# Example: Create first admin user
-curl -X POST http://localhost:3000/api/camp-admin/auth -H 'Content-Type: application/json' -d '{"username":"admin","password":"admin123"}'
+npm run cutover:redis                              # simulação: só conta chaves (padrão)
+npm run cutover:redis -- --export ../cutover.json  # cópia local (dados pessoais; fora do repositório)
+npm run cutover:redis -- --confirm                 # exclui, depois de digitar EXCLUIR (exige terminal interativo)
 ```
 
-## Testing
-No test framework configured. Do not add tests without discussing with the user.
-```
-```
+Não toca nas chaves `salt:rl:*` (rate limit). **Só execute `--confirm` com autorização explícita do responsável naquele momento.**
 
 ## Project Stack
 
-- Next.js 16 (App Router) + React 19
-- Tailwind CSS 4 + `@tailwindcss/postcss`
-- shadcn/ui (New York style, RSC enabled) + Radix primitives
-- TypeScript strict mode
-- Zod + react-hook-form + @hookform/resolvers (form validation)
-- Upstash Redis + Upstash Ratelimit (API rate limiting)
-- Nodemailer (SMTP email)
-- Sonner (toasts)
-- Swiper (carousels)
-- QRCode (QR generation)
-- CVA (variant utilities)
-- xlsx (Excel/CSV parsing)
-- fuse.js (fuzzy search)
-- bcryptjs (password hashing)
-- recharts (dashboard charts)
-- date-fns (date utilities)
+- Next.js 16 (App Router, Server Actions, `proxy.ts`) + React 19; TypeScript strict
+- Postgres no Neon + Drizzle ORM (`@neondatabase/serverless`)
+- Tailwind CSS 4 (`@tailwindcss/postcss`; tokens em `app/globals.css`) + shadcn/ui (New York, RSC) + Radix
+- Zod (validação em Server Actions e rotas; formulários usam estado controlado do React, não react-hook-form)
+- Upstash Redis + Ratelimit (somente rate limit)
+- Nodemailer (SMTP), Sonner (toasts), lucide-react (ícones)
+- `xlsx` (leitura de planilhas no navegador, importação de participantes), `jspdf` + `jspdf-autotable` (PDF no servidor)
+- bcryptjs (senhas), recharts (somente `components/ui/chart.tsx`)
 
 ## Path Aliases
 
-`@/*` maps to project root — e.g. `@/components`, `@/lib`, `@/hooks`, `@/components/ui`
+`@/*` aponta para a raiz do projeto — ex.: `@/components`, `@/lib`, `@/components/ui`.
 
 ## shadcn/ui
 
-- Components live in `components/ui/`
-- Add: `npx shadcn@latest add <component>`
-- Registry/presets: `components.json`
+- Componentes em `components/ui/`
+- Adicionar: `npx shadcn@latest add <component>`
+- Registro/presets: `components.json`
 
-## Tailwind
+## Tailwind e design
 
-- Tailwind 4 — config is `tailwind.config.ts` (still used by tooling)
-- CSS variables theme with custom colors: `primary` (purple), `secondary` (amber), `background`/`foreground` (dark), `card`, `border`
-- Custom animations: `animate-gradient-xy`, `animate-shimmer`, `animate-pulse-glow`
-- Custom shadows: `glow`, `glow-lg`, `inner-glow`
-
-## Fonts
-
-- Body: `var(--font-inter)`
-- Headings: `var(--font-poppins)`
+- Tailwind 4: tokens (`--color-*`, `--font-*`) em `app/globals.css`; `tailwind.config.ts` ainda é lido por ferramentas.
+- Cores: `primary`/`purple` (roxo), `text-2`/`text-3` (textos secundários), `success`, `warning`, `purple-tint` etc.; claro e escuro.
+- Fontes: corpo `font-sans` (Inter), títulos `font-display` (Inter Tight).
+- Design de referência (canvas): `specs/001-painel-admin-redesign/design/`.
+- Site público: segue o canvas "SALT — Site (versão profissional)" (https://claude.ai/artifact/AJjC1HUpxX7NrPTSbKY2EP). Tokens em `.site` (`app/globals.css`, aplicado em `app/(site)/layout.tsx`; o painel não é afetado): fundo branco alternando com `bg-sand`, linhas `border-line`, um único roxo de destaque, raio 8 px em botões/campos (`rounded-lg`) e 12 px em cartões/imagens (`rounded-xl`), rótulos `eyebrow`, títulos Inter Tight 600 (`PageHeader`/`SectionHeading`), rodapé `bg-night`. Nada de pílulas, brilhos ou cantos acima de 12 px. Conteúdo de portal (ex.: `SheetContent`) precisa da classe `site` própria.
+- Acessibilidade: alvos ≥ 44 px (`min-h-11`), rótulos associados aos campos, erros ligados por `aria-describedby`, um único `h1` por página.
 
 ## Data & Content
 
-- `app/*/data.ts` files hold static content (events, podcast, acampas, etc.)
-- `app/devocional/page.tsx` fetches from external JSON (GitHub Pages)
-- Admin routes under `app/admin-*`
+- Conteúdo editável (eventos, devocionais, mensagens) vem do banco; textos fixos do site ficam nos componentes/`data.ts` da página (ex.: `app/(site)/podcast/data.ts`).
+- Dados institucionais (endereço, WhatsApp, e-mail) centralizados em `lib/site-info.ts`; Pix em `lib/pix.ts`.
 
-## API Routes
+## Testing
 
-- `app/api/contact/route.ts` — contact form with nodemailer
-- `app/api/acampa/route.ts` — acampamento registration with rate limiting
-- Rate limits: check `lib/redis.ts` and Upstash config
-
-## Environment Variables
-
-See `.env` — do not expose or commit real credentials.
-
-## New Events
-
-- `app/festa-na-roca/` — Festa na Roça inscription page
-- `app/admin-festa-na-roca/` — Admin panel for Festa na Roça registrations
-- `app/api/festa-na-roca/register` — API route for registration
-- `app/api/festa-na-roca/list` — API route to list registrations
-- `app/projeto-missionario/` — Projeto Missionário SALT (12-14 jun) page
-- `app/admin-projeto-missionario/` — Admin panel for Projeto Missionário
-- `app/api/projeto-missionario/register` — API route for registration
-- `app/api/projeto-missionario/list` — API route to list registrations
-- `app/api/projeto-missionario/delete` — API route to delete registration
-- `app/api/projeto-missionario/status` — API route to update status
-- `lib/projeto-missionario/types.ts` — Zod schema, types, constants
-- `lib/projeto-missionario/storage.ts` — Redis CRUD operations
-- `lib/pdf/projeto-missionario.ts` — PDF export
+No test framework configured. Do not add tests without discussing with the user.
 
 ## Skills
 
@@ -183,3 +165,10 @@ Sempre use o Context7 MCP para consultar documentação:
 - Pesquisar exemplos atualizados de qualquer biblioteca
 - Antes de implementar funcionalidades com bibliotecas desconhecidas
 - Consultar documentação oficial para evitar APIs desatualizadas
+
+## Active Technologies
+- TypeScript 5 (strict), Node.js 24 local / runtime Node da Vercel + Next.js 16.0 (App Router, Server Actions, `proxy.ts`), React 19.2, (001-painel-admin-redesign)
+- Postgres no Neon (fonte de verdade); Upstash Redis só para rate limit (001-painel-admin-redesign)
+
+## Recent Changes
+- 001-painel-admin-redesign: painel `/painel` (eventos, inscrições, participantes e saúde, devocionais, mensagens, usuários/papéis, auditoria), site público redesenhado e sistema antigo (Redis, `/admin-*`) removido.

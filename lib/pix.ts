@@ -1,10 +1,12 @@
 const formatField = (id: string, value: string) =>
   `${id}${value.length.toString().padStart(2, "0")}${value}`;
 
-export const JUVENTUDE_PIX_KEY = "juventudepibls@gmail.com";
-export const JUVENTUDE_PIX_IMAGE = "/images/pix.png";
-export const PIBLS_PIX_KEY = "20969119000184";
-export const PIBLS_PIX_IMAGE = "/images/pix-pibls.png";
+/** O Pix da Juventude é o da igreja (chave CNPJ): https://pibls.com/contribua */
+export const PIX_KEY = "20969119000184";
+export const PIX_KEY_DISPLAY = "20.969.119/0001-84";
+export const PIX_BENEFICIARY = "Primeira Igreja Batista em Lagoa Santa";
+/** QR Code estático da chave acima (decodifica para BR.GOV.BCB.PIX com a chave 20969119000184). */
+export const PIX_IMAGE = "/images/pix-pibls.png";
 
 const sanitize = (value: string) =>
   value

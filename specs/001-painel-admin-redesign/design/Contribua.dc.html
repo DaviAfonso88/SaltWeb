@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Juventude SALT — Contribua</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111114}
+a{color:#92348C}a:hover{color:#7A2B74}
+</style>
+</helmet>
+<div style="background: #F6F5F2; color: #111114; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+  <dc-import name="Nav" active="contribua" hint-size="100%,69px"></dc-import>
+
+  <main>
+    <!-- Cabeçalho -->
+    <section aria-labelledby="page-title" style="padding: clamp(48px, 7vw, 96px) 0 clamp(40px, 5vw, 64px)">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 64px">
+        <div style="flex: 1 1 560px; min-width: 0">
+          <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #92348C">Contribua</p>
+          <h1 id="page-title" style="margin: 20px 0 0; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600; font-size: clamp(44px, 6.4vw, 88px); line-height: 0.98; letter-spacing: -0.045em">Sua generosidade move a missão.</h1>
+        </div>
+        <p style="flex: 1 1 320px; max-width: 420px; margin: 0; font-size: 18px; color: #4A4A52">Sua contribuição impulsiona a obra da Juventude Salt, permitindo que mais jovens conheçam o amor de Cristo e cresçam na fé.</p>
+      </div>
+    </section>
+
+    <section aria-label="Formas de contribuir" style="padding: 0 0 clamp(72px, 9vw, 128px)">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; align-items: start">
+
+        <!-- Pix -->
+        <article aria-labelledby="pix-title" style="background: #FFFFFF; border: 1px solid #E3E1DC; border-radius: 24px; padding: clamp(24px, 3.5vw, 40px); display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+            <h2 id="pix-title" style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.025em">Contribua com Pix</h2>
+            <span style="padding: 4px 10px; border-radius: 999px; background: #E8F5EC; color: #17602F; font-size: 13px; font-weight: 600">Instantâneo</span>
+          </div>
+          <div style="background: #F6F5F2; border-radius: 20px; padding: 28px; display: flex; justify-content: center">
+            <img src="/_blob/8e8db5646308cb090a86ee27dcca9afc" alt="QR Code Pix da Juventude SALT" style="width: 220px; height: auto; display: block">
+          </div>
+          <p style="margin: 0; color: #4A4A52; text-align: center">Escaneie o QR Code com o app do seu banco ou copie a chave abaixo.</p>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="pix-key" style="font-size: 14px; font-weight: 600">Chave Pix (e-mail)</label>
+            <div style="display: flex; gap: 8px">
+              <input id="pix-key" type="text" readonly value="juventudepibls@gmail.com" style="flex: 1 1 auto; min-width: 0; height: 52px; padding: 0 16px; border-radius: 12px; border: 1px solid #D6D3CC; background: #F6F5F2; font: inherit; font-size: 16px; font-weight: 500; color: #111114; box-sizing: border-box">
+              <button type="button" onClick="{{copyKey}}" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px; border: 0; border-radius: 12px; background: #92348C; color: #FFFFFF; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">
+                <sc-if value="{{copied}}" hint-placeholder-val="{{false}}">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Copiada
+                </sc-if>
+                <sc-if value="{{notCopied}}" hint-placeholder-val="{{true}}">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copiar
+                </sc-if>
+              </button>
+            </div>
+            <p aria-live="polite" style="margin: 0; min-height: 22px; font-size: 14px; color: #17602F">{{feedback}}</p>
+          </div>
+        </article>
+
+        <div style="display: flex; flex-direction: column; gap: 24px">
+          <!-- Como funciona -->
+          <article aria-labelledby="como-title" style="background: #FFFFFF; border: 1px solid #E3E1DC; border-radius: 24px; padding: clamp(24px, 3.5vw, 40px)">
+            <h2 id="como-title" style="margin: 0 0 8px; font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.025em">Como funciona</h2>
+            <ol style="list-style: none; margin: 0; padding: 0">
+              <li style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #EEECE7">
+                <span style="flex: 0 0 auto; width: 36px; height: 36px; border-radius: 999px; background: #F3E9F2; color: #7A2B74; display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600">1</span>
+                <div>
+                  <p style="margin: 0; font-weight: 600">Abra o app do seu banco</p>
+                  <p style="margin: 2px 0 0; color: #4A4A52; font-size: 15px">Acesse a área Pix.</p>
+                </div>
+              </li>
+              <li style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #EEECE7">
+                <span style="flex: 0 0 auto; width: 36px; height: 36px; border-radius: 999px; background: #F3E9F2; color: #7A2B74; display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600">2</span>
+                <div>
+                  <p style="margin: 0; font-weight: 600">Escolha “Pagar com QR Code”</p>
+                  <p style="margin: 2px 0 0; color: #4A4A52; font-size: 15px">Aponte a câmera para o código ao lado.</p>
+                </div>
+              </li>
+              <li style="display: flex; gap: 16px; padding: 20px 0 0">
+                <span style="flex: 0 0 auto; width: 36px; height: 36px; border-radius: 999px; background: #F3E9F2; color: #7A2B74; display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600">3</span>
+                <div>
+                  <p style="margin: 0; font-weight: 600">Ou use a chave Pix</p>
+                  <p style="margin: 2px 0 0; color: #4A4A52; font-size: 15px">Copie a chave e cole no app do banco.</p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <!-- Transferência -->
+          <article style="background: #FFFFFF; border: 1px solid #E3E1DC; border-radius: 24px; overflow: hidden">
+            <button type="button" aria-expanded="{{expandedAttr}}" aria-controls="dados-bancarios" onClick="{{toggle}}" style="width: 100%; display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 0 clamp(20px, 3.5vw, 32px); border: 0; background: transparent; color: #111114; font: inherit; text-align: left; cursor: pointer">
+              <span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: #F2F1EE; display: flex; align-items: center; justify-content: center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="18" y2="11"></line><line x1="10" x2="10" y1="18" y2="11"></line><line x1="14" x2="14" y1="18" y2="11"></line><line x1="18" x2="18" y1="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
+              </span>
+              <span style="flex: 1 1 auto">
+                <span style="display: block; font-weight: 600">Prefere transferência?</span>
+                <span style="display: block; font-size: 14px; color: #6A6A72">Ver dados bancários</span>
+              </span>
+              <sc-if value="{{expanded}}" hint-placeholder-val="{{false}}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>
+              </sc-if>
+              <sc-if value="{{collapsed}}" hint-placeholder-val="{{true}}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              </sc-if>
+            </button>
+            <sc-if value="{{expanded}}" hint-placeholder-val="{{false}}">
+              <dl id="dados-bancarios" style="margin: 0; padding: 4px clamp(20px, 3.5vw, 32px) 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px 24px; border-top: 1px solid #EEECE7; padding-top: 20px">
+                <div>
+                  <dt style="font-size: 13px; color: #6A6A72">Banco</dt>
+                  <dd style="margin: 0; font-weight: 600">Neon Pagamentos</dd>
+                </div>
+                <div>
+                  <dt style="font-size: 13px; color: #6A6A72">CPF</dt>
+                  <dd style="margin: 0; font-weight: 600">***.668.706-**</dd>
+                </div>
+                <div style="grid-column: 1 / -1">
+                  <dt style="font-size: 13px; color: #6A6A72">Titular</dt>
+                  <dd style="margin: 0; font-weight: 600">Thiago Silva Candido Oliveira</dd>
+                </div>
+              </dl>
+            </sc-if>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="Footer" hint-size="100%,460px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1750}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { copied: false, expanded: false };
+  }
+  renderVals() {
+    const copied = !!this.state.copied;
+    const expanded = !!this.state.expanded;
+    return {
+      copied: copied,
+      notCopied: !copied,
+      feedback: copied ? 'Chave Pix copiada!' : '',
+      expanded: expanded,
+      collapsed: !expanded,
+      expandedAttr: expanded ? 'true' : 'false',
+      toggle: () => this.setState({ expanded: !expanded }),
+      copyKey: () => {
+        try { navigator.clipboard && navigator.clipboard.writeText('juventudepibls@gmail.com'); } catch (e) {}
+        this.setState({ copied: true });
+        clearTimeout(this._t);
+        this._t = setTimeout(() => this.setState({ copied: false }), 2500);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

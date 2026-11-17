@@ -1,19 +1,22 @@
-import Hero from "@/app/components/home/Hero";
-import About from "@/app/components/home/About";
-import Pillars from "@/app/components/home/Pillars";
-import Gallery from "@/app/components/home/Gallery";
-import ContactForm from "@/app/components/ContactForm";
-import MapSection from "@/app/components/home/MapSection";
+import { connection } from "next/server";
 
-export default function Home() {
+import { AboutSummary } from "@/components/site/home/AboutSummary";
+import { ContactSection } from "@/components/site/home/ContactSection";
+import { FeaturedEventSection } from "@/components/site/home/FeaturedEventSection";
+import { Gallery } from "@/components/site/home/Gallery";
+import { Hero } from "@/components/site/home/Hero";
+import { Pillars } from "@/components/site/home/Pillars";
+
+export default async function Home() {
+  await connection();
   return (
     <>
       <Hero />
-      <About />
+      <AboutSummary />
       <Pillars />
+      <FeaturedEventSection />
       <Gallery />
-      <ContactForm />
-      <MapSection />
+      <ContactSection />
     </>
   );
 }

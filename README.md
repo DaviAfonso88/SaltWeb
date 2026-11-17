@@ -1,160 +1,133 @@
 # Site da Juventude SALT
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react\&logoColor=black)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react\&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript\&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3-38BDF8?logo=tailwind-css\&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8?logo=tailwind-css\&logoColor=white)
+![Postgres](https://img.shields.io/badge/Postgres-Neon-336791?logo=postgresql\&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
-![License](https://img.shields.io/badge/license-MIT-green)
 
-Site oficial da **Juventude SALT**, desenvolvido com foco em **performance, organização de código, escalabilidade e boas práticas de desenvolvimento web moderno**.
+Site oficial e painel administrativo da **Juventude SALT**, o ministério de jovens da Primeira Igreja Batista em Lagoa Santa (MG).
 
 ---
 
 ## 📖 Sobre o projeto
 
-Este projeto é uma **reformulação completa** do antigo site da Juventude SALT. A versão anterior utilizava HTML, CSS e JavaScript puro, apresentando problemas de manutenção, desempenho, falhas em formulários e baixa reutilização de código.
+O projeto tem duas partes:
 
-O novo site foi **reescrito do zero** utilizando **React, Next.js e TypeScript**, adotando uma arquitetura moderna, componentes reutilizáveis e um design padronizado e responsivo.
+* **Site público**: início, sobre, eventos (com inscrição online), podcast, devocionais e contribuição.
+* **Painel administrativo** (`/painel`): a equipe cria eventos e formulários de inscrição, acompanha inscritos, gerencia participantes dos acampamentos (inclusive fichas de saúde), publica devocionais, lê mensagens do site e controla quem acessa o quê.
 
-O resultado é uma aplicação rápida, estável, fácil de manter e preparada para crescimento futuro.
+Os dados vivem em **Postgres (Neon)**. O **Redis (Upstash)** é usado apenas para limitar requisições (rate limit).
 
----
-
-## 🚀 Tecnologias utilizadas
-
-* **React** – Criação de interfaces reutilizáveis
-* **Next.js (App Router)** – Roteamento, SEO e performance
-* **TypeScript** – Tipagem estática e maior segurança
-* **Tailwind CSS** – Estilização rápida e consistente
-* **API Routes (Next.js)** – Backend leve para formulários
-* **GitHub Pages** – Hospedagem de JSON externo (Devocionais)
-* **Vercel** – Deploy e hospedagem
+> O painel guarda dados pessoais de inscritos, muitos menores de idade, e dados de saúde. O acesso é por papéis e permissões, e as ações sensíveis ficam registradas em auditoria.
 
 ---
 
-## 🧱 Arquitetura do projeto
+## 🚀 Tecnologias
 
-O projeto utiliza o **Next.js App Router**, com uma estrutura organizada e intuitiva:
+* **Next.js 16 (App Router, Server Actions)** e **React 19**
+* **TypeScript** em modo estrito
+* **Tailwind CSS 4**, **shadcn/ui** e **Radix UI**
+* **Postgres no Neon** com **Drizzle ORM**
+* **Zod** para validação
+* **Upstash Redis / Ratelimit** para rate limit
+* **Nodemailer** (aviso de mensagens), **jsPDF** (exportação em PDF), **xlsx** (importação de planilhas)
+* **Vercel** para deploy
+
+---
+
+## 🧱 Estrutura
 
 ```
 app/
- ├─ page.tsx           # Página inicial
- ├─ eventos/
- │   ├─ page.tsx
- │   └─ data.ts
- ├─ devocional/
- │   ├─ page.tsx
- │   └─ (consumo de JSON externo)
- ├─ podcast/
- │   ├─ page.tsx
- │   └─ data.ts
- ├─ api/
- │   └─ contact/
- │       └─ route.ts
+ ├─ (site)/            # site público (home, sobre, eventos, podcast, devocional, contribua)
+ ├─ painel/            # painel administrativo (login, eventos, inscrições, participantes, ...)
+ └─ api/               # inscrição pública, contato, "quero servir" e exportações do painel
 components/
- ├─ Header.tsx
- ├─ Footer.tsx
- ├─ CardEvento.tsx
- ├─ CardPodcast.tsx
- └─ ProgramacaoCard.tsx
+ ├─ site/              # componentes do site público
+ ├─ painel/            # componentes do painel, por área
+ ├─ forms/             # formulários de inscrição pública
+ └─ ui/                # shadcn/ui
+lib/                   # regra de negócio por domínio (db, auth, events, registrations, participants, ...)
+drizzle/               # migrações SQL
+scripts/               # seed do banco e script da virada do Redis
+specs/                 # especificação, plano, tarefas e design do painel
 ```
 
 ---
 
-## 📦 Gerenciamento de conteúdo
-
-### 📅 Eventos e 🎙️ Podcasts
-
-* Conteúdo armazenado em arquivos `data.ts`
-* Separação total entre **dados** e **interface**
-* Facilidade de atualização e manutenção
-* Reutilização de componentes
-
-### 📖 Devocional
-
-* Conteúdo consumido a partir de um **JSON externo**
-* JSON hospedado via **GitHub Pages**
-* Atualização do conteúdo sem necessidade de novo deploy
-* Preparado para futura integração com API ou CMS Headless
-
----
-
-## ⚡ Performance e boas práticas
-
-* Componentização e reutilização de código
-* ESLint para padronização e qualidade
-* Tipagem estática com TypeScript
-* Geração estática de páginas quando possível
-* Design responsivo e consistente
-* Otimização automática do Next.js
-
----
-
-## 🖼️ Screenshots
-
-### Página Inicial
-
-<img width="1685" height="705" alt="image" src="https://github.com/user-attachments/assets/848a65a4-3065-4b48-99cd-933bb5f034e4" />
-
-### Eventos
-
-<img width="1641" height="713" alt="image" src="https://github.com/user-attachments/assets/253e7090-4c1a-4abb-83bc-fe50eaec4afe" />
-
-### Devocional
-
-<img width="1662" height="631" alt="image" src="https://github.com/user-attachments/assets/bfbabab0-619e-46c8-a983-2bd406aa4131" />
-
----
-
-## 🛠️ Como rodar o projeto localmente
+## 🛠️ Como rodar localmente
 
 ### Pré-requisitos
 
-* Node.js 18+
-* NPM ou Yarn
+* Node.js 20+ (desenvolvido com Node 24)
+* NPM
+* Um banco Postgres no [Neon](https://neon.tech) (um branch de desenvolvimento basta)
 
 ### Instalação
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
-
-# Acesse a pasta do projeto
-cd seu-repositorio
-
-# Instale as dependências
+git clone <url-do-repositorio>
+cd saltweb
 npm install
 ```
 
-### Executando o projeto
+### Variáveis de ambiente
+
+Crie `.env.local` (não é versionado) com:
+
+| Variável | Para quê |
+|----------|----------|
+| `DATABASE_URL` | Conexão com o Postgres (Neon) |
+| `SETUP_TOKEN` | Código para criar o primeiro administrador em `/painel/setup` |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate limit |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS` | Envio de e-mail (mensagens do site) |
+
+### Banco de dados
 
 ```bash
-npm run dev
+npm run db:migrate   # cria as tabelas
+npm run db:seed      # papéis padrão, evento do Acampa SALT 2026 e devocionais
 ```
 
-O projeto estará disponível em:
+Depois de alterar `lib/db/schema.ts`, gere uma nova migração com `npm run db:generate`.
 
+### Executando
+
+```bash
+npm run dev          # http://localhost:3000
 ```
-http://localhost:3000
+
+No primeiro acesso, abra `/painel/setup`, informe o `SETUP_TOKEN` e crie o administrador. Depois entre por `/painel/login` e crie os demais usuários em **Usuários** (cada um recebe um papel).
+
+### Outros comandos
+
+```bash
+npm run lint         # ESLint
+npm run build        # build de produção
+npm start            # servidor de produção
 ```
+
+---
+
+## 🔄 Virada do sistema antigo
+
+A versão anterior guardava inscrições, participantes e usuários do `/admin-camp` no Redis. Esses dados **não são migrados** e devem ser excluídos na virada, com o script:
+
+```bash
+npm run cutover:redis                              # simulação: só conta as chaves (padrão)
+npm run cutover:redis -- --export ../cutover.json  # cópia local antes de excluir (guarde fora do repositório)
+npm run cutover:redis -- --confirm                 # exclui, depois de digitar EXCLUIR
+```
+
+Roteiro: deploy → `db:migrate` → `db:seed` → `/painel/setup` → simulação → (opcional) exportação → `--confirm`. O script preserva as chaves de rate limit e registra a execução na auditoria.
 
 ---
 
 ## 🌍 Deploy
 
-O deploy do projeto é feito automaticamente pela **Vercel**, garantindo:
-
-* Builds otimizados
-* CDN global
-* Alta disponibilidade
-* Excelente performance
-
----
-
-## 🎯 Objetivo do projeto
-
-Criar um site moderno, rápido e escalável para a Juventude SALT, aplicando boas práticas de desenvolvimento e preparando a base para futuras evoluções, como integração com APIs externas ou CMS Headless.
+O deploy é feito pela **Vercel**. Configure as variáveis de ambiente acima no projeto e rode as migrações no banco de produção antes de publicar.
 
 ---
 

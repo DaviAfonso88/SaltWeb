@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Juventude SALT — Podcast Salt Talks</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#111114}
+a{color:#92348C}a:hover{color:#7A2B74}
+</style>
+</helmet>
+<div style="background: #F6F5F2; color: #111114; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+  <dc-import name="Nav" active="podcast" hint-size="100%,69px"></dc-import>
+
+  <main>
+    <!-- Cabeçalho -->
+    <section aria-labelledby="page-title" style="padding: clamp(48px, 7vw, 96px) 0 clamp(56px, 7vw, 96px)">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px clamp(40px, 6vw, 88px)">
+        <img src="/_blob/2567839f27e3dd23d1680042f3fefc0c" alt="Capa do podcast Salt Talks" style="flex: 0 0 auto; width: clamp(200px, 22vw, 280px); height: clamp(200px, 22vw, 280px); border-radius: 24px; object-fit: cover; display: block; box-shadow: 0 20px 40px rgba(17, 17, 20, 0.16)">
+        <div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+          <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #92348C">Podcast</p>
+          <div>
+            <h1 id="page-title" style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600; font-size: clamp(44px, 6.4vw, 88px); line-height: 0.98; letter-spacing: -0.045em">Salt Talks</h1>
+            <p style="margin: 12px 0 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: -0.015em; color: #4A4A52">Conversas que dão sabor à fé.</p>
+          </div>
+          <p style="margin: 0; font-size: 17px; color: #4A4A52; max-width: 620px">Um espaço de conversa, aprendizado e aprofundamento bíblico. A partir das aulas da nossa Escola Bíblica, exploramos temas teológicos de forma clara e prática, ajudando alunos e ouvintes a pensarem a fé cristã com mais profundidade e propósito.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; padding-top: 4px">
+            <a href="https://open.spotify.com/show/0tXOSImjZs2Tl8ZKA9cVpD" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #92348C; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>Seguir no Spotify
+            </a>
+            <a href="#episodios" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; box-shadow: inset 0 0 0 1px #CFCCC5; color: #111114; font-size: 15px; font-weight: 600; text-decoration: none">Ver episódios</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Episódios -->
+    <section id="episodios" aria-labelledby="ep-title" style="background: #FFFFFF; padding: clamp(72px, 9vw, 128px) 0">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px)">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 32px">
+          <h2 id="ep-title" style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 600; font-size: clamp(32px, 4.2vw, 52px); line-height: 1.05; letter-spacing: -0.035em">Episódios</h2>
+          <p style="margin: 0; color: #6A6A72">{{countLabel}}</p>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; border-top: 1px solid #E3E1DC">
+          <sc-for list="{{episodios}}" as="ep" hint-placeholder-count="1">
+            <li style="display: flex; flex-wrap: wrap; gap: 20px clamp(24px, 4vw, 56px); padding: 32px 0; border-bottom: 1px solid #E3E1DC">
+              <span style="flex: 0 0 72px; font-family: 'Inter Tight', Inter, sans-serif; font-size: 15px; font-weight: 600; color: #92348C; padding-top: 6px">EP {{ep.num}}</span>
+              <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+                <h3 style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2">{{ep.titulo}}</h3>
+                <p style="margin: 0; color: #4A4A52; max-width: 680px">{{ep.descricao}}</p>
+                <div style="margin-top: 12px; display: flex; align-items: center; gap: 16px; padding: 12px 16px 12px 12px; border-radius: 16px; background: #F6F5F2; border: 1px solid #E3E1DC; max-width: 680px; box-sizing: border-box">
+                  <a href="{{ep.url}}" aria-label="Ouvir episódio no Spotify" style="flex: 0 0 auto; width: 48px; height: 48px; border-radius: 999px; background: #111114; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="7 4 20 12 7 20 7 4"></polygon></svg>
+                  </a>
+                  <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+                    <span style="font-size: 13px; color: #6A6A72">Player do Spotify</span>
+                    <span aria-hidden="true" style="display: block; height: 4px; border-radius: 999px; background: #E3E1DC"></span>
+                  </div>
+                  <a href="{{ep.url}}" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; font-weight: 600; color: #111114; text-decoration: none">Abrir
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </sc-for>
+        </ol>
+        <p style="margin: 32px 0 0; color: #6A6A72; font-size: 15px">Novos episódios em breve. Siga o Salt Talks no Spotify para ser avisado.</p>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="Footer" hint-size="100%,460px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const episodios = [
+      {
+        num: '01',
+        titulo: 'Economia do Reino — Livro de Matheus Ortega',
+        descricao: 'Neste primeiro episódio do Salt Talks, aprofundamos a conversa iniciada nas aulas da nossa Escola Bíblica a partir do livro Economia do Reino, de Matheus Ortega.',
+        url: 'https://open.spotify.com/episode/4V0FweECJNZjAcKLN373pu'
+      }
+    ];
+    return {
+      episodios: episodios,
+      countLabel: episodios.length === 1 ? '1 episódio' : episodios.length + ' episódios'
+    };
+  }
+}
+</script>
+</body>
+</html>
