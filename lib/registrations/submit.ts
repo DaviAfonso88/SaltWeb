@@ -6,8 +6,11 @@ import { events, registrations, type RegistrationPayment } from "@/lib/db/schema
 import { todayInSaoPaulo } from "@/lib/format";
 import { getFestaAvailability, type FestaAvailability } from "@/lib/forms/availability";
 import { SLOT_KEY, ITEM_PREFIX } from "@/lib/forms/festa";
+import { acampamentoConfigSchema } from "@/lib/forms/acampamento";
+import { isMinor, parseFicha, type Ficha } from "@/lib/forms/ficha";
 import { getFormModel } from "@/lib/forms/registry";
 import type { Installment } from "@/lib/forms/types";
+import { createParticipantFromRegistration } from "@/lib/participants/enroll";
 import { normalizeKey, onlyDigits, phoneKey } from "@/lib/text";
 
 const baseSchema = z.object({
@@ -28,6 +31,10 @@ const baseSchema = z.object({
     .transform((v) => (v ? v : undefined))
     .refine((v) => v === undefined || z.string().email().safeParse(v).success, "Informe um e-mail válido."),
   respostas: z.unknown(),
+  // Só acampamento: ficha de saúde e responsáveis (nunca vão para as respostas da inscrição).
+  saude: z.unknown().optional(),
+  responsaveis: z.unknown().optional(),
+  extras: z.unknown().optional(),
 });
 
 export type SubmitSummary = {
@@ -51,7 +58,7 @@ const validation = (fieldErrors: Record<string, string[]>): SubmitResult => ({ o
 function collect(error: z.ZodError, prefix = ""): Record<string, string[]> {
   const out: Record<string, string[]> = {};
   for (const issue of error.issues) {
-    const key = `${prefix}${issue.path.join(".")}` || "_";
+    const key = [prefix, ...issue.path].filter((part) => part !== "").join(".") || "_";
     (out[key] ??= []).push(issue.message);
   }
   return out;
@@ -84,7 +91,17 @@ export async function submitRegistration(slug: string, body: unknown): Promise<S
     }
 
     const answers = model.parseAnswers(event.formConfig, common.data.respostas ?? {});
-    if (!answers.success) return validation(collect(answers.error, "respostas."));
+    if (!answers.success) return validation(collect(answers.error, "respostas"));
+
+    // Acampamento: a inscrição só é aceita junto com a ficha de saúde (e o responsável, se menor de 18).
+    let ficha: Ficha | null = null;
+    if (model.id === "acampamento") {
+      const minor = isMinor(Number(answers.data.idade));
+      const extras = acampamentoConfigSchema.parse(event.formConfig).ficha.extras;
+      const parsedFicha = parseFicha({ saude: common.data.saude, responsaveis: common.data.responsaveis, extras: common.data.extras }, minor, extras);
+      if (!parsedFicha.success) return validation(collect(parsedFicha.error));
+      ficha = parsedFicha.data;
+    }
 
     const nameKey = normalizeKey(common.data.nome);
     const key = phoneKey(common.data.telefone);
@@ -134,18 +151,40 @@ export async function submitRegistration(slug: string, body: unknown): Promise<S
       .where(eq(registrations.eventId, event.id));
     const number = (last ?? 0) + 1;
 
-    await tx.insert(registrations).values({
-      eventId: event.id,
-      number,
-      name: common.data.nome,
-      nameKey,
-      phone: common.data.telefone,
-      phoneKey: key,
-      email: common.data.email ?? null,
-      amountCents: price?.valorFinalCentavos ?? 0,
-      answers: answers.data,
-      payment,
-    });
+    // A data de nascimento vai só para o participante; a inscrição guarda a idade calculada.
+    const { dataNascimento, ...storedAnswers } = answers.data;
+
+    const [created] = await tx
+      .insert(registrations)
+      .values({
+        eventId: event.id,
+        number,
+        name: common.data.nome,
+        nameKey,
+        phone: common.data.telefone,
+        phoneKey: key,
+        email: common.data.email ?? null,
+        amountCents: price?.valorFinalCentavos ?? 0,
+        answers: storedAnswers,
+        payment,
+      })
+      .returning({ id: registrations.id });
+
+    if (ficha) {
+      await createParticipantFromRegistration(tx, {
+        eventId: event.id,
+        registrationId: created.id,
+        name: common.data.nome,
+        nameKey,
+        phone: common.data.telefone,
+        email: common.data.email ?? null,
+        church: typeof storedAnswers.igreja === "string" ? storedAnswers.igreja : null,
+        city: typeof storedAnswers.cidade === "string" ? storedAnswers.cidade : null,
+        birthDate: String(dataNascimento),
+        health: ficha.saude,
+        guardians: ficha.responsaveis,
+      });
+    }
 
     return {
       ok: true,

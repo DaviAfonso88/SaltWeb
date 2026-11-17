@@ -6,6 +6,7 @@ import { useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import type { PublicEvent } from "@/lib/events/queries";
 import type { FestaAvailability } from "@/lib/forms/availability";
 import { getFormModel } from "@/lib/forms/registry";
@@ -62,7 +63,11 @@ export function useRegistration(event: PublicEvent) {
   const [summary, setSummary] = useState<SubmitSummary | null>(null);
   const model = getFormModel(event.formModel);
 
-  async function submit(person: Person, answers: unknown, website: string): Promise<SubmitOutcome> {
+  /**
+   * `extra` leva campos além da pessoa e das respostas (ex.: ficha de saúde e responsáveis do acampamento):
+   * `body` segue no envio e `errors` são erros já validados no navegador.
+   */
+  async function submit(person: Person, answers: unknown, website: string, extra?: { body: Record<string, unknown>; errors: Errors }): Promise<SubmitOutcome> {
     if (!model) return { kind: "encerrada" };
     setFormError(null);
 
@@ -74,6 +79,7 @@ export function useRegistration(event: PublicEvent) {
         (local[key] ??= []).push(issue.message);
       }
     }
+    for (const [key, messages] of Object.entries(extra?.errors ?? {})) (local[key] ??= []).push(...messages);
     setErrors(local);
     if (Object.keys(local).length) return { kind: "invalid" };
 
@@ -87,6 +93,7 @@ export function useRegistration(event: PublicEvent) {
           telefone: person.telefone,
           email: person.email || undefined,
           respostas: answers,
+          ...extra?.body,
           website,
         }),
       });
@@ -209,6 +216,89 @@ export function TextInput({
   );
 }
 
+export function TextArea({
+  name,
+  label,
+  value,
+  onChange,
+  errors,
+  hint,
+  ...props
+}: Omit<React.ComponentProps<typeof Textarea>, "onChange" | "value" | "name"> & {
+  name: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  errors?: string[];
+  hint?: string;
+}) {
+  return (
+    <Field name={name} label={label} errors={errors} hint={hint}>
+      {(a11y) => (
+        <Textarea
+          {...a11y}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="min-h-24 rounded-lg bg-white px-3.5 py-3 text-[15px] placeholder:text-[#77737e]"
+          {...props}
+        />
+      )}
+    </Field>
+  );
+}
+
+/** Lista suspensa nativa (funciona bem em celular e com leitor de tela), no visual dos campos do site. */
+export function SelectInput({
+  name,
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+  errors,
+  hint,
+}: {
+  name: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+  placeholder: string;
+  errors?: string[];
+  hint?: string;
+}) {
+  return (
+    <Field name={name} label={label} errors={errors} hint={hint}>
+      {(a11y) => (
+        <select
+          {...a11y}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="min-h-12 w-full rounded-lg border border-input bg-white px-3 text-[15px] focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive"
+        >
+          <option value="">{placeholder}</option>
+          {options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      )}
+    </Field>
+  );
+}
+
+/** Leva o foco ao primeiro campo com erro (o formulário do acampamento é longo). */
+export function focusFirstError(form: HTMLFormElement | null) {
+  const target = form?.querySelector<HTMLElement>('[aria-invalid="true"], [data-invalid="true"]');
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+  const focusable = target.matches("input, select, textarea") ? target : target.querySelector<HTMLElement>("input, select, textarea");
+  focusable?.focus({ preventScroll: true });
+}
+
 export function PersonFields({
   person,
   onChange,
@@ -271,7 +361,7 @@ export function ChoiceCards<T extends string>({
 }) {
   const groupId = useId();
   return (
-    <fieldset className="grid gap-2 border-0 p-0" aria-describedby={errors?.length ? `${groupId}-erro` : undefined}>
+    <fieldset className="grid gap-2 border-0 p-0" data-invalid={errors?.length ? "true" : undefined} aria-describedby={errors?.length ? `${groupId}-erro` : undefined}>
       <legend className="mb-1 p-0 text-sm font-semibold">{legend}</legend>
       <div className={cn("grid gap-2.5", columns === 2 && "sm:grid-cols-2", columns === 3 && "sm:grid-cols-3")}>
         {options.map((o) => (

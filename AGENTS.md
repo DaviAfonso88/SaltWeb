@@ -80,6 +80,9 @@ APIs: `POST /api/inscricoes/[slug]` (inscrição pública), `POST /api/contact`,
 - O histórico (`entity_history`) visível a quem só tem `participantes.ver` registra **os nomes dos campos de saúde alterados, nunca os valores**.
 - Exportação com saúde exige pedido explícito (`saude=1`) e `participantes.saude.ver`.
 - Retenção: fichas de acampamentos encerrados há mais de 60 dias aparecem como aviso no `/painel` (exclusão manual, `participantes.excluir`).
+- Inscrição em acampamento: só é aceita **junto com a ficha de saúde** (e com ao menos um responsável, se o inscrito tem menos de 18 anos). `lib/registrations/submit.ts` valida com `lib/forms/ficha.ts` e, na mesma transação, cria o participante, a ficha e os responsáveis (`lib/participants/enroll.ts`). Saúde e responsáveis **nunca** entram em `registrations.answers`; a data de nascimento fica só no participante (a inscrição guarda a idade calculada).
+- A ficha é editável **por evento** (`events.formConfig.ficha`, editor em `components/painel/eventos/config/FichaConfigEditor.tsx`; módulo puro `lib/forms/ficha-config.ts`): textos, dicas e aviso de privacidade das perguntas fixas e até 10 perguntas extras (texto livre ou sim/não). As perguntas fixas não podem ser removidas (indicadores, exportação e alertas dependem delas). As respostas extras ficam em `participant_health.extra_answers` (com cópia do texto da pergunta) e o servidor valida contra a configuração do evento, nunca contra o que o navegador enviar.
+- A página do participante (`/painel/participantes/[id]`) usa abas por URL (`?aba=cadastro|responsaveis|saude|historico`): a ficha de saúde só é consultada (e auditada) quando a aba `saude` é aberta, e a aba só existe com `participantes.saude.ver`.
 
 ### Primeiro acesso
 
