@@ -1,132 +1,44 @@
-import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
 import { z } from "zod";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
 
-// Escape HTML para evitar injeção no e-mail
-const escapeHTML = (str: string) =>
-  str.replace(/[&<>'"]/g, (tag) =>
-    ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      "'": "&#39;",
-      '"': "&quot;",
-    }[tag] || tag)
-  );
+import { allowContactSubmit, getClientIp } from "@/lib/auth/rate-limit";
+import { sendContactEmail } from "@/lib/messages/email";
+import { markEmailResult, saveMessage } from "@/lib/messages/save";
+import { describeError } from "@/lib/safe-error";
 
-// Schema com honeypot
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "Nome é obrigatório.").max(100),
-  email: z.string().trim().email("E-mail inválido.").max(150),
-  message: z
-    .string()
-    .trim()
-    .min(1, "Mensagem é obrigatória.")
-    .max(2000, "Mensagem muito longa."),
-  website: z.string().optional(), // honeypot
+const schema = z.object({
+  nome: z.string().trim().min(1, "Informe seu nome.").max(100),
+  email: z.string().trim().email("Informe um e-mail válido.").max(150),
+  mensagem: z.string().trim().min(1, "Escreva sua mensagem.").max(2000, "Mensagem muito longa."),
+  website: z.string().optional(),
 });
 
-// Upstash Rate Limit
-const redis = Redis.fromEnv();
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(3, "1 m"), // 3 req por minuto por IP
-  analytics: true,
-});
+export async function POST(request: Request) {
+  if (!(await allowContactSubmit(getClientIp(request.headers)))) {
+    return NextResponse.json({ error: "Muitas tentativas. Aguarde um minuto e tente de novo." }, { status: 429 });
+  }
 
-export async function POST(req: NextRequest) {
+  let body: unknown;
   try {
-    // IP real (Vercel / Proxy)
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      req.headers.get("x-real-ip") ||
-      "unknown-ip";
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Requisição inválida." }, { status: 400 });
+  }
 
-    // Rate limit
-    const rl = await ratelimit.limit(`contact:${ip}`);
-    if (!rl.success) {
-      return NextResponse.json(
-        { message: "Muitas tentativas. Aguarde um pouco e tente novamente." },
-        { status: 429 }
-      );
-    }
+  const parsed = schema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Dados inválidos.", fieldErrors: parsed.error.flatten().fieldErrors }, { status: 400 });
+  }
+  // Honeypot: robôs preenchem; responde como sucesso sem gravar.
+  if (parsed.data.website) return NextResponse.json({ ok: true });
 
-    const body = await req.json();
-    const result = contactSchema.safeParse(body);
-
-    if (!result.success) {
-      const errors = result.error.flatten().fieldErrors;
-      const errorMessage =
-        errors.name?.[0] || errors.email?.[0] || errors.message?.[0];
-
-      return NextResponse.json(
-        { message: errorMessage || "Dados inválidos." },
-        { status: 400 }
-      );
-    }
-
-    const { name, email, message, website } = result.data;
-
-    // Honeypot: bot preenche campo escondido
-    if (website && website.trim().length > 0) {
-      return NextResponse.json(
-        { message: "Mensagem enviada com sucesso!" },
-        { status: 200 }
-      );
-    }
-
-    // Envs SMTP
-    const host = process.env.EMAIL_HOST;
-    const user = process.env.EMAIL_USER;
-    const pass = process.env.EMAIL_PASS;
-    const port = Number(process.env.EMAIL_PORT || 587);
-
-    if (!host || !user || !pass) {
-      console.error("Config SMTP ausente (EMAIL_HOST/EMAIL_USER/EMAIL_PASS).");
-      return NextResponse.json(
-        { message: "Falha ao enviar mensagem. Tente novamente mais tarde." },
-        { status: 500 }
-      );
-    }
-
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure: port === 465, // fix correto
-      auth: { user, pass },
-    });
-
-    const safeName = escapeHTML(name);
-    const safeEmail = escapeHTML(email);
-    const safeMessage = escapeHTML(message).replace(/\n/g, "<br/>");
-
-    await transporter.sendMail({
-      from: user,
-      to: "juventudesalt@pibls.com",
-      replyTo: email, // muito bom para responder direto
-      subject: `Novo Contato do Site - ${safeName}`,
-      html: `
-        <p>Você recebeu uma nova mensagem do formulário de contato do site:</p>
-        <p><strong>Nome:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
-        <p><strong>Mensagem:</strong></p>
-        <p>${safeMessage}</p>
-        <br/>
-        <p><strong>Responder para:</strong> ${safeEmail}</p>
-      `,
-    });
-
-    return NextResponse.json(
-      { message: "Mensagem enviada com sucesso!" },
-      { status: 200 }
-    );
+  try {
+    const id = await saveMessage({ kind: "contato", nome: parsed.data.nome, email: parsed.data.email, mensagem: parsed.data.mensagem });
+    // A mensagem já está salva: falha de e-mail não vira erro para a pessoa.
+    await markEmailResult(id, await sendContactEmail(parsed.data));
+    return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Erro ao enviar e-mail:", error);
-    return NextResponse.json(
-      { message: "Falha ao enviar mensagem." },
-      { status: 500 }
-    );
+    console.error("[contato] falha ao gravar", describeError(error));
+    return NextResponse.json({ error: "Não foi possível enviar agora. Tente novamente em instantes." }, { status: 503 });
   }
 }
