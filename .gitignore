@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# exportação da virada do Redis (dados pessoais)
+/cutover-*.json
