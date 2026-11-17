@@ -30,7 +30,7 @@ export function EventRowActions({ event }: Props) {
             </Button>
           }
           title="Publicar evento?"
-          description="O evento passa a aparecer no site público."
+          description="O evento passa a aparecer no site público, com o destaque e as inscrições como estavam antes."
           confirmLabel="Publicar"
           onConfirm={() => setEventPublication(event.id, "published")}
         />
@@ -43,7 +43,7 @@ export function EventRowActions({ event }: Props) {
             </Button>
           }
           title="Despublicar evento?"
-          description="O evento sai do site, volta a rascunho e as inscrições são encerradas."
+          description="O evento sai do site e volta a rascunho. Inscrições não são aceitas enquanto ele não estiver publicado."
           confirmLabel="Despublicar"
           onConfirm={() => setEventPublication(event.id, "draft")}
         />
@@ -58,7 +58,7 @@ export function EventRowActions({ event }: Props) {
             </Button>
           }
           title="Arquivar evento?"
-          description="O evento sai do site e as inscrições são encerradas. As inscrições já recebidas são mantidas."
+          description="O evento sai do site e não aceita inscrições. As inscrições já recebidas são mantidas e você pode publicá-lo de novo depois."
           confirmLabel="Arquivar"
           onConfirm={() => setEventPublication(event.id, "archived")}
         />
