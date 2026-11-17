@@ -99,7 +99,7 @@ export default async function RegistrationsPage({ searchParams }: { searchParams
       hideOnMobile: true,
       cell: (r) => {
         const parcelas = r.payment?.parcelas ?? [];
-        if (parcelas.length) return `Carnê ${parcelas.filter((p) => p.pago).length}/${parcelas.length}`;
+        if (parcelas.length) return `${r.payment?.plano === "credito" ? "Cartão" : "Carnê"} ${parcelas.filter((p) => p.pago).length}/${parcelas.length}`;
         return r.payment?.plano ? `${r.payment.plano}${r.payment.forma ? ` (${r.payment.forma})` : ""}` : "—";
       },
     },

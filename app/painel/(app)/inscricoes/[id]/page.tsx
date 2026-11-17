@@ -84,6 +84,7 @@ export default async function RegistrationPage({ params }: { params: Promise<{ i
           name={r.name}
           status={r.status}
           installments={r.payment?.parcelas ?? []}
+          plan={r.payment?.plano}
           canManage={can(user, "inscricoes.gerenciar")}
         />
 
