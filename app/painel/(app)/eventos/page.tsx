@@ -44,7 +44,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
       cell: (e) => (
         <div>
           <p className="font-semibold">
-            {e.title} {e.featured ? <StatusBadge tone="brand">Destaque</StatusBadge> : null}
+            {e.title} {e.featured && e.publication === "published" ? <StatusBadge tone="brand">Destaque</StatusBadge> : null}
           </p>
           <p className="text-xs text-text-3">/eventos/{e.slug}</p>
         </div>
@@ -65,7 +65,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
             <span>
               {e.registrations} · {FORM_MODELS[e.formModel].label}
             </span>
-            <StatusBadge tone={e.registrationOpen ? "success" : "neutral"}>{e.registrationOpen ? "Abertas" : "Fechadas"}</StatusBadge>
+            <StatusBadge tone={e.registrationOpen && e.publication === "published" ? "success" : "neutral"}>{e.registrationOpen && e.publication === "published" ? "Abertas" : "Fechadas"}</StatusBadge>
           </div>
         ) : (
           <span className="text-text-3">Sem formulário</span>

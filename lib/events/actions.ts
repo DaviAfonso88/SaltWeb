@@ -248,18 +248,18 @@ export async function setEventPublication(
   if (!z.enum(["draft", "published", "archived"]).safeParse(publication).success) return fail("Situação inválida.");
 
   const db = getDb();
-  const [event] = await db.select({ title: events.title }).from(events).where(eq(events.id, eventId)).limit(1);
+  const [event] = await db.select({ title: events.title, featured: events.featured }).from(events).where(eq(events.id, eventId)).limit(1);
   if (!event) return fail("Evento não encontrado.");
 
-  await db
-    .update(events)
-    .set({
-      publication,
-      // Arquivar ou voltar para rascunho tira do destaque e fecha as inscrições.
-      ...(publication !== "published" ? { featured: false, registrationOpen: false } : {}),
-      updatedAt: new Date(),
-    })
-    .where(eq(events.id, eventId));
+  // Destaque e inscrições abertas não são zerados ao arquivar/despublicar: o site e a API de inscrição só
+  // enxergam eventos publicados, e ao publicar de novo o evento volta como estava.
+  await db.transaction(async (tx) => {
+    // Só um evento fica em destaque por vez: ao republicar um destacado, ele assume o destaque.
+    if (publication === "published" && event.featured) {
+      await tx.update(events).set({ featured: false }).where(and(eq(events.featured, true), ne(events.id, eventId)));
+    }
+    await tx.update(events).set({ publication, updatedAt: new Date() }).where(eq(events.id, eventId));
+  });
 
   await logAudit({
     actor: auth.user,

@@ -26,12 +26,15 @@ export function RegistrationActions({
   name,
   status,
   installments,
+  plan,
   canManage,
 }: {
   id: string;
   name: string;
   status: Status;
   installments: Installment[];
+  /** Plano de pagamento (define o título da seção de parcelas). */
+  plan?: string;
   canManage: boolean;
 }) {
   const router = useRouter();
@@ -83,13 +86,13 @@ export function RegistrationActions({
       {installments.length ? (
         <section aria-labelledby="parcelas-titulo" className="grid gap-3 rounded-2xl border border-border bg-card p-4 sm:p-6">
           <h2 id="parcelas-titulo" className="font-display text-lg font-semibold">
-            Carnê
+            {plan === "credito" ? "Cartão de crédito" : "Carnê"}
           </h2>
           <ul className="grid gap-2">
             {installments.map((p, i) => {
               const cid = `parcela-${i}`;
               return (
-                <li key={p.rotulo} className="flex min-h-11 items-center gap-3 rounded-xl border border-border px-3">
+                <li key={`${i}-${p.rotulo}`} className="flex min-h-11 items-center gap-3 rounded-xl border border-border px-3">
                   <Checkbox
                     id={cid}
                     checked={p.pago}

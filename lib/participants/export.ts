@@ -32,7 +32,7 @@ export async function buildParticipantExport(filters: ParticipantExportFilters, 
   const health = healthUser ? await getHealthSummaries(filters.eventId, healthUser) : null;
 
   const headers = ["Nº", "Nome", "Sexo", "Idade", "Nascimento", "CPF", "Igreja", "Cidade", "Celular", "WhatsApp", "E-mail", "Responsáveis", "Contato de emergência"];
-  if (health) headers.push("Tipo sanguíneo", "Alergias", "Medicamentos", "Condições", "Restrições alimentares", "Necessidades especiais");
+  if (health) headers.push("Tipo sanguíneo", "Alergias", "Medicamentos", "Condições", "Restrições alimentares", "Necessidades especiais", "Perguntas adicionais");
 
   const rows = people.map((p) => {
     const emergency = p.emergencyContact ? `${p.emergencyContact.nome}${p.emergencyContact.parentesco ? ` (${p.emergencyContact.parentesco})` : ""} ${p.emergencyContact.telefone}` : "";
@@ -61,6 +61,7 @@ export async function buildParticipantExport(filters: ParticipantExportFilters, 
       h ? join(h.conditions) : "",
       h ? join(h.dietaryRestrictions) : "",
       h?.specialNeeds ? h.specialNeedsDetails || "Sim" : "",
+      h ? join(h.extraAnswers.map((a) => `${a.pergunta}: ${a.tipo === "simnao" ? (a.resposta === "sim" ? "Sim" : "Não") : a.resposta}`)) : "",
     ];
   });
 

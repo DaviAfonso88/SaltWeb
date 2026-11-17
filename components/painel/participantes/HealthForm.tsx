@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import type { ActionResult } from "@/lib/action-result";
+import type { ExtraAnswer } from "@/lib/db/schema";
 import { updateParticipantHealth } from "@/lib/participants/actions";
 import { HEALTH_CONDITIONS } from "@/lib/participants/import/aliases";
 
@@ -30,6 +31,7 @@ export type HealthValues = {
   otherHealthInfo: string | null;
   specialNeeds: boolean;
   specialNeedsDetails: string | null;
+  extraAnswers: ExtraAnswer[];
 };
 
 const BLOOD_TYPES = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -82,6 +84,7 @@ export function HealthForm({ participantId, initial, readOnly }: { participantId
       otherHealthInfo: v.otherHealthInfo,
       specialNeeds: v.specialNeeds,
       specialNeedsDetails: v.specialNeedsDetails,
+      extraAnswers: v.extraAnswers,
     };
     startTransition(async () => {
       const r = await updateParticipantHealth(participantId, payload);
@@ -151,6 +154,23 @@ export function HealthForm({ participantId, initial, readOnly }: { participantId
         </div>
         {v.specialNeeds ? <AreaField id="h-special-details" label="Descreva as necessidades especiais" {...text("specialNeedsDetails")} /> : null}
       </div>
+
+      {v.extraAnswers.length ? (
+        <fieldset className="grid gap-4">
+          <legend className="text-sm font-semibold">Perguntas adicionais do evento</legend>
+          {v.extraAnswers.map((a, i) => {
+            const update = (resposta: string) => setV((s) => ({ ...s, extraAnswers: s.extraAnswers.map((x, idx) => (idx === i ? { ...x, resposta } : x)) }));
+            return a.tipo === "simnao" ? (
+              <SelectField key={a.id} id={`h-extra-${i}`} label={a.pergunta} value={a.resposta} onChange={(e) => update(e.target.value)} disabled={readOnly}>
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+              </SelectField>
+            ) : (
+              <AreaField key={a.id} id={`h-extra-${i}`} label={a.pergunta} value={a.resposta} onChange={(e) => update(e.target.value)} disabled={readOnly} />
+            );
+          })}
+        </fieldset>
+      ) : null}
 
       <AreaField id="h-notes" label="Observações médicas" hint="Uma por linha." {...lines("medicalNotes")} />
       <AreaField id="h-other" label="Outras informações de saúde" {...text("otherHealthInfo")} />

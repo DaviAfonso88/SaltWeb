@@ -120,6 +120,18 @@ export const healthSchema = z.object({
   otherHealthInfo: optionalText(1000),
   specialNeeds: z.boolean().default(false),
   specialNeedsDetails: optionalText(1000),
+  /** Perguntas extras configuradas no evento (a pergunta é copiada no momento da resposta). */
+  extraAnswers: z
+    .array(
+      z.object({
+        id: z.string().trim().min(1).max(40),
+        pergunta: z.string().trim().min(1).max(300),
+        tipo: z.enum(["texto", "simnao"]),
+        resposta: z.string().trim().max(1000),
+      }),
+    )
+    .max(10)
+    .default([]),
 });
 export type HealthInput = z.infer<typeof healthSchema>;
 
@@ -157,6 +169,7 @@ export const HEALTH_FIELD_LABELS: Record<keyof HealthInput, string> = {
   otherHealthInfo: "Outras informações de saúde",
   specialNeeds: "Necessidades especiais",
   specialNeedsDetails: "Detalhes das necessidades especiais",
+  extraAnswers: "Perguntas adicionais",
 };
 
 /** Idade em anos completos numa data de referência (hoje por padrão). */

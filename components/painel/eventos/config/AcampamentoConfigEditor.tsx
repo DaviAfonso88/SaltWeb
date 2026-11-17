@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import type { AcampamentoConfig } from "@/lib/forms/acampamento";
 
+import { FichaConfigEditor } from "./FichaConfigEditor";
 import { ConfigErrors, MoneyField, NumberField, type ConfigEditorProps } from "./fields";
 
 export function AcampamentoConfigEditor({ value, onChange, errors, disabled }: ConfigEditorProps<AcampamentoConfig>) {
@@ -82,7 +83,7 @@ export function AcampamentoConfigEditor({ value, onChange, errors, disabled }: C
         <NumberField id="desc-dinheiro" label="Dinheiro à vista (%)" value={value.descontoDinheiroPct} max={100} step={0.5} onChange={(n) => set({ descontoDinheiroPct: n })} />
       </fieldset>
 
-      <fieldset className="grid gap-3 sm:grid-cols-2 sm:items-end" disabled={disabled}>
+      <fieldset className="grid gap-3 sm:grid-cols-3 sm:items-end" disabled={disabled}>
         <legend className="mb-1 text-sm font-semibold">Pagamento</legend>
         <NumberField
           id="parcelas-carne"
@@ -91,6 +92,14 @@ export function AcampamentoConfigEditor({ value, onChange, errors, disabled }: C
           max={12}
           onChange={(n) => set({ parcelasCarne: Math.trunc(n) })}
           hint="0 desativa o carnê."
+        />
+        <NumberField
+          id="parcelas-credito"
+          label="Parcelas no cartão"
+          value={value.parcelasCredito ?? 1}
+          max={12}
+          onChange={(n) => set({ parcelasCredito: Math.max(1, Math.trunc(n)) })}
+          hint="1 = valor total em uma cobrança. O painel dá baixa em cada parcela."
         />
         <div className="flex min-h-11 items-center gap-3">
           <Switch
@@ -103,6 +112,8 @@ export function AcampamentoConfigEditor({ value, onChange, errors, disabled }: C
           </Label>
         </div>
       </fieldset>
+
+      <FichaConfigEditor value={value.ficha} onChange={(ficha) => set({ ficha })} disabled={disabled} />
 
       <ConfigErrors errors={errors} />
     </div>

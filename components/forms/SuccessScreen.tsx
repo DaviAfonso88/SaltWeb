@@ -16,12 +16,15 @@ export function SuccessScreen({
   summary,
   name,
   showPayment,
+  healthReceived = false,
 }: {
   eventTitle: string;
   summary: SubmitSummary;
   name: string;
   /** Mostra Pix e parcelas quando o modelo cobra valor. */
   showPayment: boolean;
+  /** Acampamento: confirma que a ficha de saúde foi recebida junto com a inscrição. */
+  healthReceived?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
   const hasValue = summary.valorFinalCentavos > 0;
@@ -47,6 +50,7 @@ export function SuccessScreen({
           <p className="mt-1 text-text-2">
             Obrigado, {name.split(" ")[0]}. Guarde o seu número: <strong>nº {summary.numero}</strong>.
           </p>
+          {healthReceived ? <p className="mt-1 text-text-2">Recebemos também a sua ficha de saúde. A equipe pode atualizá-la com você se for preciso.</p> : null}
         </div>
       </div>
 
@@ -58,9 +62,9 @@ export function SuccessScreen({
               <dd className="font-display text-2xl font-semibold">{formatCurrency(summary.valorFinalCentavos)}</dd>
               {summary.resumo.lote ? <dd className="text-sm text-text-2">{summary.resumo.lote}</dd> : null}
             </div>
-            {summary.parcelas.length ? (
+            {summary.parcelas.length > 1 || summary.resumo.plano === "carne" ? (
               <div>
-                <dt className="text-[13px] text-text-3">Carnê SALT</dt>
+                <dt className="text-[13px] text-text-3">{summary.resumo.plano === "credito" ? "Cartão de crédito" : "Carnê SALT"}</dt>
                 <dd className="text-sm">
                   <ul className="grid gap-0.5">
                     {summary.parcelas.map((p) => (

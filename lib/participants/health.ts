@@ -37,6 +37,7 @@ export const EMPTY_HEALTH = {
   otherHealthInfo: null,
   specialNeeds: false,
   specialNeedsDetails: null,
+  extraAnswers: [],
 } satisfies Omit<Health, "participantId" | "updatedAt">;
 
 /** Ficha de saúde de um participante (registra a consulta). `health` é null se ainda não existe ficha. */

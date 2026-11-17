@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { formatCurrency } from "@/lib/format";
+import { calculateAge, formatCurrency, todayInSaoPaulo } from "@/lib/format";
 
+import { EMPTY_FICHA, fichaConfigSchema } from "./ficha-config";
 import { defineModel, type Installment } from "./types";
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -26,9 +27,16 @@ export const acampamentoConfigSchema = z.object({
   descontoDinheiroPct: z.number().min(0).max(100),
   parcelasCarne: z.number().int().min(0).max(12),
   permitirCredito: z.boolean(),
+  /** Parcelas no cartão (1 = à vista no cartão). Eventos antigos, sem o campo, usam 1. */
+  parcelasCredito: z.number().int().min(1).max(12).default(1),
+  // Ficha de saúde editável por evento; eventos antigos (sem `ficha`) usam os textos padrão.
+  ficha: fichaConfigSchema.prefault({}),
 });
 
 export type AcampamentoConfig = z.infer<typeof acampamentoConfigSchema>;
+
+/** Idade mínima aceita na inscrição. */
+const MIN_AGE = 10;
 
 const MONTHS = [
   "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -54,10 +62,22 @@ export function buildInstallments(total: number, count: number, today: string): 
   });
 }
 
+/** Parcelas do cartão de crédito, para o painel dar baixa: "cartão de crédito" (1x) ou "cartão 1/3", "cartão 2/3"… */
+export function buildCreditInstallments(total: number, count: number): Installment[] {
+  const n = Math.max(1, count);
+  const base = Math.floor(total / n);
+  return Array.from({ length: n }, (_, i) => ({
+    rotulo: n === 1 ? "cartão de crédito" : `cartão ${i + 1}/${n}`,
+    valorCentavos: i === n - 1 ? total - base * (n - 1) : base,
+    pago: false,
+  }));
+}
+
 const buildAnswersSchema = (config: AcampamentoConfig) =>
   z
     .object({
-      idade: z.number().int().min(10, "Idade inválida.").max(99, "Idade inválida."),
+      // A idade é calculada no servidor a partir da data de nascimento (que não fica nas respostas).
+      dataNascimento: z.string().regex(DATE, "Informe a data de nascimento."),
       igreja: z.string().trim().min(2, "Informe a igreja.").max(100),
       cidade: z.string().trim().min(2, "Informe a cidade.").max(100),
       dupla: z.enum(["nao", "irmao", "conjuge"]),
@@ -68,6 +88,14 @@ const buildAnswersSchema = (config: AcampamentoConfig) =>
     })
     .superRefine((data, ctx) => {
       const issue = (path: string, message: string) => ctx.addIssue({ code: "custom", path: [path], message });
+
+      const born = new Date(`${data.dataNascimento}T00:00:00Z`);
+      if (Number.isNaN(born.getTime()) || born.toISOString().slice(0, 10) !== data.dataNascimento || data.dataNascimento > todayInSaoPaulo()) {
+        issue("dataNascimento", "Data de nascimento inválida.");
+      } else {
+        const age = calculateAge(data.dataNascimento);
+        if (age < MIN_AGE || age > 99) issue("dataNascimento", age < MIN_AGE ? `A idade mínima é ${MIN_AGE} anos.` : "Data de nascimento inválida.");
+      }
 
       if (data.dupla === "nao") {
         if (data.quantidadePessoas !== 1) issue("quantidadePessoas", "Inscrição individual é para 1 pessoa.");
@@ -88,7 +116,8 @@ const buildAnswersSchema = (config: AcampamentoConfig) =>
         if (config.parcelasCarne <= 0) issue("plano", "Carnê não está disponível.");
         if (data.formaPagamento) issue("formaPagamento", "Carnê não tem forma de pagamento à vista.");
       }
-    });
+    })
+    .transform((data) => ({ ...data, idade: calculateAge(data.dataNascimento) }));
 
 export const acampamentoModel = defineModel({
   id: "acampamento",
@@ -103,6 +132,8 @@ export const acampamentoModel = defineModel({
     descontoDinheiroPct: 10,
     parcelasCarne: 6,
     permitirCredito: true,
+    parcelasCredito: 1,
+    ficha: EMPTY_FICHA,
   }),
   answersSchema: buildAnswersSchema,
   price: (config, a, today) => {
@@ -121,7 +152,12 @@ export const acampamentoModel = defineModel({
       valorFinalCentavos: final,
       plano: a.plano,
       forma: a.formaPagamento,
-      parcelas: a.plano === "carne" ? buildInstallments(final, config.parcelasCarne, today) : [],
+      parcelas:
+        a.plano === "carne"
+          ? buildInstallments(final, config.parcelasCarne, today)
+          : a.plano === "credito"
+            ? buildCreditInstallments(final, config.parcelasCredito)
+            : [],
     };
   },
   columns: () => [

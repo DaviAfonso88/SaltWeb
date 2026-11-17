@@ -12,6 +12,7 @@ import { entityHistory, events, participantGuardians, participantHealth, partici
 import { diffFields, recordHistory } from "@/lib/history";
 import { normalizeKey } from "@/lib/text";
 
+import { nextParticipantNumber as nextNumber } from "./enroll";
 import { searchParticipantsForMerge } from "./queries";
 
 import {
@@ -37,16 +38,6 @@ function refresh(participantId?: string) {
   revalidatePath("/painel/participantes");
   if (participantId) revalidatePath(`/painel/participantes/${participantId}`);
   revalidatePath("/painel");
-}
-
-/** Próximo número sequencial do acampamento; serializa criações concorrentes no mesmo evento. */
-async function nextNumber(tx: Tx, eventId: string): Promise<number> {
-  await tx.execute(sql`select pg_advisory_xact_lock(hashtext(${`participants:${eventId}`}))`);
-  const [row] = await tx
-    .select({ max: sql<number>`coalesce(max(${participants.number}), 0)::int` })
-    .from(participants)
-    .where(eq(participants.eventId, eventId));
-  return (row?.max ?? 0) + 1;
 }
 
 async function getCampEvent(tx: Tx | ReturnType<typeof getDb>, eventId: string) {
@@ -383,6 +374,8 @@ export async function mergeParticipants(principalId: string, otherId: string): P
       const merged: Partial<typeof participantHealth.$inferInsert> = { specialNeeds: pHealth.specialNeeds || oHealth.specialNeeds, updatedAt: new Date() };
       for (const f of TEXT_HEALTH_FIELDS) if (!pHealth[f] && oHealth[f]) (merged as Record<string, unknown>)[f] = oHealth[f];
       for (const f of LIST_HEALTH_FIELDS) (merged as Record<string, unknown>)[f] = union(pHealth[f], oHealth[f]);
+      // Respostas às perguntas extras: mantém as do principal; se ele não tem, usa as do outro cadastro.
+      if (!pHealth.extraAnswers.length && oHealth.extraAnswers.length) merged.extraAnswers = oHealth.extraAnswers;
       await tx.update(participantHealth).set(merged).where(eq(participantHealth.participantId, principalId));
     }
 

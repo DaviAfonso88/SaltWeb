@@ -43,6 +43,7 @@ export function EventRegistration({ event, open, availability }: Props) {
         summary={done.summary}
         name={done.name}
         showPayment={event.formModel === "acampamento" || (event.formModel === "festa" && done.summary.valorFinalCentavos > 0)}
+        healthReceived={event.formModel === "acampamento"}
       />
     );
   }

@@ -261,6 +261,9 @@ export const importMappings = pgTable("import_mappings", {
 
 export type EmergencyContact = { nome: string; parentesco?: string | null; telefone: string };
 
+/** Resposta a uma pergunta extra da ficha de saúde; guarda o texto da pergunta no momento em que foi respondida. */
+export type ExtraAnswer = { id: string; pergunta: string; tipo: "texto" | "simnao"; resposta: string };
+
 export const participants = pgTable(
   "participants",
   {
@@ -341,6 +344,7 @@ export const participantHealth = pgTable("participant_health", {
   otherHealthInfo: text("other_health_info"),
   specialNeeds: boolean("special_needs").notNull().default(false),
   specialNeedsDetails: text("special_needs_details"),
+  extraAnswers: jsonb("extra_answers").$type<ExtraAnswer[]>().notNull().default(sql`'[]'::jsonb`),
   updatedAt: updatedAt(),
 });
 
