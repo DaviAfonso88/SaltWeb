@@ -180,6 +180,24 @@ export const devotionals = pgTable(
   (t) => [index("devotionals_published_idx").on(t.published, t.publishedAt.desc())],
 );
 
+/** Dia e horário das programações fixas (células, culto, discipulado). O resto do conteúdo fica em lib/programacoes/catalog.ts. */
+export const programacaoKindEnum = pgEnum("programacao_kind", ["semanal", "mensal", "personalizada"]);
+
+export const programacoes = pgTable("programacoes", {
+  slug: text("slug").primaryKey(),
+  kind: programacaoKindEnum("kind").notNull(),
+  /** 0 = domingo … 6 = sábado. */
+  weekday: integer("weekday").notNull().default(5),
+  /** Semana do mês (1–4) ou 5 = última; só vale para `mensal`. */
+  nth: integer("nth").notNull().default(1),
+  /** "HH:MM" (horário de Brasília); vazio em `personalizada`. */
+  time: text("time"),
+  customDay: text("custom_day"),
+  customTime: text("custom_time"),
+  version: integer("version").notNull().default(1),
+  updatedAt: updatedAt(),
+});
+
 export const messages = pgTable(
   "messages",
   {

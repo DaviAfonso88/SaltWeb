@@ -4,23 +4,24 @@ import { connection } from "next/server";
 import { EventListItem, FeaturedEventCard } from "@/components/site/EventCard";
 import { PageHeader, SectionHeading } from "@/components/site/SectionHeading";
 import { getUpcomingEvents } from "@/lib/events/queries";
+import { getProgramacoes, pickProgramacoes } from "@/lib/programacoes/queries";
+import { describeSchedule } from "@/lib/programacoes/schedule";
 
 export const metadata: Metadata = {
   title: "Eventos",
   description: "Participe dos encontros da Juventude SALT e cresça em comunhão e fé.",
 };
 
-const FIXED_MEETINGS = [
-  { name: "Células de Jovens", when: "Toda sexta-feira · 19h30" },
-  { name: "Células de Adolescentes", when: "Toda sexta-feira · 19h30" },
-  { name: "Culto SALT", when: "Toda 1ª sexta do mês · 19h45" },
-  { name: "Discipulado", when: "A combinar · horário flexível" },
-];
+const FIXED_MEETING_SLUGS = ["celula-jovens", "celula-adolescentes", "culto-salt", "discipulado"];
 
 export default async function EventosPage() {
   await connection();
   const now = new Date();
-  const events = await getUpcomingEvents();
+  const [events, programacoes] = await Promise.all([getUpcomingEvents(), getProgramacoes()]);
+  const FIXED_MEETINGS = pickProgramacoes(programacoes, FIXED_MEETING_SLUGS).map((p) => ({
+    name: p.titulo,
+    when: describeSchedule(p.schedule).long,
+  }));
   const featured = events.find((e) => e.featured) ?? events[0];
   const others = events.filter((e) => e.id !== featured?.id);
 

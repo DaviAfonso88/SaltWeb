@@ -15,6 +15,13 @@
       "when": 1794920242494,
       "tag": "0001_ordinary_smasher",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795031085244,
+      "tag": "0002_demonic_thena",
+      "breakpoints": true
     }
   ]
 }

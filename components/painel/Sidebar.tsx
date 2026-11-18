@@ -10,6 +10,7 @@ import {
   Mail,
   Menu,
   ScrollText,
+  Settings,
   ShieldCheck,
   UserCog,
   BookOpen,
@@ -32,7 +33,8 @@ export type NavIcon =
   | "mensagens"
   | "usuarios"
   | "papeis"
-  | "auditoria";
+  | "auditoria"
+  | "configuracoes";
 
 export type NavItem = { href: string; label: string; icon: NavIcon; badge?: number };
 
@@ -46,6 +48,7 @@ const ICONS: Record<NavIcon, React.ComponentType<{ className?: string; "aria-hid
   usuarios: UserCog,
   papeis: ShieldCheck,
   auditoria: ScrollText,
+  configuracoes: Settings,
 };
 
 function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => void }) {

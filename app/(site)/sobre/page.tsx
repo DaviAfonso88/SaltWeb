@@ -6,9 +6,9 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/site/ButtonLink";
 import { PageHeader, SectionHeading } from "@/components/site/SectionHeading";
 import { ServirForm } from "@/components/site/ServirForm";
+import { getProgramacoes } from "@/lib/programacoes/queries";
+import { describeSchedule } from "@/lib/programacoes/schedule";
 import { whatsappUrlWithText } from "@/lib/site-info";
-
-import { programacoes } from "./programacoesData";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -33,7 +33,8 @@ const VALUES = [
   },
 ];
 
-export default function SobrePage() {
+export default async function SobrePage() {
+  const programacoes = await getProgramacoes();
   return (
     <>
       <PageHeader
@@ -131,14 +132,14 @@ export default function SobrePage() {
               const hasLink = p.linkBotao !== "#";
               const external = p.linkBotao.startsWith("http");
               return (
-                <li key={p.titulo} className="flex flex-col overflow-hidden rounded-xl border border-line bg-white">
+                <li key={p.slug} className="flex flex-col overflow-hidden rounded-xl border border-line bg-white">
                   <div className="relative aspect-[4/3] bg-[#ece9e4]">
                     <Image src={p.imagem} alt={`Imagem: ${p.titulo}`} fill sizes="(min-width: 1024px) 280px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                   </div>
                   <div className="flex flex-1 flex-col gap-2.5 p-5">
                     <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text-3">
                       <Clock className="size-3.5" strokeWidth={1.75} aria-hidden />
-                      {p.data} · {p.horario}
+                      {describeSchedule(p.schedule).long}
                     </p>
                     <h3 className="font-display text-[19px] font-semibold leading-tight tracking-[-0.01em]">{p.titulo}</h3>
                     <p className="text-[15px] text-text-2">{p.descricao}</p>
