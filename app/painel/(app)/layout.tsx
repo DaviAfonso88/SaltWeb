@@ -8,18 +8,20 @@ export default async function PanelLayout({ children }: { children: React.ReactN
   const user = await requireUser({ allowPasswordChange: true });
 
   const items: NavItem[] = [{ href: "/painel", label: "Visão geral", icon: "home" }];
-  if (can(user, "inscricoes.ver")) items.push({ href: "/painel/inscricoes", label: "Inscrições", icon: "inscricoes" });
-  if (can(user, "eventos.gerenciar")) items.push({ href: "/painel/eventos", label: "Eventos", icon: "eventos" });
-  if (can(user, "participantes.ver")) items.push({ href: "/painel/participantes", label: "Participantes", icon: "participantes" });
   if (can(user, "devocionais.gerenciar")) items.push({ href: "/painel/devocionais", label: "Devocionais", icon: "devocionais" });
-  if (can(user, "mensagens.ver")) {
+    if (can(user, "mensagens.ver")) {
     items.push({ href: "/painel/mensagens", label: "Mensagens", icon: "mensagens", badge: await countNewMessages() });
   }
+  if (can(user, "eventos.gerenciar")) items.push({ href: "/painel/eventos", label: "Eventos", icon: "eventos" });
+  if (can(user, "inscricoes.ver")) items.push({ href: "/painel/inscricoes", label: "Inscrições", icon: "inscricoes" });
+  if (can(user, "participantes.ver")) items.push({ href: "/painel/participantes", label: "Participantes", icon: "participantes" });
   if (can(user, "usuarios.gerenciar")) {
     items.push({ href: "/painel/usuarios", label: "Usuários", icon: "usuarios" });
     items.push({ href: "/painel/papeis", label: "Papéis", icon: "papeis" });
   }
   if (can(user, "auditoria.ver")) items.push({ href: "/painel/auditoria", label: "Auditoria", icon: "auditoria" });
+  if (can(user, "eventos.gerenciar")) items.push({ href: "/painel/configuracoes", label: "Configurações", icon: "configuracoes" });
+
 
   return (
     <div className="flex min-h-screen flex-1 flex-col lg:flex-row">

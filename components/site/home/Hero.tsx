@@ -2,15 +2,24 @@ import { Home, MessageCircle, Music, Users } from "lucide-react";
 import Image from "next/image";
 
 import { ButtonLink } from "@/components/site/ButtonLink";
+import { getProgramacoes, pickProgramacoes } from "@/lib/programacoes/queries";
+import { describeSchedule } from "@/lib/programacoes/schedule";
 
 const MEETINGS = [
-  { name: "Células de Jovens", when: "Sextas · 19h30", icon: Home },
-  { name: "Células de Adolescentes", when: "Sextas · 19h30", icon: Users },
-  { name: "Culto SALT", when: "1ª sexta do mês · 19h45", icon: Music },
-  { name: "Discipulado", when: "Horário a combinar", icon: MessageCircle },
+  { slug: "celula-jovens", icon: Home },
+  { slug: "celula-adolescentes", icon: Users },
+  { slug: "culto-salt", icon: Music },
+  { slug: "discipulado", icon: MessageCircle },
 ];
 
-export function Hero() {
+export async function Hero() {
+  const programacoes = pickProgramacoes(await getProgramacoes(), MEETINGS.map((m) => m.slug));
+  const meetings = programacoes.map((p) => ({
+    name: p.titulo,
+    when: describeSchedule(p.schedule).short,
+    icon: MEETINGS.find((m) => m.slug === p.slug)!.icon,
+  }));
+
   return (
     <>
       <section aria-labelledby="hero-title" className="pb-[clamp(40px,5vw,64px)] pt-[clamp(48px,6vw,88px)]">
@@ -54,7 +63,7 @@ export function Hero() {
             Encontros regulares
           </h2>
           <ul className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-px overflow-hidden rounded-xl border border-line bg-line">
-            {MEETINGS.map(({ name, when, icon: Icon }) => (
+            {meetings.map(({ name, when, icon: Icon }) => (
               <li key={name} className="flex items-start gap-3.5 bg-white p-6">
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-purple-tint text-purple">
                   <Icon className="size-[18px]" strokeWidth={1.75} aria-hidden />

@@ -51,6 +51,7 @@ Painel (`app/painel/`, protegido por `proxy.ts` + checagem em cada página/açã
 | `/painel/login`, `/painel/setup`, `/painel/conta/senha` | públicas / sessão |
 | `/painel` | qualquer usuário autenticado (resumo + aviso de retenção) |
 | `/painel/eventos`, `/novo`, `/[id]` | `eventos.gerenciar` |
+| `/painel/configuracoes` | `eventos.gerenciar` (dia/horário das programações fixas; fonte única para home, rodapé, `/eventos` e `/sobre` via `lib/programacoes/`) |
 | `/painel/inscricoes`, `/[id]` | `inscricoes.ver` (+ editar/exportar) |
 | `/painel/participantes`, `/novo`, `/[id]`, `/importar` | `participantes.*` (saúde: `participantes.saude.ver/editar`) |
 | `/painel/devocionais` | `devocionais.gerenciar` |

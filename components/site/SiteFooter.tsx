@@ -2,6 +2,8 @@ import { ArrowUpRight, Headphones, Instagram, MessageCircle } from "lucide-react
 import Image from "next/image";
 import Link from "next/link";
 
+import { getProgramacoes, pickProgramacoes } from "@/lib/programacoes/queries";
+import { describeSchedule } from "@/lib/programacoes/schedule";
 import { CHURCH_NAME, CHURCH_URL, WHATSAPP_URL } from "@/lib/site-info";
 
 const NAV = [
@@ -12,11 +14,7 @@ const NAV = [
   { href: "/contribua", label: "Contribua" },
 ];
 
-const MEETINGS = [
-  { name: "Células", when: "Sextas-feiras, 19h30" },
-  { name: "Culto SALT", when: "1ª sexta do mês, 19h45" },
-  { name: "Discipulado", when: "Horário a combinar" },
-];
+const MEETING_SLUGS = ["celula-jovens", "celula-adolescentes", "culto-salt", "discipulado"];
 
 const SOCIAL = [
   { href: "https://www.instagram.com/saltjuventude_/", label: "Instagram da Juventude SALT", icon: Instagram },
@@ -43,7 +41,12 @@ function ChurchLink({ className }: { className?: string }) {
 
 const TITLE = "text-[13px] font-semibold uppercase tracking-[0.1em] text-[#b7aebb]";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const meetings = pickProgramacoes(await getProgramacoes(), MEETING_SLUGS).map((p) => ({
+    name: p.titulo,
+    when: describeSchedule(p.schedule).footer,
+  }));
+
   return (
     <footer className="bg-night text-[15px] leading-relaxed text-[#f5f3f6]">
       <div className="container-site pb-8 pt-[clamp(56px,6vw,80px)]">
@@ -86,7 +89,7 @@ export function SiteFooter() {
           <div className="flex flex-col gap-3">
             <h2 className={TITLE}>Encontros</h2>
             <ul className="grid gap-3">
-              {MEETINGS.map((m) => (
+              {meetings.map((m) => (
                 <li key={m.name}>
                   <p className="font-semibold">{m.name}</p>
                   <p className="text-[#b7aebb]">{m.when}</p>
