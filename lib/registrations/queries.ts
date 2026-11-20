@@ -1,9 +1,11 @@
-import { and, count, desc, eq, ilike, or, type SQL } from "drizzle-orm";
+import { and, count, desc, eq, ilike, isNotNull, or, type SQL } from "drizzle-orm";
 
 import { PAGE_SIZE } from "@/components/painel/Pagination";
 import { getDb } from "@/lib/db";
 import { entityHistory, events, registrations } from "@/lib/db/schema";
 import { normalizeKey, onlyDigits } from "@/lib/text";
+
+import { summarizePayments } from "./payment";
 
 export type RegistrationStatus = (typeof registrations.$inferSelect)["status"];
 export const REGISTRATION_STATUSES: RegistrationStatus[] = ["pending", "confirmed", "cancelled"];
@@ -57,6 +59,15 @@ export async function listRegistrations(filters: RegistrationFilters & { page: n
   for (const row of statusCounts) counts[row.status] = row.total;
 
   return { rows, total, counts };
+}
+
+/** Arrecadado e a receber do evento inteiro (independe de situação e busca). */
+export async function getEventPaymentSummary(eventId: string) {
+  const rows = await getDb()
+    .select({ status: registrations.status, payment: registrations.payment })
+    .from(registrations)
+    .where(and(eq(registrations.eventId, eventId), isNotNull(registrations.payment)));
+  return summarizePayments(rows);
 }
 
 /** Eventos que têm modelo de formulário ou já receberam inscrições, mais recentes primeiro. */

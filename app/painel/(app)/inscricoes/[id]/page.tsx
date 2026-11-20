@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/painel/StatusBadge";
 import { can, requirePermission } from "@/lib/auth/guard";
 import { formatCurrency, formatDateTime } from "@/lib/format";
 import { getFormModel } from "@/lib/forms/registry";
+import { paymentInstallments } from "@/lib/registrations/payment";
 import { getRegistration } from "@/lib/registrations/queries";
 
 export const metadata = { title: "Inscrição" };
@@ -83,7 +84,7 @@ export default async function RegistrationPage({ params }: { params: Promise<{ i
           id={r.id}
           name={r.name}
           status={r.status}
-          installments={r.payment?.parcelas ?? []}
+          installments={paymentInstallments(r.payment)}
           plan={r.payment?.plano}
           canManage={can(user, "inscricoes.gerenciar")}
         />

@@ -4,13 +4,21 @@ import { z } from "zod";
 
 import { DataTable, type Column } from "@/components/painel/DataTable";
 import { EmptyState } from "@/components/painel/EmptyState";
+import { PaymentSummary } from "@/components/painel/inscricoes/PaymentSummary";
 import { PageHeader } from "@/components/painel/PageHeader";
 import { Pagination, parsePage } from "@/components/painel/Pagination";
 import { StatusBadge } from "@/components/painel/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { can, requirePermission } from "@/lib/auth/guard";
 import { formatCurrency, formatDateTime } from "@/lib/format";
-import { listEventsWithRegistrations, listRegistrations, REGISTRATION_STATUSES, type RegistrationStatus } from "@/lib/registrations/queries";
+import { paymentStatusLabel } from "@/lib/registrations/payment";
+import {
+  getEventPaymentSummary,
+  listEventsWithRegistrations,
+  listRegistrations,
+  REGISTRATION_STATUSES,
+  type RegistrationStatus,
+} from "@/lib/registrations/queries";
 import { cn } from "@/lib/utils";
 
 export const metadata = { title: "Inscrições" };
@@ -51,7 +59,10 @@ export default async function RegistrationsPage({ searchParams }: { searchParams
   const q = sp.q?.trim().slice(0, 100) || undefined;
   const page = parsePage(sp.page);
 
-  const { rows, total, counts } = await listRegistrations({ eventId: event.id, status, q, page });
+  const [{ rows, total, counts }, payments] = await Promise.all([
+    listRegistrations({ eventId: event.id, status, q, page }),
+    getEventPaymentSummary(event.id),
+  ]);
   const allCount = counts.pending + counts.confirmed + counts.cancelled;
   const canExport = can(user, "inscricoes.exportar");
 
@@ -97,11 +108,7 @@ export default async function RegistrationsPage({ searchParams }: { searchParams
       key: "plan",
       header: "Pagamento",
       hideOnMobile: true,
-      cell: (r) => {
-        const parcelas = r.payment?.parcelas ?? [];
-        if (parcelas.length) return `${r.payment?.plano === "credito" ? "Cartão" : "Carnê"} ${parcelas.filter((p) => p.pago).length}/${parcelas.length}`;
-        return r.payment?.plano ? `${r.payment.plano}${r.payment.forma ? ` (${r.payment.forma})` : ""}` : "—";
-      },
+      cell: (r) => paymentStatusLabel(r.payment) ?? "—",
     },
     { key: "date", header: "Inscrito em", hideOnMobile: true, cell: (r) => formatDateTime(r.createdAt) },
   ];
@@ -163,6 +170,8 @@ export default async function RegistrationsPage({ searchParams }: { searchParams
           Aplicar
         </button>
       </form>
+
+      {payments.registrations || payments.cancelledPaidCents ? <PaymentSummary summary={payments} /> : null}
 
       <nav aria-label="Filtrar por situação" className="mb-4 flex flex-wrap gap-2">
         <Link href={withParams({ situacao: undefined, page: undefined })} aria-current={!status ? "page" : undefined} className={chip(!status)}>
