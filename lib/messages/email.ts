@@ -44,6 +44,33 @@ export function sendContactEmail(data: { nome: string; email: string; mensagem: 
   });
 }
 
+export function sendVisitorEmail(data: {
+  nome: string;
+  whatsapp: string;
+  grupo: string;
+  bairro?: string;
+  comoConheceu?: string;
+  convidadoPor?: string;
+  interesses: string[];
+}): Promise<EmailResult> {
+  const row = (label: string, value?: string) => (value ? `<p><strong>${label}:</strong> ${escapeHtml(value)}</p>` : "");
+  return send({
+    subject: `Novo Visitante - ${escapeHtml(data.nome)}`,
+    html: `
+      <p>Um visitante deixou o contato pelo site:</p>
+      ${row("Nome", data.nome)}
+      ${row("WhatsApp", data.whatsapp)}
+      ${row("Grupo", data.grupo)}
+      ${row("Bairro/cidade", data.bairro)}
+      ${row("Como conheceu", data.comoConheceu)}
+      ${row("Convidado por", data.convidadoPor)}
+      ${row("Gostaria de", data.interesses.join(", "))}
+      <br/>
+      <p>O cadastro está no painel, em Visitantes. Marque como contatado depois do primeiro contato.</p>
+    `,
+  });
+}
+
 export function sendServirEmail(data: { nome: string; whatsapp: string; ministerio: string }): Promise<EmailResult> {
   return send({
     subject: `Novo Voluntário - ${escapeHtml(data.nome)}`,

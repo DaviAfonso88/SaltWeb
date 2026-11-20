@@ -13,6 +13,8 @@ Lista fixa definida em `lib/auth/permissions.ts`. Papéis guardam um subconjunto
 | `inscricoes.exportar` | Exportar inscrições (CSV/PDF) |
 | `mensagens.ver` | Listar e abrir mensagens (abrir marca como lida) |
 | `mensagens.gerenciar` | Marcar lida/não lida, arquivar, excluir |
+| `visitantes.ver` | Listar e abrir visitantes cadastrados em `/visitante` |
+| `visitantes.gerenciar` | Marcar contatado/novo, arquivar, excluir visitante |
 | `participantes.ver` | Lista, detalhe (sem saúde) e painel do acampamento (sem nomes de saúde) |
 | `participantes.editar` | Criar/editar participante, responsáveis, contato de emergência; gerar a partir de inscrições |
 | `participantes.importar` | Importar planilhas |
@@ -31,6 +33,7 @@ Lista fixa definida em `lib/auth/permissions.ts`. Papéis guardam um subconjunto
 | Editor de conteúdo | `eventos.gerenciar`, `devocionais.gerenciar` |
 | Equipe de inscrições | `inscricoes.ver`, `inscricoes.gerenciar`, `inscricoes.exportar` |
 | Atendimento | `mensagens.ver`, `mensagens.gerenciar` |
+| Acolhimento | `visitantes.ver`, `visitantes.gerenciar` |
 | Equipe de saúde | `participantes.ver`, `participantes.editar`, `participantes.observacoes`, `participantes.exportar`, `participantes.saude.ver`, `participantes.saude.editar` |
 | Liderança | `participantes.ver`, `participantes.observacoes`, `participantes.saude.ver` |
 | Recepção | `participantes.ver` |
@@ -48,6 +51,7 @@ excluídos.
 | `participantes` | `participantes.ver` |
 | `devocionais` | `devocionais.gerenciar` |
 | `mensagens` | `mensagens.ver` |
+| `visitantes` | `visitantes.ver` |
 | `usuarios`, `papeis` | `usuarios.gerenciar` |
 | `auditoria` | `auditoria.ver` |
 | `conta` (trocar senha) | qualquer usuário logado |

@@ -6,7 +6,9 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/site/ButtonLink";
 import { PageHeader, SectionHeading } from "@/components/site/SectionHeading";
 import { ServirForm } from "@/components/site/ServirForm";
+import { DISCIPULADO, SEXTAS } from "@/lib/programacoes/catalog";
 import { getProgramacoes } from "@/lib/programacoes/queries";
+import { isEncontro, ritmoDasSextas } from "@/lib/programacoes/ritmo";
 import { describeSchedule } from "@/lib/programacoes/schedule";
 import { whatsappUrlWithText } from "@/lib/site-info";
 
@@ -35,6 +37,11 @@ const VALUES = [
 
 export default async function SobrePage() {
   const programacoes = await getProgramacoes();
+  const sextas = ritmoDasSextas(programacoes);
+  const cards = [
+    ...programacoes.filter(isEncontro).map((p) => ({ ...p, quando: describeSchedule(p.schedule).long })),
+    { ...DISCIPULADO, quando: "" },
+  ];
   return (
     <>
       <PageHeader
@@ -127,20 +134,64 @@ export default async function SobrePage() {
             <SectionHeading id="programacoes" eyebrow="Agenda" title="Nossas programações" />
             <p className="max-w-[400px] text-text-2">Encontros fixos para você se conectar, crescer e servir com a galera.</p>
           </div>
-          <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,250px),1fr))] gap-5">
-            {programacoes.map((p) => {
+          {sextas.items.length ? (
+            <article
+              aria-labelledby="sextas-titulo"
+              className="mb-5 grid overflow-hidden rounded-xl border border-line bg-white lg:grid-cols-2"
+            >
+              <div className="relative aspect-[3/2] bg-[#ece9e4] lg:aspect-auto lg:min-h-[360px]">
+                {/* Foto em grupo: no recorte lado a lado, puxa um pouco para a esquerda para não cortar ninguém. */}
+                <Image src={SEXTAS.imagem} alt={SEXTAS.imagemAlt} fill sizes="(min-width: 1024px) 600px, 100vw" className="object-cover object-[40%_50%]" />
+              </div>
+              <div className="flex flex-col gap-3 p-[clamp(20px,3vw,32px)]">
+                <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text-3">
+                  <Clock className="size-3.5" strokeWidth={1.75} aria-hidden />
+                  {sextas.dia}
+                </p>
+                <h3 id="sextas-titulo" className="font-display text-[clamp(21px,2vw,24px)] font-semibold leading-tight tracking-[-0.01em]">
+                  {SEXTAS.titulo}
+                </h3>
+                <p className="text-[15px] text-text-2">{SEXTAS.descricao}</p>
+                <ol className="mt-1 border-t border-line">
+                  {sextas.items.map((item) => (
+                    <li key={item.slug} className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5 border-b border-line py-2.5">
+                      <span className="w-[92px] shrink-0 text-sm font-semibold text-purple">{item.tag}</span>
+                      <span className="font-semibold">{item.titulo}</span>
+                      {item.ocasional ? <span className="text-sm text-text-3">quando o mês tiver</span> : null}
+                    </li>
+                  ))}
+                </ol>
+                {sextas.next ? (
+                  <p className="text-[15px] text-text-2">
+                    Próxima: <strong className="font-semibold text-foreground">{sextas.next.titulo}</strong> ·{" "}
+                    {[sextas.next.quando, sextas.next.time].filter(Boolean).join(" · ")}
+                  </p>
+                ) : null}
+                <div className="mt-auto pt-1">
+                  <ButtonLink href="/eventos" variant="text" icon="next">
+                    Veja a agenda
+                  </ButtonLink>
+                </div>
+              </div>
+            </article>
+          ) : null}
+
+          <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,250px),1fr))] gap-5">
+            {cards.map((p) => {
               const hasLink = p.linkBotao !== "#";
               const external = p.linkBotao.startsWith("http");
               return (
                 <li key={p.slug} className="flex flex-col overflow-hidden rounded-xl border border-line bg-white">
                   <div className="relative aspect-[4/3] bg-[#ece9e4]">
-                    <Image src={p.imagem} alt={`Imagem: ${p.titulo}`} fill sizes="(min-width: 1024px) 280px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+                    <Image src={p.imagem} alt={`Imagem: ${p.titulo}`} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                   </div>
                   <div className="flex flex-1 flex-col gap-2.5 p-5">
-                    <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text-3">
-                      <Clock className="size-3.5" strokeWidth={1.75} aria-hidden />
-                      {describeSchedule(p.schedule).long}
-                    </p>
+                    {p.quando ? (
+                      <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text-3">
+                        <Clock className="size-3.5" strokeWidth={1.75} aria-hidden />
+                        {p.quando}
+                      </p>
+                    ) : null}
                     <h3 className="font-display text-[19px] font-semibold leading-tight tracking-[-0.01em]">{p.titulo}</h3>
                     <p className="text-[15px] text-text-2">{p.descricao}</p>
                     {hasLink ? (

@@ -6,7 +6,7 @@ import { TriangleAlert } from "lucide-react";
 import { PageHeader } from "@/components/painel/PageHeader";
 import { can, requireUser } from "@/lib/auth/guard";
 import { getDb } from "@/lib/db";
-import { events, messages, registrations } from "@/lib/db/schema";
+import { events, messages, registrations, visitors } from "@/lib/db/schema";
 import { formatDate } from "@/lib/format";
 import { listRetentionWarnings } from "@/lib/participants/health";
 
@@ -47,6 +47,10 @@ export default async function PanelHome() {
   if (can(user, "mensagens.ver")) {
     const [{ total }] = await db.select({ total: count() }).from(messages).where(eq(messages.status, "new"));
     cards.push({ label: "Mensagens novas", value: total, href: "/painel/mensagens" });
+  }
+  if (can(user, "visitantes.ver")) {
+    const [{ total }] = await db.select({ total: count() }).from(visitors).where(eq(visitors.status, "new"));
+    cards.push({ label: "Visitantes sem contato", value: total, href: "/painel/visitantes?situacao=new" });
   }
 
   // Fichas de saúde de acampamentos encerrados há mais de 60 dias: lembrete de exclusão manual.

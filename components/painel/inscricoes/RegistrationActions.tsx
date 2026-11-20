@@ -39,6 +39,8 @@ export function RegistrationActions({
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const totalCents = installments.reduce((sum, p) => sum + p.valorCentavos, 0);
+  const paidCents = installments.reduce((sum, p) => sum + (p.pago ? p.valorCentavos : 0), 0);
 
   function changeStatus(next: Status) {
     startTransition(async () => {
@@ -85,9 +87,14 @@ export function RegistrationActions({
 
       {installments.length ? (
         <section aria-labelledby="parcelas-titulo" className="grid gap-3 rounded-2xl border border-border bg-card p-4 sm:p-6">
-          <h2 id="parcelas-titulo" className="font-display text-lg font-semibold">
-            {plan === "credito" ? "Cartão de crédito" : "Carnê"}
-          </h2>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 id="parcelas-titulo" className="font-display text-lg font-semibold">
+              {plan === "credito" ? "Cartão de crédito" : plan === "carne" ? "Carnê" : "Pagamento"}
+            </h2>
+            <p className="text-sm tabular-nums text-text-2">
+              Recebido {formatCurrency(paidCents)} de {formatCurrency(totalCents)}
+            </p>
+          </div>
           <ul className="grid gap-2">
             {installments.map((p, i) => {
               const cid = `parcela-${i}`;
@@ -100,8 +107,8 @@ export function RegistrationActions({
                     onCheckedChange={(checked) => toggleInstallment(i, checked === true)}
                   />
                   <Label htmlFor={cid} className="flex flex-1 flex-wrap items-center justify-between gap-2 text-sm font-normal">
-                    <span className="capitalize">{p.rotulo}</span>
-                    <span className="text-text-2">
+                    <span className="first-letter:uppercase">{p.rotulo}</span>
+                    <span className="tabular-nums text-text-2">
                       {formatCurrency(p.valorCentavos)}
                       {p.pago && p.pagoEm ? ` · paga em ${formatDate(p.pagoEm)}` : ""}
                     </span>

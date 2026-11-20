@@ -9,6 +9,8 @@ export const PERMISSIONS = [
   "inscricoes.exportar",
   "mensagens.ver",
   "mensagens.gerenciar",
+  "visitantes.ver",
+  "visitantes.gerenciar",
   "participantes.ver",
   "participantes.editar",
   "participantes.importar",
@@ -34,6 +36,8 @@ export const PERMISSION_LABELS: Record<Permission, string> = {
   "inscricoes.exportar": "Exportar inscrições",
   "mensagens.ver": "Ver mensagens",
   "mensagens.gerenciar": "Arquivar e excluir mensagens",
+  "visitantes.ver": "Ver visitantes cadastrados pelo site",
+  "visitantes.gerenciar": "Marcar contato, arquivar e excluir visitantes",
   "participantes.ver": "Ver participantes (sem dados de saúde)",
   "participantes.editar": "Criar e editar participantes",
   "participantes.importar": "Importar planilhas de participantes",
@@ -50,6 +54,7 @@ export const PERMISSION_GROUPS: { title: string; items: Permission[] }[] = [
   { title: "Conteúdo", items: ["eventos.gerenciar", "devocionais.gerenciar"] },
   { title: "Inscrições", items: ["inscricoes.ver", "inscricoes.gerenciar", "inscricoes.exportar"] },
   { title: "Mensagens", items: ["mensagens.ver", "mensagens.gerenciar"] },
+  { title: "Visitantes", items: ["visitantes.ver", "visitantes.gerenciar"] },
   {
     title: "Participantes do acampamento",
     items: [
@@ -89,6 +94,11 @@ export const DEFAULT_ROLES: {
     name: "Atendimento",
     description: "Responde às mensagens recebidas pelo site.",
     permissions: ["mensagens.ver", "mensagens.gerenciar"],
+  },
+  {
+    name: "Acolhimento",
+    description: "Acompanha os visitantes cadastrados pelo site.",
+    permissions: ["visitantes.ver", "visitantes.gerenciar"],
   },
   {
     name: "Equipe de saúde",

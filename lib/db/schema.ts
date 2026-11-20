@@ -180,7 +180,7 @@ export const devotionals = pgTable(
   (t) => [index("devotionals_published_idx").on(t.published, t.publishedAt.desc())],
 );
 
-/** Dia e horário das programações fixas (células, culto, discipulado). O resto do conteúdo fica em lib/programacoes/catalog.ts. */
+/** Dia e horário das programações fixas (sextas SALT, células, discipulado). O resto do conteúdo fica em lib/programacoes/catalog.ts. */
 export const programacaoKindEnum = pgEnum("programacao_kind", ["semanal", "mensal", "personalizada"]);
 
 export const programacoes = pgTable("programacoes", {
@@ -188,7 +188,7 @@ export const programacoes = pgTable("programacoes", {
   kind: programacaoKindEnum("kind").notNull(),
   /** 0 = domingo … 6 = sábado. */
   weekday: integer("weekday").notNull().default(5),
-  /** Semana do mês (1–4) ou 5 = última; só vale para `mensal`. */
+  /** Semana do mês: 1–4, 5 = última, 6 = 5ª (só nos meses que têm); só vale para `mensal`. */
   nth: integer("nth").notNull().default(1),
   /** "HH:MM" (horário de Brasília); vazio em `personalizada`. */
   time: text("time"),
@@ -215,6 +215,36 @@ export const messages = pgTable(
     createdAt: createdAt(),
   },
   (t) => [index("messages_status_idx").on(t.status, t.createdAt.desc())],
+);
+
+// ---------------------------------------------------------------- visitantes
+export const visitorStatusEnum = pgEnum("visitor_status", ["new", "contacted", "archived"]);
+
+/** Cadastro de visitante feito pelo site (QR Code na recepção). Opções em lib/visitors/options.ts. */
+export const visitors = pgTable(
+  "visitors",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    whatsapp: text("whatsapp").notNull(),
+    ageGroup: text("age_group").notNull(),
+    neighborhood: text("neighborhood"),
+    howFound: text("how_found"),
+    invitedBy: text("invited_by"),
+    interests: text("interests").array().notNull().default(sql`'{}'::text[]`),
+    contactConsent: boolean("contact_consent").notNull().default(false),
+    status: visitorStatusEnum("status").notNull().default("new"),
+    contactedAt: timestamp("contacted_at", { withTimezone: true }),
+    contactedBy: uuid("contacted_by").references(() => users.id, { onDelete: "set null" }),
+    contactedByLabel: text("contacted_by_label"),
+    emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+    emailError: text("email_error"),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index("visitors_status_idx").on(t.status, t.createdAt.desc()),
+    index("visitors_age_group_idx").on(t.ageGroup, t.createdAt.desc()),
+  ],
 );
 
 // ---------------------------------------------------------------- inscrições
@@ -388,3 +418,4 @@ export type Registration = typeof registrations.$inferSelect;
 export type Participant = typeof participants.$inferSelect;
 export type Devotional = typeof devotionals.$inferSelect;
 export type Message = typeof messages.$inferSelect;
+export type Visitor = typeof visitors.$inferSelect;

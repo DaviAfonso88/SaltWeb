@@ -42,6 +42,7 @@ Site público (`app/(site)/`):
 | `/podcast` | Salt Talks (`app/(site)/podcast/data.ts`) |
 | `/devocional` | Devocionais publicados (banco) |
 | `/contribua` | Pix e dados bancários |
+| `/visitante` | Cadastro de visitante (QR Code da recepção); vai para `/painel/visitantes` e avisa o e-mail da juventude |
 | `/acampa-salt`, `/festa-na-roca`, `/projeto-missionario` | Redirecionam (`next.config.ts`) para `/eventos/...` |
 
 Painel (`app/painel/`, protegido por `proxy.ts` + checagem em cada página/ação/rota):
@@ -51,27 +52,30 @@ Painel (`app/painel/`, protegido por `proxy.ts` + checagem em cada página/açã
 | `/painel/login`, `/painel/setup`, `/painel/conta/senha` | públicas / sessão |
 | `/painel` | qualquer usuário autenticado (resumo + aviso de retenção) |
 | `/painel/eventos`, `/novo`, `/[id]` | `eventos.gerenciar` |
-| `/painel/configuracoes` | `eventos.gerenciar` (dia/horário das programações fixas; fonte única para home, rodapé, `/eventos` e `/sobre` via `lib/programacoes/`) |
+| `/painel/configuracoes` | `eventos.gerenciar` (dia/horário das programações fixas, agrupadas em "Sextas SALT" e "Células"; mostra as próximas datas e avisa quando duas sextas caem no mesmo dia; fonte única para home, rodapé, `/eventos`, `/sobre` e `/visitante` via `lib/programacoes/`) |
 | `/painel/inscricoes`, `/[id]` | `inscricoes.ver` (+ editar/exportar) |
 | `/painel/participantes`, `/novo`, `/[id]`, `/importar` | `participantes.*` (saúde: `participantes.saude.ver/editar`) |
 | `/painel/devocionais` | `devocionais.gerenciar` |
 | `/painel/mensagens`, `/[id]` | `mensagens.ver` / `mensagens.gerenciar` |
+| `/painel/visitantes`, `/[id]` | `visitantes.ver` / `visitantes.gerenciar` (filtro por grupo do discipulado; "contatado" guarda quem e quando) |
 | `/painel/usuarios`, `/painel/papeis`, `/painel/auditoria` | permissões de acesso e auditoria |
 
-APIs: `POST /api/inscricoes/[slug]` (inscrição pública), `POST /api/contact`, `POST /api/servir`, `GET /api/painel/inscricoes/export`, `GET /api/painel/participantes/export`, `GET /imagens/eventos/[id]` (imagens de eventos).
+APIs: `POST /api/inscricoes/[slug]` (inscrição pública), `POST /api/contact`, `POST /api/servir`, `POST /api/visitantes`, `GET /api/painel/inscricoes/export`, `GET /api/painel/participantes/export`, `GET /imagens/eventos/[id]` (imagens de eventos).
 
 ## Architecture
 
 - Páginas: `app/(site)/<rota>/page.tsx` (público) e `app/painel/(app)/<rota>/page.tsx` (painel).
 - Regra de negócio por domínio em `lib/<domínio>/` — `queries.ts` (leitura), `actions.ts` (Server Actions `"use server"`: só exportam funções assíncronas), módulos puros sem diretiva:
   - `lib/db` (Drizzle + Neon; `schema.ts`), `lib/auth` (sessão, permissões, `guard.ts`, rate limit), `lib/audit.ts`, `lib/history.ts`
-  - `lib/events`, `lib/forms` (modelos de formulário: acampamento, festa, missão, simples), `lib/registrations`, `lib/participants` (+ `import/`), `lib/devotionals`, `lib/messages`, `lib/users`, `lib/export` (CSV/PDF)
+  - `lib/events`, `lib/forms` (modelos de formulário: acampamento, festa, missão, simples), `lib/registrations`, `lib/participants` (+ `import/`), `lib/devotionals`, `lib/messages`, `lib/visitors`, `lib/users`, `lib/export` (CSV/PDF)
 - Componentes: `components/site/` (público), `components/painel/<área>/`, `components/forms/` (inscrição pública), `components/ui/` (shadcn).
 - Migrações em `drizzle/` (geradas por `db:generate`); nunca edite uma migração já aplicada.
 
 ### Acesso e permissões
 
-- Papéis e permissões são dados do banco; permissões possíveis em `lib/auth/permissions.ts` (papéis padrão criados pelo `db:seed`: Administrador, Editor de conteúdo, Equipe de inscrições, Atendimento, Equipe de saúde, Liderança, Recepção).
+- Papéis e permissões são dados do banco; permissões possíveis em `lib/auth/permissions.ts` (papéis padrão criados pelo `db:seed`: Administrador, Editor de conteúdo, Equipe de inscrições, Atendimento, Acolhimento, Equipe de saúde, Liderança, Recepção). O papel Administrador não é editável e o seed não altera papéis existentes: permissão nova precisa entrar no Administrador por migração (ex.: `drizzle/0003_*.sql`).
+- Programações fixas: `lib/programacoes/catalog.ts` (texto, grupo e horário padrão; código) + tabela `programacoes` (dia/horário salvos no painel). Só as linhas do banco ficam em cache, então programação nova no catálogo aparece no deploy seguinte. Ritmo das sextas (Planejamento SALT 2026, p. 14): 1ª Culto SALT, 2ª Esportes SALT, 3ª Missões SALT, 4ª Semana do Discipulado, 5ª Encontrão SALT (só nos meses com cinco sextas: `nth = 6`; `nth = 5` é "última"). `lib/programacoes/ritmo.ts` (puro) calcula a próxima sexta mostrada no site. As células são divididas por bairro e não têm dia/horário único (`semAgenda` no catálogo): o site mostra "Em vários bairros · Dia e horário variam", o painel não edita e linhas antigas no banco são ignoradas. O Discipulado (um a um) não é programação com horário: só um cartão em `/sobre` (`DISCIPULADO` no catálogo).
+- Pagamentos das inscrições: `lib/registrations/payment.ts` (módulo puro) calcula parcelas, baixa e o resumo "arrecadado / falta receber" mostrado em `/painel/inscricoes`. À vista e contribuição em valor não gravam parcelas na inscrição; viram uma parcela única, gravada na primeira baixa. Inscrições canceladas ficam fora dos totais (o que já tinham pago aparece num aviso).
 - `proxy.ts` só confere se existe o cookie de sessão. **A autorização real** é feita com `requirePermission` (páginas), `authorizeAction` (Server Actions) e `authorizeRoute` (Route Handlers), de `lib/auth/guard.ts`. Toda ação nova deve usar uma delas.
 - Ações sensíveis (login, exclusões, exportações, consulta a saúde, importação, mescla) gravam em `audit_log` via `logAudit`. Alterações de cadastro gravam `entity_history` via `recordHistory`.
 

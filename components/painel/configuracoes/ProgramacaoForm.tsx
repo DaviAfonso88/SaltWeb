@@ -84,9 +84,9 @@ export function ProgramacaoForm({ programacao }: { programacao: ProgramacaoCardD
 
   return (
     <section aria-labelledby={headingId} className="rounded-2xl border border-border bg-card p-5">
-      <h2 id={headingId} className="mb-4 text-lg font-semibold">
+      <h3 id={headingId} className="mb-4 text-lg font-semibold">
         {titulo}
-      </h2>
+      </h3>
 
       {/* `key` remonta o formulário quando a versão muda, mantendo o estado local em sincronia com o servidor. */}
       <form onSubmit={onSubmit} className="grid gap-4" noValidate>
