@@ -217,6 +217,36 @@ export const messages = pgTable(
   (t) => [index("messages_status_idx").on(t.status, t.createdAt.desc())],
 );
 
+// ---------------------------------------------------------------- visitantes
+export const visitorStatusEnum = pgEnum("visitor_status", ["new", "contacted", "archived"]);
+
+/** Cadastro de visitante feito pelo site (QR Code na recepção). Opções em lib/visitors/options.ts. */
+export const visitors = pgTable(
+  "visitors",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    whatsapp: text("whatsapp").notNull(),
+    ageGroup: text("age_group").notNull(),
+    neighborhood: text("neighborhood"),
+    howFound: text("how_found"),
+    invitedBy: text("invited_by"),
+    interests: text("interests").array().notNull().default(sql`'{}'::text[]`),
+    contactConsent: boolean("contact_consent").notNull().default(false),
+    status: visitorStatusEnum("status").notNull().default("new"),
+    contactedAt: timestamp("contacted_at", { withTimezone: true }),
+    contactedBy: uuid("contacted_by").references(() => users.id, { onDelete: "set null" }),
+    contactedByLabel: text("contacted_by_label"),
+    emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+    emailError: text("email_error"),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index("visitors_status_idx").on(t.status, t.createdAt.desc()),
+    index("visitors_age_group_idx").on(t.ageGroup, t.createdAt.desc()),
+  ],
+);
+
 // ---------------------------------------------------------------- inscrições
 export type RegistrationPayment = {
   lote?: string;
@@ -388,3 +418,4 @@ export type Registration = typeof registrations.$inferSelect;
 export type Participant = typeof participants.$inferSelect;
 export type Devotional = typeof devotionals.$inferSelect;
 export type Message = typeof messages.$inferSelect;
+export type Visitor = typeof visitors.$inferSelect;

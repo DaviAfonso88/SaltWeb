@@ -401,6 +401,62 @@ export function ChoiceCards<T extends string>({
   );
 }
 
+/** Várias opções em cartões: checkbox nativo no mesmo visual de ChoiceCards. */
+export function CheckboxCards<T extends string>({
+  name,
+  legend,
+  hint,
+  values,
+  onChange,
+  options,
+  columns = 2,
+}: {
+  name: string;
+  legend: string;
+  hint?: string;
+  values: T[];
+  onChange: (values: T[]) => void;
+  options: Choice<T>[];
+  columns?: 1 | 2;
+}) {
+  const groupId = useId();
+  const hintId = `${groupId}-dica`;
+  return (
+    <fieldset className="grid gap-2 border-0 p-0" aria-describedby={hint ? hintId : undefined}>
+      <legend className="mb-1 p-0 text-sm font-semibold">{legend}</legend>
+      {hint ? (
+        <p id={hintId} className="-mt-1 mb-1 text-xs text-text-3">
+          {hint}
+        </p>
+      ) : null}
+      <div className={cn("grid gap-2.5", columns === 2 && "sm:grid-cols-2")}>
+        {options.map((o) => {
+          const checked = values.includes(o.value);
+          return (
+            <label
+              key={o.value}
+              className={cn(
+                "flex min-h-14 cursor-pointer items-start gap-3 rounded-lg border p-4 text-[15px] transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring",
+                checked ? "border-primary bg-[#fbf7fa] shadow-[inset_0_0_0_1px_var(--purple)]" : "border-line-strong bg-white hover:bg-sand",
+              )}
+            >
+              <input
+                type="checkbox"
+                name={name}
+                value={o.value}
+                checked={checked}
+                onChange={(e) => onChange(e.target.checked ? [...values, o.value] : values.filter((v) => v !== o.value))}
+                className="mt-[3px] size-[18px] shrink-0 accent-[var(--purple)]"
+              />
+              <span className={checked ? "font-semibold" : "font-medium"}>{o.label}</span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 export function Honeypot({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">

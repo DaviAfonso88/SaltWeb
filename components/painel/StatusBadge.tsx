@@ -49,3 +49,9 @@ export const MESSAGE_STATUS: Record<string, { label: string; tone: Tone }> = {
   read: { label: "Lida", tone: "neutral" },
   archived: { label: "Arquivada", tone: "warning" },
 };
+
+export const VISITOR_STATUS: Record<string, { label: string; tone: Tone }> = {
+  new: { label: "Novo", tone: "brand" },
+  contacted: { label: "Contatado", tone: "success" },
+  archived: { label: "Arquivado", tone: "neutral" },
+};

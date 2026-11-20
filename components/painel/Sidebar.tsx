@@ -13,6 +13,7 @@ import {
   Settings,
   ShieldCheck,
   UserCog,
+  UserPlus,
   BookOpen,
 } from "lucide-react";
 import Image from "next/image";
@@ -31,6 +32,7 @@ export type NavIcon =
   | "participantes"
   | "devocionais"
   | "mensagens"
+  | "visitantes"
   | "usuarios"
   | "papeis"
   | "auditoria"
@@ -45,6 +47,7 @@ const ICONS: Record<NavIcon, React.ComponentType<{ className?: string; "aria-hid
   participantes: HeartPulse,
   devocionais: BookOpen,
   mensagens: Mail,
+  visitantes: UserPlus,
   usuarios: UserCog,
   papeis: ShieldCheck,
   auditoria: ScrollText,
