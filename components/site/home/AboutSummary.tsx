@@ -9,7 +9,7 @@ export function AboutSummary() {
     <section aria-labelledby="quem-somos" className="bg-sand py-[clamp(64px,8vw,112px)]">
       <div className="container-site grid items-center gap-x-[clamp(40px,6vw,88px)] gap-y-10 lg:grid-cols-2">
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#ece9e4]">
-          <Image src="/images/sobre.jpeg" alt="Encontro da Juventude SALT na igreja" fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
+          <Image src="/images/acampa-fogueira.jpg" alt="Jovens abraçados caminhando em direção à fogueira, à noite, no Acampa SALT" fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
         </div>
         <div className="flex flex-col gap-5">
           <SectionHeading id="quem-somos" eyebrow="Quem somos" title="Sal e luz em nossa geração." />

@@ -78,7 +78,7 @@ export const DISCIPULADO = {
   slug: "discipulado",
   titulo: "Discipulado",
   descricao: "Caminhada individual e intencional para o crescimento espiritual. Um a um, ombro a ombro, mais perto de Jesus.",
-  imagem: "/images/discipulado.webp",
+  imagem: "/images/discipulado-abraco.jpg",
   linkBotao: "https://linktr.ee/Discipulado_Salt",
   textoBotao: "Quero ser discipulado",
 };
