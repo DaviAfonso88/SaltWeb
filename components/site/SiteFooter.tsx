@@ -2,7 +2,9 @@ import { ArrowUpRight, Headphones, Instagram, MessageCircle } from "lucide-react
 import Image from "next/image";
 import Link from "next/link";
 
-import { getProgramacoes, pickProgramacoes } from "@/lib/programacoes/queries";
+import { SEXTAS } from "@/lib/programacoes/catalog";
+import { getProgramacoes } from "@/lib/programacoes/queries";
+import { isEncontro, ritmoDasSextas } from "@/lib/programacoes/ritmo";
 import { describeSchedule } from "@/lib/programacoes/schedule";
 import { CHURCH_NAME, CHURCH_URL, WHATSAPP_URL } from "@/lib/site-info";
 
@@ -12,9 +14,8 @@ const NAV = [
   { href: "/devocional", label: "Devocional" },
   { href: "/podcast", label: "Podcast" },
   { href: "/contribua", label: "Contribua" },
+  { href: "/visitante", label: "Primeira vez?" },
 ];
-
-const MEETING_SLUGS = ["celula-jovens", "celula-adolescentes", "culto-salt", "discipulado"];
 
 const SOCIAL = [
   { href: "https://www.instagram.com/saltjuventude_/", label: "Instagram da Juventude SALT", icon: Instagram },
@@ -42,10 +43,12 @@ function ChurchLink({ className }: { className?: string }) {
 const TITLE = "text-[13px] font-semibold uppercase tracking-[0.1em] text-[#b7aebb]";
 
 export async function SiteFooter() {
-  const meetings = pickProgramacoes(await getProgramacoes(), MEETING_SLUGS).map((p) => ({
-    name: p.titulo,
-    when: describeSchedule(p.schedule).footer,
-  }));
+  const programacoes = await getProgramacoes();
+  const sextas = ritmoDasSextas(programacoes);
+  const meetings = [
+    ...(sextas.next ? [{ name: SEXTAS.titulo, when: `Próxima: ${sextas.next.titulo} · ${sextas.next.quando}` }] : []),
+    ...programacoes.filter(isEncontro).map((p) => ({ name: p.titulo, when: describeSchedule(p.schedule).footer })),
+  ];
 
   return (
     <footer className="bg-night text-[15px] leading-relaxed text-[#f5f3f6]">

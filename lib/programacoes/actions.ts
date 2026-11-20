@@ -29,6 +29,7 @@ export async function saveProgramacao(_prev: ActionResult | undefined, formData:
   const slug = String(formData.get("slug") ?? "");
   const info = PROGRAMACOES.find((p) => p.slug === slug);
   if (!info) return fail("Programação não encontrada.");
+  if (info.semAgenda) return fail(`${info.titulo} não tem dia e horário fixos para salvar.`);
 
   const parsed = scheduleSchema.safeParse({
     kind: formData.get("kind"),
