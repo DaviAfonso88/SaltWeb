@@ -1,14 +1,18 @@
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
+import { ReminderButton } from "@/components/painel/estoque/ReminderButton";
 import { PageHeader } from "@/components/painel/PageHeader";
 import { RegistrationActions } from "@/components/painel/inscricoes/RegistrationActions";
 import { StatusBadge } from "@/components/painel/StatusBadge";
+import { Button } from "@/components/ui/button";
 import { can, requirePermission } from "@/lib/auth/guard";
-import { formatCurrency, formatDateTime } from "@/lib/format";
+import { describeEventDates, formatCurrency, formatDateTime } from "@/lib/format";
+import { festaContribuicao, festaReminderUrl } from "@/lib/forms/festa-lembrete";
 import { getFormModel } from "@/lib/forms/registry";
-import { paymentInstallments } from "@/lib/registrations/payment";
+import { paymentInstallments, paymentProgress } from "@/lib/registrations/payment";
 import { getRegistration } from "@/lib/registrations/queries";
 
 export const metadata = { title: "Inscrição" };
@@ -35,16 +39,43 @@ export default async function RegistrationPage({ params }: { params: Promise<{ i
 
   const data = await getRegistration(id);
   if (!data) notFound();
-  const { registration: r, eventTitle, formModel, formConfig, history } = data;
+  const { registration: r, eventTitle, eventStartsAt, eventEndsAt, eventLocation, formModel, formConfig, history } = data;
   const model = getFormModel(formModel);
   const columns = model ? model.columns(formConfig) : [];
+  const progress = paymentProgress(r.payment);
+  // Festa: lembrete do que a pessoa ficou de levar (inscrição cancelada não recebe).
+  const reminderUrl =
+    formModel === "festa" && r.status !== "cancelled"
+      ? festaReminderUrl({
+          de: "equipe",
+          telefone: r.phone,
+          nome: r.name,
+          numero: r.number,
+          evento: eventTitle,
+          quando: describeEventDates(eventStartsAt, eventEndsAt).long,
+          local: eventLocation,
+          contribuicao: festaContribuicao(r.answers, r.payment?.valorFinalCentavos ?? 0),
+          pago: progress.installments > 0 && progress.paidInstallments === progress.installments,
+        })
+      : null;
 
   return (
     <>
       <PageHeader
         title={`${r.name} · nº ${r.number}`}
         description={eventTitle}
-        actions={<StatusBadge tone={STATUS[r.status].tone}>{STATUS[r.status].label}</StatusBadge>}
+        actions={
+          <>
+            <StatusBadge tone={STATUS[r.status].tone}>{STATUS[r.status].label}</StatusBadge>
+            {formModel === "festa" && can(user, "inscricoes.gerenciar") ? (
+              <Button asChild variant="outline" className="min-h-11 rounded-full">
+                <Link href={`/painel/inscricoes/${r.id}/editar`}>
+                  <Pencil aria-hidden /> Editar
+                </Link>
+              </Button>
+            ) : null}
+          </>
+        }
       />
       <Link href={`/painel/inscricoes?evento=${r.eventId}`} className="mb-6 inline-flex min-h-11 items-center text-sm font-semibold text-purple hover:text-purple-dark">
         ← Voltar às inscrições
@@ -77,6 +108,11 @@ export default async function RegistrationPage({ params }: { params: Promise<{ i
                 </Item>
               ))}
             </dl>
+            {reminderUrl ? (
+              <div className="mt-5">
+                <ReminderButton href={reminderUrl} name={r.name} label="Enviar lembrete" />
+              </div>
+            ) : null}
           </section>
         ) : null}
 

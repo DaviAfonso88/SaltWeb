@@ -36,6 +36,7 @@ export async function saveProgramacao(_prev: ActionResult | undefined, formData:
     weekday: formData.get("weekday") ?? 5,
     nth: formData.get("nth") ?? 1,
     time: formData.get("time") ?? "",
+    noTime: formData.get("noTime") === "on",
     customDay: formData.get("customDay") ?? "",
     customTime: formData.get("customTime") ?? "",
   });
@@ -97,5 +98,5 @@ export async function saveProgramacao(_prev: ActionResult | undefined, formData:
     summary: `${info.titulo}: ${describe(result.data!.before)} → ${describe(next)}`,
   });
   refresh();
-  return ok(undefined, `${info.titulo} atualizado. O site já mostra o novo horário.`);
+  return ok(undefined, `${info.titulo} atualizado. O site já mostra a mudança.`);
 }

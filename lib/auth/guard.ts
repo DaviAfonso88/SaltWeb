@@ -46,6 +46,16 @@ export async function requirePermission(permission: Permission | Permission[]) {
   return user;
 }
 
+/** Páginas: exige login + ao menos uma das permissões. */
+export async function requireAnyPermission(permissions: Permission[]) {
+  const user = await requireUser();
+  if (!canAny(user, permissions)) {
+    await audit(user, permissions, "uma página do painel");
+    redirect(NO_ACCESS_PATH);
+  }
+  return user;
+}
+
 /** Server Actions: devolve o usuário ou um ActionResult de erro. */
 export async function authorizeAction(
   permission: Permission | Permission[],

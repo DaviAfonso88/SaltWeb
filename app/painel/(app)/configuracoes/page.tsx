@@ -6,7 +6,7 @@ import { requirePermission } from "@/lib/auth/guard";
 import { SEXTAS } from "@/lib/programacoes/catalog";
 import { getProgramacoesAdmin, type Programacao } from "@/lib/programacoes/queries";
 import { conflitosDasSextas, isEncontro, isSexta, ritmoDasSextas } from "@/lib/programacoes/ritmo";
-import { describeSchedule } from "@/lib/programacoes/schedule";
+import { describeSchedule, weekRange } from "@/lib/programacoes/schedule";
 
 export const metadata = { title: "Configurações" };
 
@@ -63,7 +63,7 @@ export default async function ConfiguracoesPage() {
                       <span className="font-semibold">{i.titulo}</span> <span className="text-text-3">· {i.tag}</span>
                     </span>
                     <span className="tabular-nums text-text-2">
-                      {formatDay(i.date!)}
+                      {i.semanaInteira ? `semana de ${weekRange(i.date!).from} a ${weekRange(i.date!).to}` : formatDay(i.date!)}
                       {i.time ? ` · ${i.time}` : ""}
                     </span>
                   </li>

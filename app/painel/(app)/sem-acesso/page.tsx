@@ -14,7 +14,7 @@ export default async function NoAccessPage() {
         href="/painel"
         className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-purple-dark"
       >
-        Voltar à visão geral
+        Voltar ao Dashboard
       </Link>
     </>
   );

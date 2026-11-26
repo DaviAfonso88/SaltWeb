@@ -9,7 +9,7 @@ import { logAudit } from "@/lib/audit";
 import { authorizeAction } from "@/lib/auth/guard";
 import { expireTag, TAGS } from "@/lib/cache-tags";
 import { getDb } from "@/lib/db";
-import { events, participants, registrations } from "@/lib/db/schema";
+import { eventExpenses, events, participants, registrations } from "@/lib/db/schema";
 import { fromSaoPauloInput } from "@/lib/format";
 import { getFormModel } from "@/lib/forms/registry";
 import { slugify } from "@/lib/text";
@@ -314,12 +314,13 @@ export async function deleteEvent(eventId: string): Promise<ActionResult> {
       .limit(1);
     if (!event) return fail("Evento não encontrado.");
 
-    const [[reg], [part]] = await Promise.all([
+    const [[reg], [part], [spent]] = await Promise.all([
       tx.select({ total: count() }).from(registrations).where(eq(registrations.eventId, eventId)),
       tx.select({ total: count() }).from(participants).where(eq(participants.eventId, eventId)),
+      tx.select({ total: count() }).from(eventExpenses).where(eq(eventExpenses.eventId, eventId)),
     ]);
-    if (reg.total > 0 || part.total > 0) {
-      return fail("Este evento tem inscrições ou participantes. Arquive-o em vez de excluir.");
+    if (reg.total > 0 || part.total > 0 || spent.total > 0) {
+      return fail("Este evento tem inscrições, participantes ou gastos. Arquive-o em vez de excluir.");
     }
 
     await tx.delete(events).where(eq(events.id, eventId));

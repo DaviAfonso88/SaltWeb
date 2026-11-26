@@ -11,6 +11,8 @@ import { getProgramacoes } from "@/lib/programacoes/queries";
 import { isEncontro, ritmoDasSextas } from "@/lib/programacoes/ritmo";
 import { describeSchedule } from "@/lib/programacoes/schedule";
 import { whatsappUrlWithText } from "@/lib/site-info";
+// Import estático: a URL muda junto com o arquivo, então trocar a foto não deixa a antiga em cache.
+import pastorPhoto from "@/public/images/pastor.jpeg";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -33,6 +35,15 @@ const VALUES = [
     title: "Discipulamos pessoas",
     text: "Cumprir o IDE é evangelizar e batizar novos discípulos, mas não para por aí. Cabe a todo seguidor de Jesus, enquanto peregrino na terra, caminhar ao lado de outros discípulos, como Jesus fez no caminho de Emaús, e ensinar toda a Escritura.",
   },
+];
+
+/** Trajetória pública do pastor (Currículo Lattes). Dados pessoais do currículo não vão para o site. */
+const PASTOR_EDUCATION = [
+  { course: "Pós-graduação em Aconselhamento Cristão", school: "Faculdades Batista do Paraná (FABAPAR)", year: "2026" },
+  { course: "Licenciatura em Ciências da Religião", school: "IPEMIG", year: "2025" },
+  { course: "Curso Livre em Teologia", school: "Seminário Martin Bucer", year: "2024" },
+  { course: "Graduação em Teologia", school: "Faculdade Batista de Minas Gerais", year: "2023" },
+  { course: "Formação Ministerial", school: "Seminário Teológico Batista Mineiro", year: "2023" },
 ];
 
 export default async function SobrePage() {
@@ -98,7 +109,14 @@ export default async function SobrePage() {
       <section aria-labelledby="lideranca" className="py-[clamp(64px,8vw,112px)]">
         <div className="container-site flex flex-wrap items-center gap-x-[clamp(40px,6vw,88px)] gap-y-10">
           <div className="relative aspect-[4/5] w-full max-w-[400px] min-w-0 flex-[0_1_400px] overflow-hidden rounded-xl bg-[#ece9e4]">
-            <Image src="/images/pastor.jpeg" alt="Pastor Davi Franco pregando" fill sizes="(min-width: 1024px) 400px, 90vw" className="object-cover" />
+            {/* Foto horizontal num recorte em pé: o enquadramento puxa para a direita, onde o pastor está. */}
+            <Image
+              src={pastorPhoto}
+              alt="Pastor Davi Franco falando ao microfone"
+              fill
+              sizes="(min-width: 1024px) 750px, 170vw"
+              className="object-cover object-[66%_50%]"
+            />
           </div>
           <div className="flex min-w-0 flex-[1_1_420px] flex-col gap-5">
             <p className="eyebrow">Liderança</p>
@@ -106,13 +124,36 @@ export default async function SobrePage() {
               <h2 id="lideranca" className="font-display text-[clamp(28px,2.8vw,38px)] font-semibold leading-[1.15] tracking-[-0.02em]">
                 Davi Franco
               </h2>
-              <p className="mt-1 text-text-3">Pastor da Juventude</p>
+              <p className="mt-1 text-text-3">Pastor de novas gerações da PIBLS</p>
             </div>
-            <p className="max-w-[560px] text-[17px] text-text-2">
-              Pastor Davi Franco dedica sua vida a guiar e inspirar os jovens da Juventude Salt. Com paixão pelo discipulado e um
-              coração voltado para o serviço, ele lidera com sabedoria, promovendo um ambiente de fé, crescimento e comunhão. Sua
-              visão é ver cada jovem florescer em seu propósito, impactando o mundo ao seu redor com os valores do Reino.
+            <p className="border-l-2 border-purple pl-5 font-display text-[clamp(22px,2.2vw,28px)] font-semibold leading-snug tracking-[-0.015em]">
+              Apaixonado por Jesus.
+              <span className="block text-purple">Marcando a nova geração.</span>
             </p>
+            <div className="grid max-w-[560px] gap-4 text-[17px] text-text-2">
+              <p>
+                Pastor na Primeira Igreja Batista em Lagoa Santa desde 2024, Davi Franco dedica sua vida a guiar e inspirar os jovens
+                da Juventude Salt, com paixão pelo discipulado e um coração voltado para o serviço.
+              </p>
+              <p>
+                Seu trabalho de conclusão em Teologia teve como tema “Preparando a nova geração: o discipulado que os alcança”. Sua
+                visão é ver cada jovem florescer em seu propósito, impactando o mundo ao seu redor com os valores do Reino.
+              </p>
+            </div>
+            <div className="max-w-[560px]">
+              <h3 className="mb-2 text-[13px] font-semibold uppercase tracking-[0.1em] text-text-3">Formação</h3>
+              <ul className="border-t border-line">
+                {PASTOR_EDUCATION.map((item) => (
+                  <li key={item.course} className="flex items-baseline justify-between gap-4 border-b border-line py-3">
+                    <div className="min-w-0">
+                      <p className="font-semibold">{item.course}</p>
+                      <p className="text-sm text-text-3">{item.school}</p>
+                    </div>
+                    <span className="shrink-0 text-sm tabular-nums text-text-2">{item.year}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div>
               <a
                 href={whatsappUrlWithText("Olá Pastor Davi, gostaria de conversar com você.")}
@@ -155,7 +196,7 @@ export default async function SobrePage() {
                 <ol className="mt-1 border-t border-line">
                   {sextas.items.map((item) => (
                     <li key={item.slug} className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5 border-b border-line py-2.5">
-                      <span className="w-[92px] shrink-0 text-sm font-semibold text-purple">{item.tag}</span>
+                      <span className="w-[108px] shrink-0 text-sm font-semibold text-purple">{item.tag}</span>
                       <span className="font-semibold">{item.titulo}</span>
                       {item.ocasional ? <span className="text-sm text-text-3">quando o mês tiver</span> : null}
                     </li>

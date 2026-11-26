@@ -16,7 +16,7 @@ const LABEL = { new: "novo", contacted: "contatado", archived: "arquivado" } as 
 function refresh(id?: string) {
   revalidatePath("/painel/visitantes");
   if (id) revalidatePath(`/painel/visitantes/${id}`);
-  // Contador de novos no menu e na visão geral.
+  // Contador de novos no menu e no Dashboard.
   revalidatePath("/painel", "layout");
 }
 

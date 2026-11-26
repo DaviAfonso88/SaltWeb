@@ -285,6 +285,25 @@ export const registrations = pgTable(
   ],
 );
 
+/** Gastos de um evento (compras do churrasco, aluguel etc.). */
+export const eventExpenses = pgTable(
+  "event_expenses",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    eventId: uuid("event_id")
+      .notNull()
+      .references(() => events.id, { onDelete: "restrict" }),
+    description: text("description").notNull(),
+    amountCents: integer("amount_cents").notNull(),
+    paidBy: text("paid_by"),
+    spentOn: date("spent_on"),
+    createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+    createdByLabel: text("created_by_label"),
+    createdAt: createdAt(),
+  },
+  (t) => [index("event_expenses_event_idx").on(t.eventId, t.createdAt)],
+);
+
 // ---------------------------------------------------------------- participantes
 export const importBatches = pgTable("import_batches", {
   id: uuid("id").primaryKey().defaultRandom(),

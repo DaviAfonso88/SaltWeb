@@ -5,7 +5,8 @@ import { getDb } from "@/lib/db";
 import { events, registrations, type RegistrationPayment } from "@/lib/db/schema";
 import { todayInSaoPaulo } from "@/lib/format";
 import { getFestaAvailability, type FestaAvailability } from "@/lib/forms/availability";
-import { SLOT_KEY, ITEM_PREFIX } from "@/lib/forms/festa";
+import { festaShortages } from "@/lib/forms/festa";
+import { festaContribuicao, type FestaContribuicao } from "@/lib/forms/festa-lembrete";
 import { acampamentoConfigSchema } from "@/lib/forms/acampamento";
 import { isMinor, parseFicha, type Ficha } from "@/lib/forms/ficha";
 import { getFormModel } from "@/lib/forms/registry";
@@ -45,10 +46,12 @@ export type SubmitSummary = {
   plano?: string;
   forma?: string;
   parcelas: Installment[];
+  /** Só Festa: o que a pessoa ficou de levar ou pagar, como foi gravado. */
+  contribuicao?: FestaContribuicao;
 };
 
 export type SubmitResult =
-  | { ok: true; summary: SubmitSummary }
+  | { ok: true; id: string; summary: SubmitSummary }
   | { ok: false; error: "validacao"; fieldErrors: Record<string, string[]> }
   | { ok: false; error: "duplicada" | "encerrada" | "nao_encontrado" }
   | { ok: false; error: "sem_vagas"; itens: string[]; disponibilidade: FestaAvailability };
@@ -65,24 +68,28 @@ function collect(error: z.ZodError, prefix = ""): Record<string, string[]> {
 }
 
 /**
- * Grava uma inscrição pública. Tudo acontece em uma transação com trava por evento, então
- * número sequencial, detecção de duplicada e contagem de vagas não sofrem corrida.
+ * Grava uma inscrição. Tudo acontece em uma transação com trava por evento, então número
+ * sequencial, detecção de duplicada e contagem de vagas não sofrem corrida.
+ *
+ * `fromPanel` é a inscrição lançada pela equipe: vale para evento não publicado ou com inscrições
+ * encerradas, mas duplicada e vagas continuam conferidas. Quem chama precisa ter autorizado.
  */
-export async function submitRegistration(slug: string, body: unknown): Promise<SubmitResult> {
+export async function submitRegistration(slug: string, body: unknown, { fromPanel = false } = {}): Promise<SubmitResult> {
   const common = baseSchema.safeParse(body);
   if (!common.success) return validation(collect(common.error));
 
   const db = getDb();
   return db.transaction(async (tx): Promise<SubmitResult> => {
     const [event] = await tx.select().from(events).where(eq(events.slug, slug)).limit(1);
-    if (!event || event.publication !== "published") return { ok: false, error: "nao_encontrado" };
+    if (!event || (!fromPanel && event.publication !== "published")) return { ok: false, error: "nao_encontrado" };
 
     // Serializa inscrições do mesmo evento.
     await tx.execute(sql`select pg_advisory_xact_lock(hashtext(${event.id}))`);
 
     const model = getFormModel(event.formModel);
     const now = new Date();
-    if (!model || !event.registrationOpen || (event.registrationClosesAt && event.registrationClosesAt <= now)) {
+    const closed = !event.registrationOpen || (event.registrationClosesAt && event.registrationClosesAt <= now);
+    if (!model || (!fromPanel && closed)) {
       return { ok: false, error: "encerrada" };
     }
 
@@ -114,22 +121,11 @@ export async function submitRegistration(slug: string, body: unknown): Promise<S
       .limit(1);
     if (duplicate) return { ok: false, error: "duplicada" };
 
-    // Disponibilidade (Festa): itens e vagas consumidos por inscrições não canceladas.
+    // Disponibilidade (Festa): itens, vagas em valor e lotação, consumidos por inscrições não canceladas.
     if (model.id === "festa") {
-      const wanted = model.consumes(event.formConfig, answers.data);
-      if (wanted.length) {
-        const availability = await getFestaAvailability(event.id, event.formConfig, tx);
-        const exhausted: string[] = [];
-        for (const key of wanted) {
-          if (key === SLOT_KEY && availability.vagasContribuicao <= 0) exhausted.push("Contribuição em valor");
-          if (key.startsWith(ITEM_PREFIX)) {
-            const name = key.slice(ITEM_PREFIX.length);
-            const item = availability.itens.find((i) => i.nome === name);
-            if (!item || item.restante <= 0) exhausted.push(name);
-          }
-        }
-        if (exhausted.length) return { ok: false, error: "sem_vagas", itens: exhausted, disponibilidade: availability };
-      }
+      const availability = await getFestaAvailability(event.id, event.formConfig, tx);
+      const exhausted = festaShortages(availability, answers.data);
+      if (exhausted.length) return { ok: false, error: "sem_vagas", itens: exhausted, disponibilidade: availability };
     }
 
     // Valor sempre recalculado no servidor.
@@ -188,6 +184,7 @@ export async function submitRegistration(slug: string, body: unknown): Promise<S
 
     return {
       ok: true,
+      id: created.id,
       summary: {
         numero: number,
         valorFinalCentavos: price?.valorFinalCentavos ?? 0,
@@ -196,6 +193,7 @@ export async function submitRegistration(slug: string, body: unknown): Promise<S
         plano: price?.plano,
         forma: price?.forma,
         parcelas: price?.parcelas ?? [],
+        contribuicao: model.id === "festa" ? festaContribuicao(answers.data, price?.valorFinalCentavos ?? 0) : undefined,
       },
     };
   });

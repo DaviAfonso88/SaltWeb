@@ -29,6 +29,34 @@
       "when": 1795119843552,
       "tag": "0003_quiet_nocturne",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1795650981207,
+      "tag": "0004_papeis_estoque",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795653199634,
+      "tag": "0005_presenca_gastos",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795655466715,
+      "tag": "0006_remove_presenca",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1795656138865,
+      "tag": "0007_papel_gastos",
+      "breakpoints": true
     }
   ]
 }

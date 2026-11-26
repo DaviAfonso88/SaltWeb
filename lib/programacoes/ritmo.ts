@@ -4,11 +4,13 @@ import {
   describeDayLong,
   describeDayTag,
   describeNextDate,
+  describeNextWeek,
   describeSchedule,
   describeTime,
   nextOccurrence,
   NTH_FIFTH,
   todayInBrasilia,
+  WHOLE_WEEK,
 } from "./schedule";
 
 /** Módulo puro: separa os grupos de programação e monta o ritmo das sextas mostrado no site. */
@@ -32,6 +34,8 @@ export type SextaDoMes = {
   ocasional: boolean;
   /** Próxima data, "YYYY-MM-DD" (Brasília). */
   date: string | null;
+  /** Ocupa a semana toda: `date` é o primeiro dia dela que ainda não passou. */
+  semanaInteira: boolean;
 };
 
 export type RitmoDasSextas = {
@@ -54,19 +58,24 @@ export function ritmoDasSextas(list: Programacao[], now: Date = new Date()): Rit
     long: describeSchedule(p.schedule).long,
     ocasional: p.schedule.kind === "mensal" && p.schedule.nth === NTH_FIFTH,
     date: nextOccurrence(p.schedule, today),
+    semanaInteira: p.schedule.kind !== "personalizada" && p.schedule.weekday === WHOLE_WEEK,
   }));
 
   // Em empate (duas na mesma data), vale a que vem primeiro no mês.
   const next = items.reduce<SextaDoMes | null>((best, item) => (item.date && (!best?.date || item.date < best.date) ? item : best), null);
 
-  const weekdays = new Set(sextas.filter((p) => p.schedule.kind !== "personalizada").map((p) => p.schedule.weekday));
+  // Uma semana inteira inclui a sexta dela, então não muda o dia do ritmo.
+  const weekdays = new Set(
+    sextas.filter((p) => p.schedule.kind !== "personalizada" && p.schedule.weekday !== WHOLE_WEEK).map((p) => p.schedule.weekday),
+  );
   const [weekday] = weekdays;
   const dia =
     weekdays.size === 1
       ? describeDayLong({ kind: "semanal", weekday, nth: 1, time: null, customDay: "", customTime: "" })
       : "Uma vez por mês, cada uma";
 
-  return { items, dia, next: next?.date ? { ...next, quando: describeNextDate(next.date, today) } : null };
+  const quando = (item: SextaDoMes, date: string) => (item.semanaInteira ? describeNextWeek : describeNextDate)(date, today);
+  return { items, dia, next: next?.date ? { ...next, quando: quando(next, next.date) } : null };
 }
 
 export type ConflitoDeSexta = { titulos: string[]; primeiraData: string; vezes: number };
@@ -80,9 +89,11 @@ export function conflitosDasSextas(list: Programacao[], now: Date = new Date(), 
   const limit = addDaysIso(today, days);
   const byDate = new Map<string, string[]>();
   for (const p of list.filter(isSexta)) {
+    // A semana inteira é comparada pela sexta-feira dela (senão cada dia contaria como uma data).
+    const schedule = p.schedule.weekday === WHOLE_WEEK ? { ...p.schedule, weekday: 5 } : p.schedule;
     let from = today;
     for (let i = 0; i < 60; i++) {
-      const date = nextOccurrence(p.schedule, from);
+      const date = nextOccurrence(schedule, from);
       if (!date || date > limit) break;
       byDate.set(date, [...(byDate.get(date) ?? []), p.titulo]);
       from = addDaysIso(date, 1);

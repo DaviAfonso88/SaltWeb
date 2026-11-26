@@ -60,6 +60,29 @@ export function paymentStatusLabel(payment: RegistrationPayment | null | undefin
   return `${kind} · ${progress.paidInstallments ? "pago" : "em aberto"}`;
 }
 
+export type Reprice = { ok: true; payment: RegistrationPayment | null } | { ok: false; paidCents: number };
+
+/**
+ * Pagamento depois que a equipe muda a contribuição (Festa: valor único). O que já foi recebido
+ * fica marcado e a diferença vira um complemento em aberto. Baixar o valor para menos do que já
+ * entrou não é aceito: primeiro se reabre o pagamento (e se trata o reembolso).
+ */
+export function repricePayment(current: RegistrationPayment | null, price: Omit<RegistrationPayment, "parcelas"> | null): Reprice {
+  const total = price?.valorFinalCentavos ?? 0;
+  const paid = paymentInstallments(current).filter((p) => p.pago);
+  const paidCents = paid.reduce((sum, p) => sum + p.valorCentavos, 0);
+
+  if (!current || !paidCents) {
+    return { ok: true, payment: price && total ? { ...price, parcelas: [] } : null };
+  }
+  if (total === current.valorFinalCentavos) return { ok: true, payment: current };
+  if (!price || total < paidCents) return { ok: false, paidCents };
+
+  const rest = total - paidCents;
+  const parcelas = rest ? [...paid, { rotulo: "complemento", valorCentavos: rest, pago: false }] : paid;
+  return { ok: true, payment: { ...price, parcelas } };
+}
+
 export type PaymentKindTotals = {
   kind: PaymentKind;
   label: string;

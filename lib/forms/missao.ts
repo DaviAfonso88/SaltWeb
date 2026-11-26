@@ -43,7 +43,7 @@ const buildAnswersSchema = (config: MissaoConfig) => {
 
 export const missaoModel = defineModel({
   id: "missao",
-  label: "Missão",
+  label: "Projetos",
   description: "Participação em tempo integral ou em períodos escolhidos.",
   requiresEmail: false,
   configSchema: missaoConfigSchema,

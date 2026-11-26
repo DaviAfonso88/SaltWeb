@@ -1,4 +1,4 @@
-import { onlyDigits } from "@/lib/text";
+import { whatsappUrlForPhone } from "@/lib/text";
 
 /** Grupos do discipulado (Planejamento SALT 2026), para encaminhar o visitante ao líder certo. */
 export const AGE_GROUPS = [
@@ -42,9 +42,6 @@ export const interestLabels = (values: string[]) => values.map((v) => labelOf(IN
 
 /** Link do WhatsApp com uma saudação pronta; `null` se o número não parece brasileiro com DDD. */
 export function visitorWhatsappUrl(phone: string, name: string): string | null {
-  const digits = onlyDigits(phone);
-  const full = digits.length === 10 || digits.length === 11 ? `55${digits}` : digits.startsWith("55") && digits.length >= 12 ? digits : null;
-  if (!full) return null;
   const first = name.trim().split(/\s+/)[0] ?? "";
-  return `https://wa.me/${full}?text=${encodeURIComponent(`Oi, ${first}! Tudo bem? Aqui é da Juventude SALT.`)}`;
+  return whatsappUrlForPhone(phone, `Oi, ${first}! Tudo bem? Aqui é da Juventude SALT.`);
 }

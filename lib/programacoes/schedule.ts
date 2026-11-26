@@ -7,11 +7,11 @@ export type ScheduleKind = (typeof KINDS)[number];
 
 export type Schedule = {
   kind: ScheduleKind;
-  /** 0 = domingo … 6 = sábado. */
+  /** 0 = domingo … 6 = sábado; `WHOLE_WEEK` = a semana inteira. */
   weekday: number;
   /** Semana do mês: 1–4, `NTH_LAST` (última) ou `NTH_FIFTH` (5ª, só nos meses que têm). Só vale para `mensal`. */
   nth: number;
-  /** "HH:MM" (Brasília); vazio em `personalizada`. */
+  /** "HH:MM" (Brasília); null quando não há horário definido e em `personalizada`. */
   time: string | null;
   customDay: string;
   customTime: string;
@@ -33,7 +33,17 @@ const WEEKDAYS = [
   { name: "sábado", plural: "sábados", masculine: true },
 ] as const;
 
-export const WEEKDAY_OPTIONS = WEEKDAYS.map((d, value) => ({ value, label: d.name[0].toUpperCase() + d.name.slice(1) }));
+/**
+ * "Dia" que ocupa a semana toda (domingo a sábado). Numa programação mensal, a semana N é a que
+ * tem a N-ésima sexta-feira do mês, para acompanhar o ritmo das sextas.
+ */
+export const WHOLE_WEEK = 7;
+const FRIDAY = 5;
+
+export const WEEKDAY_OPTIONS = [
+  ...WEEKDAYS.map((d, value) => ({ value: value as number, label: d.name[0].toUpperCase() + d.name.slice(1) })),
+  { value: WHOLE_WEEK, label: "Semana inteira" },
+];
 
 /** "Última" ficou com o 5 (já gravado no banco); a 5ª semana, que só existe em alguns meses, usa o 6. */
 export const NTH_LAST = 5;
@@ -72,9 +82,18 @@ const capitalize = (s: string) => s.replace(/^./, (c) => c.toUpperCase());
 const shortName = (schedule: Schedule) => weekdayOf(schedule).name.replace("-feira", "");
 const whenAvailable = (schedule: Schedule) => (schedule.nth === NTH_FIFTH ? " (quando houver)" : "");
 
+/** "1ª semana", "última semana". */
+function nthWeek(schedule: Schedule) {
+  // "Semana" é feminino, como a sexta-feira que a define.
+  return `${nthOrdinal({ ...schedule, weekday: FRIDAY })} semana`;
+}
+
 /** Texto completo: "Todas as sextas-feiras", "Toda 1ª sexta-feira do mês", "A combinar". */
 export function describeDayLong(schedule: Schedule): string {
   if (schedule.kind === "personalizada") return schedule.customDay.trim();
+  if (schedule.weekday === WHOLE_WEEK) {
+    return schedule.kind === "semanal" ? "A semana inteira" : `Toda ${nthWeek(schedule)} do mês${whenAvailable(schedule)}`;
+  }
   const day = weekdayOf(schedule);
   if (schedule.kind === "semanal") return `${day.masculine ? "Todos os" : "Todas as"} ${day.plural}`;
   return `${day.masculine ? "Todo" : "Toda"} ${nthOrdinal(schedule)} ${day.name} do mês${whenAvailable(schedule)}`;
@@ -83,14 +102,18 @@ export function describeDayLong(schedule: Schedule): string {
 /** Texto curto para espaços apertados: "Sextas", "1ª sexta do mês", "A combinar". */
 export function describeDayShort(schedule: Schedule): string {
   if (schedule.kind === "personalizada") return schedule.customDay.trim();
+  if (schedule.weekday === WHOLE_WEEK) {
+    return schedule.kind === "semanal" ? "Semana inteira" : capitalize(`${nthWeek(schedule)} do mês${whenAvailable(schedule)}`);
+  }
   const base = shortName(schedule);
   if (schedule.kind === "semanal") return `${capitalize(base)}s`;
   return capitalize(`${nthOrdinal(schedule)} ${base} do mês${whenAvailable(schedule)}`);
 }
 
-/** Rótulo do ritmo mensal: "1ª sexta", "5ª sexta", "Última sexta", "Toda sexta", "A combinar". */
+/** Rótulo do ritmo mensal: "1ª sexta", "5ª sexta", "Última sexta", "4ª semana", "Toda sexta", "A combinar". */
 export function describeDayTag(schedule: Schedule): string {
   if (schedule.kind === "personalizada") return schedule.customDay.trim();
+  if (schedule.weekday === WHOLE_WEEK) return schedule.kind === "semanal" ? "Semana toda" : capitalize(nthWeek(schedule));
   const base = shortName(schedule);
   if (schedule.kind === "semanal") return `${weekdayOf(schedule).masculine ? "Todo" : "Toda"} ${base}`;
   return capitalize(`${nthOrdinal(schedule)} ${base}`);
@@ -149,15 +172,27 @@ function nthWeekdayOfMonth(year: number, month: number, weekday: number, nth: nu
   return day.getUTCMonth() === first.getUTCMonth() ? day : null;
 }
 
-/** Próxima data da programação a partir de `today` (inclusive), "YYYY-MM-DD"; null para texto livre. */
+/**
+ * Próxima data da programação a partir de `today` (inclusive), "YYYY-MM-DD"; null para texto livre.
+ * Na semana inteira, é o primeiro dia da semana que ainda não passou (hoje, se já estiver nela).
+ */
 export function nextOccurrence(schedule: Schedule, today: string): string | null {
   if (schedule.kind === "personalizada") return null;
   const start = toDate(today);
-  if (schedule.kind === "semanal") return toIso(addDays(start, (schedule.weekday - start.getUTCDay() + 7) % 7));
-  // Mensal: procura no mês atual e nos seguintes (a 5ª semana pode pular alguns meses).
-  for (let offset = 0; offset < 14; offset++) {
-    const date = nthWeekdayOfMonth(start.getUTCFullYear(), start.getUTCMonth() + offset, schedule.weekday, schedule.nth);
-    if (date && date >= start) return toIso(date);
+  const wholeWeek = schedule.weekday === WHOLE_WEEK;
+  if (schedule.kind === "semanal") {
+    return wholeWeek ? today : toIso(addDays(start, (schedule.weekday - start.getUTCDay() + 7) % 7));
+  }
+  // Mensal: procura no mês atual e nos seguintes (a 5ª semana pode pular alguns meses). A semana
+  // inteira começa no mês anterior, porque a última delas pode terminar já no mês atual.
+  for (let offset = wholeWeek ? -1 : 0; offset < 14; offset++) {
+    const weekday = wholeWeek ? FRIDAY : schedule.weekday;
+    const date = nthWeekdayOfMonth(start.getUTCFullYear(), start.getUTCMonth() + offset, weekday, schedule.nth);
+    if (!date) continue;
+    // Domingo a sábado em volta da sexta.
+    const first = wholeWeek ? addDays(date, -FRIDAY) : date;
+    const last = wholeWeek ? addDays(date, 1) : date;
+    if (last >= start) return toIso(first >= start ? first : start);
   }
   return null;
 }
@@ -176,14 +211,30 @@ export function describeNextDate(date: string, today: string): string {
   return days < 7 ? `${day.masculine ? "Neste" : "Nesta"} ${name}, ${when}` : `${capitalize(name)}, ${when}`;
 }
 
+/** Domingo e sábado da semana de `date`, em "dia/mês". */
+export function weekRange(date: string): { from: string; to: string } {
+  const d = toDate(date);
+  const sunday = addDays(d, -d.getUTCDay());
+  return { from: dayMonth.format(sunday), to: dayMonth.format(addDays(sunday, 6)) };
+}
+
+/** "Nesta semana" ou "Semana de 20/12 a 26/12", para o retorno de `nextOccurrence` na semana inteira. */
+export function describeNextWeek(date: string, today: string): string {
+  if (date === today) return "Nesta semana";
+  const { from, to } = weekRange(date);
+  return `Semana de ${from} a ${to}`;
+}
+
 const text = (max: number) => z.string().trim().max(max, `Use no máximo ${max} caracteres.`);
 
 export const scheduleSchema = z
   .object({
     kind: z.enum(KINDS, { message: "Escolha como a programação se repete." }),
-    weekday: z.coerce.number().int().min(0).max(6),
+    weekday: z.coerce.number().int().min(0).max(WHOLE_WEEK),
     nth: z.coerce.number().int().min(1).max(NTH_FIFTH),
     time: z.string().trim(),
+    /** Marcado no painel: o site mostra só o dia. */
+    noTime: z.boolean(),
     customDay: text(80),
     customTime: text(60),
   })
@@ -192,7 +243,9 @@ export const scheduleSchema = z
       if (!v.customDay) ctx.addIssue({ code: "custom", path: ["customDay"], message: "Informe o texto do dia (ex.: A combinar)." });
       return;
     }
-    if (!TIME_RE.test(v.time)) ctx.addIssue({ code: "custom", path: ["time"], message: "Informe o horário." });
+    if (!v.noTime && !TIME_RE.test(v.time)) {
+      ctx.addIssue({ code: "custom", path: ["time"], message: "Informe o horário ou marque “Não definir horário”." });
+    }
   })
   .transform((v): Schedule => {
     if (v.kind === "personalizada") {
@@ -202,7 +255,7 @@ export const scheduleSchema = z
       kind: v.kind,
       weekday: v.weekday,
       nth: v.kind === "mensal" ? v.nth : 1,
-      time: v.time,
+      time: v.noTime ? null : v.time,
       customDay: "",
       customTime: "",
     };
