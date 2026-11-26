@@ -9,7 +9,7 @@ import type { AgeGroup } from "./options";
 export type VisitorStatus = Visitor["status"];
 export const VISITOR_STATUSES: VisitorStatus[] = ["new", "contacted", "archived"];
 
-/** Visitantes ainda sem contato (aviso no menu e na visão geral). */
+/** Visitantes ainda sem contato (aviso no menu e no Dashboard). */
 export async function countNewVisitors(): Promise<number> {
   const [{ total }] = await getDb().select({ total: count() }).from(visitors).where(eq(visitors.status, "new"));
   return total;
