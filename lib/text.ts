@@ -18,6 +18,13 @@ export function phoneKey(text: string): string {
   return digits.length >= 12 && digits.startsWith("55") ? digits.slice(2) : digits;
 }
 
+/** Link do WhatsApp para um número brasileiro com mensagem pronta; `null` se não parece ter DDD. */
+export function whatsappUrlForPhone(phone: string, text: string): string | null {
+  const digits = onlyDigits(phone);
+  const full = digits.length === 10 || digits.length === 11 ? `55${digits}` : digits.startsWith("55") && digits.length >= 12 ? digits : null;
+  return full ? `https://wa.me/${full}?text=${encodeURIComponent(text)}` : null;
+}
+
 export function slugify(text: string): string {
   return normalizeKey(text)
     .replace(/[^a-z0-9]+/g, "-")

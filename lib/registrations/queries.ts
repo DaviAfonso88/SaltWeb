@@ -1,4 +1,4 @@
-import { and, count, desc, eq, ilike, isNotNull, or, type SQL } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, isNotNull, or, type SQL } from "drizzle-orm";
 
 import { PAGE_SIZE } from "@/components/painel/Pagination";
 import { getDb } from "@/lib/db";
@@ -78,6 +78,41 @@ export async function listEventsWithRegistrations() {
     .orderBy(desc(events.startsAt));
 }
 
+/** Eventos do modelo Festa (os que têm estoque), mais recentes primeiro. */
+export async function listFestaEvents() {
+  return getDb()
+    .select({
+      id: events.id,
+      title: events.title,
+      startsAt: events.startsAt,
+      endsAt: events.endsAt,
+      locationName: events.locationName,
+      publication: events.publication,
+      registrationOpen: events.registrationOpen,
+      formConfig: events.formConfig,
+    })
+    .from(events)
+    .where(eq(events.formModel, "festa"))
+    .orderBy(desc(events.startsAt));
+}
+
+/** Todas as inscrições do evento, em ordem alfabética, para montar o estoque. */
+export async function listStockRegistrations(eventId: string) {
+  return getDb()
+    .select({
+      id: registrations.id,
+      number: registrations.number,
+      name: registrations.name,
+      phone: registrations.phone,
+      status: registrations.status,
+      answers: registrations.answers,
+      payment: registrations.payment,
+    })
+    .from(registrations)
+    .where(eq(registrations.eventId, eventId))
+    .orderBy(asc(registrations.nameKey), asc(registrations.number));
+}
+
 export async function getRegistration(id: string) {
   const db = getDb();
   const [row] = await db
@@ -85,6 +120,9 @@ export async function getRegistration(id: string) {
       registration: registrations,
       eventTitle: events.title,
       eventSlug: events.slug,
+      eventStartsAt: events.startsAt,
+      eventEndsAt: events.endsAt,
+      eventLocation: events.locationName,
       formModel: events.formModel,
       formConfig: events.formConfig,
     })

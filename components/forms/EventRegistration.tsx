@@ -10,6 +10,7 @@ import { SuccessScreen } from "@/components/forms/SuccessScreen";
 import { FormCard, type Person, type SubmitOutcome, type SubmitSummary } from "@/components/forms/shared";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import type { PublicEvent } from "@/lib/events/queries";
+import { describeEventDates } from "@/lib/format";
 import type { FestaAvailability } from "@/lib/forms/availability";
 import { CONTACT_EMAIL } from "@/lib/site-info";
 
@@ -30,7 +31,7 @@ function Notice({ title, children }: { title: string; children?: React.ReactNode
 }
 
 export function EventRegistration({ event, open, availability }: Props) {
-  const [done, setDone] = useState<{ summary: SubmitSummary; name: string } | null>(null);
+  const [done, setDone] = useState<{ summary: SubmitSummary; person: Person } | null>(null);
   const [blocked, setBlocked] = useState<"duplicada" | "encerrada" | null>(null);
   const top = useRef<HTMLDivElement>(null);
 
@@ -41,7 +42,10 @@ export function EventRegistration({ event, open, availability }: Props) {
       <SuccessScreen
         eventTitle={event.title}
         summary={done.summary}
-        name={done.name}
+        name={done.person.nome}
+        phone={done.person.telefone}
+        when={describeEventDates(event.startsAt, event.endsAt).long}
+        location={event.locationName}
         showPayment={event.formModel === "acampamento" || (event.formModel === "festa" && done.summary.valorFinalCentavos > 0)}
         healthReceived={event.formModel === "acampamento"}
       />
@@ -65,7 +69,7 @@ export function EventRegistration({ event, open, availability }: Props) {
 
   function onOutcome(outcome: SubmitOutcome, person: Person) {
     if (outcome.kind === "ok") {
-      setDone({ summary: outcome.summary, name: person.nome });
+      setDone({ summary: outcome.summary, person });
       requestAnimationFrame(() => top.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } else if (outcome.kind === "duplicada" || outcome.kind === "encerrada") {
       setBlocked(outcome.kind);

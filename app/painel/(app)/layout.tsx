@@ -1,5 +1,5 @@
 import { Sidebar, type NavItem } from "@/components/painel/Sidebar";
-import { can, requireUser } from "@/lib/auth/guard";
+import { can, canAny, requireUser } from "@/lib/auth/guard";
 import { countNewMessages } from "@/lib/messages/queries";
 import { countNewVisitors } from "@/lib/visitors/queries";
 
@@ -15,13 +15,20 @@ export default async function PanelLayout({ children }: { children: React.ReactN
     canVisitors ? countNewVisitors() : 0,
   ]);
 
-  const items: NavItem[] = [{ href: "/painel", label: "Visão geral", icon: "home" }];
+  const items: NavItem[] = [{ href: "/painel", label: "Dashboard", icon: "home" }];
   if (can(user, "devocionais.gerenciar")) items.push({ href: "/painel/devocionais", label: "Devocionais", icon: "devocionais" });
   if (canMessages) items.push({ href: "/painel/mensagens", label: "Mensagens", icon: "mensagens", badge: newMessages });
   if (canVisitors) items.push({ href: "/painel/visitantes", label: "Visitantes", icon: "visitantes", badge: newVisitors });
-  if (can(user, "eventos.gerenciar")) items.push({ href: "/painel/eventos", label: "Eventos", icon: "eventos" });
-  if (can(user, "inscricoes.ver")) items.push({ href: "/painel/inscricoes", label: "Inscrições", icon: "inscricoes" });
-  if (can(user, "participantes.ver")) items.push({ href: "/painel/participantes", label: "Participantes", icon: "participantes" });
+  // O que é de evento (inscrições, estoque, gastos etc.) fica dentro de Eventos, cada um com a própria permissão.
+  const canEvents = can(user, "eventos.gerenciar");
+  const eventItems: NavItem[] = [];
+  if (can(user, "inscricoes.ver")) eventItems.push({ href: "/painel/inscricoes", label: "Inscrições", icon: "inscricoes" });
+  if (canAny(user, ["estoque.ver", "inscricoes.ver"])) eventItems.push({ href: "/painel/estoque", label: "Estoque", icon: "estoque" });
+  if (can(user, "gastos.ver")) eventItems.push({ href: "/painel/gastos", label: "Gastos", icon: "gastos" });
+  if (can(user, "participantes.ver")) eventItems.push({ href: "/painel/participantes", label: "Participantes", icon: "participantes" });
+  if (canEvents || eventItems.length) {
+    items.push({ href: canEvents ? "/painel/eventos" : undefined, label: "Eventos", icon: "eventos", children: eventItems });
+  }
   if (can(user, "usuarios.gerenciar")) {
     items.push({ href: "/painel/usuarios", label: "Usuários", icon: "usuarios" });
     items.push({ href: "/painel/papeis", label: "Papéis", icon: "papeis" });

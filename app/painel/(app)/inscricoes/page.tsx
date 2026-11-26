@@ -1,9 +1,10 @@
-import { Download } from "lucide-react";
+import { Download, Package, Plus } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 
 import { DataTable, type Column } from "@/components/painel/DataTable";
 import { EmptyState } from "@/components/painel/EmptyState";
+import { DeleteAllRegistrations } from "@/components/painel/inscricoes/DeleteAllRegistrations";
 import { PaymentSummary } from "@/components/painel/inscricoes/PaymentSummary";
 import { PageHeader } from "@/components/painel/PageHeader";
 import { Pagination, parsePage } from "@/components/painel/Pagination";
@@ -125,24 +126,48 @@ export default async function RegistrationsPage({ searchParams }: { searchParams
         title="Inscrições"
         description="Respostas dos formulários de cada evento."
         actions={
-          canExport ? (
-            total > 0 ? (
-              <>
-                <Button asChild variant="outline" className="min-h-11 rounded-full">
-                  <a href={exportHref("csv")} download>
-                    <Download aria-hidden /> CSV
-                  </a>
-                </Button>
-                <Button asChild variant="outline" className="min-h-11 rounded-full">
-                  <a href={exportHref("pdf")} download>
-                    <Download aria-hidden /> PDF
-                  </a>
-                </Button>
-              </>
-            ) : (
-              <p className="text-sm text-text-3">Nada para exportar com este filtro.</p>
-            )
-          ) : null
+          <>
+            {event.formModel === "festa" && can(user, "inscricoes.gerenciar") ? (
+              <Button asChild className="min-h-11 rounded-full">
+                <Link href={`/painel/inscricoes/novo?evento=${event.id}`}>
+                  <Plus aria-hidden /> Nova inscrição
+                </Link>
+              </Button>
+            ) : null}
+            {event.formModel === "festa" ? (
+              <Button asChild variant="outline" className="min-h-11 rounded-full">
+                <Link href={`/painel/estoque?evento=${event.id}`}>
+                  <Package aria-hidden /> Estoque
+                </Link>
+              </Button>
+            ) : null}
+            {canExport ? (
+              total > 0 ? (
+                <>
+                  <Button asChild variant="outline" className="min-h-11 rounded-full">
+                    <a href={exportHref("csv")} download>
+                      <Download aria-hidden /> CSV
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" className="min-h-11 rounded-full">
+                    <a href={exportHref("pdf")} download>
+                      <Download aria-hidden /> PDF
+                    </a>
+                  </Button>
+                </>
+              ) : (
+                <p className="text-sm text-text-3">Nada para exportar com este filtro.</p>
+              )
+            ) : null}
+            {allCount && can(user, "inscricoes.gerenciar") ? (
+              <DeleteAllRegistrations
+                eventId={event.id}
+                eventTitle={event.title}
+                total={allCount}
+                keepsParticipants={event.formModel === "acampamento"}
+              />
+            ) : null}
+          </>
         }
       />
 

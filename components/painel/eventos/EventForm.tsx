@@ -167,7 +167,7 @@ export function EventForm({ event, modelLocked }: { event?: EventFormValues; mod
           <Textarea id="description" name="description" rows={6} defaultValue={event?.description} maxLength={5000} className="rounded-xl bg-card" />
           <p className="text-xs text-text-3">Uma linha em branco separa os parágrafos.</p>
         </div>
-        <TextField name="category" label="Categoria (opcional)" defaultValue={event?.category} maxLength={40} hint="Ex.: Acampamento, Festa, Missões." errors={errors?.category} />
+        <TextField name="category" label="Categoria (opcional)" defaultValue={event?.category} maxLength={40} hint="Ex.: Acampamento, Confraternização, Projetos." errors={errors?.category} />
         <CheckField id="featured" name="featured" label="Evento em destaque" defaultChecked={event?.featured} hint="Aparece na página inicial. Só um evento fica em destaque por vez." />
       </Section>
 
@@ -242,7 +242,7 @@ export function EventForm({ event, modelLocked }: { event?: EventFormValues; mod
             onChange={(e) => chooseModel(e.target.value as FormModelId | "")}
             className="min-h-11 rounded-xl border border-input bg-card px-3 text-sm disabled:opacity-60"
           >
-            <option value="">Sem inscrição neste site</option>
+            <option value="">Sem inscrição</option>
             {FORM_MODEL_LIST.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.label}

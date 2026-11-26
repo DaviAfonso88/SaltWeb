@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { PublicEvent } from "@/lib/events/queries";
 import type { FestaAvailability } from "@/lib/forms/availability";
+import type { FestaContribuicao } from "@/lib/forms/festa-lembrete";
 import { getFormModel } from "@/lib/forms/registry";
 import type { Installment } from "@/lib/forms/types";
 import { onlyDigits } from "@/lib/text";
@@ -20,7 +21,7 @@ export type SubmitSummary = {
   numero: number;
   valorFinalCentavos: number;
   parcelas: Installment[];
-  resumo: { valorOriginalCentavos?: number; lote?: string; plano?: string; forma?: string };
+  resumo: { valorOriginalCentavos?: number; lote?: string; plano?: string; forma?: string; contribuicao?: FestaContribuicao };
 };
 
 export type Person = { nome: string; telefone: string; email: string };

@@ -16,6 +16,7 @@ const ACTION_GROUPS = [
   { value: "registration.", label: "Inscrições" },
   { value: "participant.", label: "Participantes" },
   { value: "event.", label: "Eventos" },
+  { value: "expense.", label: "Gastos" },
   { value: "message.", label: "Mensagens" },
   { value: "devotional.", label: "Devocionais" },
   { value: "cutover.", label: "Virada" },
