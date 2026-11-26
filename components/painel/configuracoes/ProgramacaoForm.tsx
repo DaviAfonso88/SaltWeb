@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { FieldError, FormError } from "@/components/painel/FieldError";
 import { SubmitButton } from "@/components/painel/SubmitButton";
 import { TextField } from "@/components/painel/TextField";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import type { ActionResult } from "@/lib/action-result";
 import { saveProgramacao } from "@/lib/programacoes/actions";
@@ -15,6 +16,7 @@ import {
   KINDS,
   NTH_OPTIONS,
   WEEKDAY_OPTIONS,
+  WHOLE_WEEK,
   type Schedule,
   type ScheduleKind,
 } from "@/lib/programacoes/schedule";
@@ -66,6 +68,8 @@ export function ProgramacaoForm({ programacao }: { programacao: ProgramacaoCardD
   const [draft, setDraft] = useState<Schedule>(programacao.schedule);
   const [result, setResult] = useState<ActionResult | undefined>();
   const [pending, startTransition] = useTransition();
+  const [noTime, setNoTime] = useState(programacao.schedule.kind !== "personalizada" && !programacao.schedule.time);
+  const noTimeId = useId();
   const set = <K extends keyof Schedule>(key: K, value: Schedule[K]) => setDraft((d) => ({ ...d, [key]: value }));
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -79,7 +83,7 @@ export function ProgramacaoForm({ programacao }: { programacao: ProgramacaoCardD
   }
 
   const errors = result && !result.ok ? result.fieldErrors : undefined;
-  const preview = describeSchedule(draft);
+  const preview = describeSchedule(noTime ? { ...draft, time: null } : draft);
   const headingId = `prog-${slug}`;
 
   return (
@@ -124,34 +128,48 @@ export function ProgramacaoForm({ programacao }: { programacao: ProgramacaoCardD
             />
           </div>
         ) : (
-          <div className={`grid gap-4 ${draft.kind === "mensal" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
-            {draft.kind === "mensal" ? (
+          <div className="grid gap-3">
+            <div className={`grid gap-4 ${draft.kind === "mensal" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+              {draft.kind === "mensal" ? (
+                <SelectField
+                  name="nth"
+                  label="Semana do mês"
+                  value={draft.nth}
+                  onChange={(v) => set("nth", Number(v))}
+                  options={NTH_OPTIONS}
+                  errors={errors?.nth}
+                />
+              ) : null}
               <SelectField
-                name="nth"
-                label="Semana do mês"
-                value={draft.nth}
-                onChange={(v) => set("nth", Number(v))}
-                options={NTH_OPTIONS}
-                errors={errors?.nth}
+                name="weekday"
+                label="Dia da semana"
+                value={draft.weekday}
+                onChange={(v) => set("weekday", Number(v))}
+                options={WEEKDAY_OPTIONS}
+                errors={errors?.weekday}
               />
+              <TextField
+                name="time"
+                label="Horário"
+                type="time"
+                value={noTime ? "" : (draft.time ?? "")}
+                onChange={(e) => set("time", e.target.value)}
+                disabled={noTime}
+                required={!noTime}
+                errors={noTime ? undefined : errors?.time}
+              />
+            </div>
+            {draft.kind === "mensal" && draft.weekday === WHOLE_WEEK ? (
+              <p className="text-xs text-text-3">
+                Semana inteira vai de domingo a sábado: é a semana da sexta-feira escolhida em “Semana do mês”.
+              </p>
             ) : null}
-            <SelectField
-              name="weekday"
-              label="Dia da semana"
-              value={draft.weekday}
-              onChange={(v) => set("weekday", Number(v))}
-              options={WEEKDAY_OPTIONS}
-              errors={errors?.weekday}
-            />
-            <TextField
-              name="time"
-              label="Horário"
-              type="time"
-              value={draft.time ?? ""}
-              onChange={(e) => set("time", e.target.value)}
-              required
-              errors={errors?.time}
-            />
+            <div className="flex min-h-11 items-center gap-3">
+              <Checkbox id={noTimeId} name="noTime" checked={noTime} onCheckedChange={(checked) => setNoTime(checked === true)} />
+              <Label htmlFor={noTimeId} className="flex min-h-11 flex-1 items-center text-sm font-normal">
+                Não definir horário (o site mostra só o dia)
+              </Label>
+            </div>
           </div>
         )}
 
